@@ -16,7 +16,6 @@ typedef struct Date {
 typedef struct {
     char* name;
     char* model;
-    int capacity; // Passenger or cargo capacity
     double maxSpeed; // Maximum speed of the spacecraft
     // Other relevant attributes...
 } SpaceCraft;
@@ -55,7 +54,7 @@ typedef struct Planet {
 } Planet;
 
 typedef struct SolarSystem {
-    char *name;
+    char* name;
     Location portal_location;
     int risk_level;
     Planet* planets[MAX_STAR_SYSTEMS]; // Array of pointers of unknown size
@@ -123,7 +122,6 @@ SpaceCraft* create_spacecraft(const char* name, const char* model, int capacity,
     if (craft) {
         craft->name = safe_strdup(name);
         craft->model = safe_strdup(model);
-        craft->capacity = capacity;
         craft->maxSpeed = maxSpeed;
         // Initialize other attributes...
     }
@@ -132,6 +130,12 @@ SpaceCraft* create_spacecraft(const char* name, const char* model, int capacity,
 Planet* create_planet(const char* name, Location location, int ID) {
     Planet* new_planet = (Planet*)malloc(sizeof(Planet));
     if (new_planet) {
+        size_t name_length = strlen(name);
+        if (name_length >= MAX_PLANET_NAME) {
+            fprintf(stderr, "Planet name too long (maximum %d characters).\n", MAX_PLANET_NAME - 1);
+            free(new_planet);
+            return NULL;
+        }
         strncpy(new_planet->name, name, MAX_PLANET_NAME - 1);
         new_planet->name[MAX_PLANET_NAME - 1] = '\0'; // Ensure null-termination
         new_planet->portal_location = location;
@@ -326,7 +330,7 @@ void load_galaxy_from_text(FILE* file, Galaxy* galaxy) {
         fscanf(file, "Solar System %*d Name: %s\n", buffer);
         char* new_name = strdup(buffer);
         if (new_name) {
-            free(galaxy->star_systems[i]->name); // Make sure to free any previously allocated memory
+            free(galaxy->star_systems[i]->name); // Free the existing name
             galaxy->star_systems[i]->name = new_name;
         }
         else {
@@ -346,20 +350,20 @@ void load_galaxy_from_text(FILE* file, Galaxy* galaxy) {
 
 // Comparison functions for qsort
 int compare_by_name(const void* a, const void* b) {
-    SolarSystem* system_a = *(SolarSystem**)a;
-    SolarSystem* system_b = *(SolarSystem**)b;
+    SolarSystem* system_a = (SolarSystem*)a;
+    SolarSystem* system_b = (SolarSystem*)b;
     return strcmp(system_a->name, system_b->name);
 }
 
 int compare_by_risk_level(const void* a, const void* b) {
-    SolarSystem* system_a = *(SolarSystem**)a;
-    SolarSystem* system_b = *(SolarSystem**)b;
+    SolarSystem* system_a = (SolarSystem*)a;
+    SolarSystem* system_b = (SolarSystem*)b;
     return (system_a->risk_level - system_b->risk_level);
 }
 
 int compare_by_num_planets(const void* a, const void* b) {
-    SolarSystem* system_a = *(SolarSystem**)a;
-    SolarSystem* system_b = *(SolarSystem**)b;
+    SolarSystem* system_a = (SolarSystem*)a;
+    SolarSystem* system_b = (SolarSystem*)b;
     return (system_a->num_planets - system_b->num_planets);
 }
 
@@ -390,7 +394,7 @@ void* search_by_risk_level(const void* key, SolarSystem** systems, size_t num_sy
 void* search_by_num_planets(const void* key, SolarSystem** systems, size_t num_systems) {
     return bsearch(key, systems, num_systems, sizeof(SolarSystem*), compare_by_num_planets);
 }
-void process_void_array(void** array, size_t num_elements, void (*process)(void*)) {
+void process_void_array(void** array, size_t num_elements, void (process)(void)) {
     for (size_t i = 0; i < num_elements; i++) {
         process(array[i]);
     }
@@ -423,40 +427,59 @@ void display_system(Galaxy* galaxy) {
 
 // Function to add a new SolarSystem to a Galaxy
 void add_solar_system(Galaxy* galaxy) {
-    char temp[MAX_GALAXY_NAME];
-    SolarSystem* new_system = malloc(sizeof(SolarSystem));
+    // Allocate memory for the new Solar System
+    SolarSystem* new_system = (SolarSystem*)malloc(sizeof(SolarSystem));
     if (!new_system) {
-        printf("Memory allocation failed for the new Solar System.\n");
-        return; // Exit the function or handle the error as appropriate
+        fprintf(stderr, "Memory allocation failed for the new Solar System.\n");
+        return;
     }
-    // Assume the user provides data for the new solar system
-    // The actual input should be handled safely and validated
-    new_system->name = malloc(MAX_GALAXY_NAME); // +1 for the null terminator
-    if (new_system->name) {
-        strcpy(new_system->name, temp);
+
+    // Initialize the new Solar System fields
+    new_system->name = NULL;
+    new_system->portal_location = (Location){ 0, 0, 0 }; // Assuming default values for location
+    new_system->risk_level = 0;
+    new_system->num_planets = 0;
+
+    // Initialize all planet pointers in the planets array to NULL
+    for (int i = 0; i < MAX_STAR_SYSTEMS; i++) {
+        new_system->planets[i] = NULL;
     }
-    else {
-        printf("Failed to allocate memory for the solar system name.\n");
-        // Handle the error, possibly freeing new_system and returning
-    }
+
+    // Temporary buffer for Solar System name input
+    char temp[MAX_GALAXY_NAME];
     printf("Enter Solar System Name: ");
-    scanf("%99s", new_system->name); // Assuming the name won't exceed the MAX_GALAXY_NAME
+    fgets(temp, sizeof(temp), stdin);
+    temp[strcspn(temp, "\n")] = 0; // Remove trailing newline
+
+    // Allocate memory and assign the name to the new Solar System
+    new_system->name = strdup(temp);
+    if (!new_system->name) {
+        fprintf(stderr, "Failed to allocate memory for Solar System name.\n");
+        free(new_system);
+        return;
+    }
+
+    // Prompt for Risk Level
     printf("Enter Risk Level: ");
     scanf("%d", &new_system->risk_level);
-    // Add more input handling as needed
+    while (getchar() != '\n');  // Clear input buffer
 
-    // Add the new system to the galaxy's array of star systems
-    SolarSystem** new_array = realloc(galaxy->star_systems, (galaxy->num_solar_systems + 1) * sizeof(SolarSystem*));
+    // Reallocate the galaxy's star_systems array to accommodate the new Solar System
+    SolarSystem** new_array = (SolarSystem*)realloc(galaxy->star_systems, (galaxy->num_solar_systems + 1) * sizeof(SolarSystem));
     if (new_array) {
         galaxy->star_systems = new_array;
         galaxy->star_systems[galaxy->num_solar_systems] = new_system;
         galaxy->num_solar_systems++;
+        printf("New Solar System '%s' added successfully.\n", new_system->name);
     }
     else {
+        fprintf(stderr, "Failed to reallocate memory for new solar systems.\n");
+        free(new_system->name);
         free(new_system);
-        printf("Failed to add a new Solar System due to memory allocation error.\n");
     }
 }
+
+
 
 // Function to display sub-components of a SolarSystem
 void display_subcomponents(Galaxy* galaxy) {
@@ -500,27 +523,75 @@ void rename_planet(Galaxy* galaxy) {
 }
 // Function to add a planet to a solar system
 void add_planet(Galaxy* galaxy) {
+    // Clear the input buffer
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {}
+
     // Prompt for which solar system to add the planet to
     int system_index;
     printf("Enter the index of the Solar System to add a planet to (0 to %d): ", galaxy->num_solar_systems - 1);
-    scanf("%d", &system_index);
-    if (system_index < 0 || system_index >= galaxy->num_solar_systems) {
-        printf("Invalid Solar System index.\n");
+    char input[MAX_PLANET_NAME];
+    if (fgets(input, sizeof(input), stdin) == NULL) {
+        printf("Error reading input.\n");
         return;
     }
 
+    // Validate and parse the system index
+    if (sscanf(input, "%d", &system_index) != 1) {
+        printf("Invalid input for Solar System index.\n");
+        return;
+    }
+
+    if (system_index < 0 || system_index >= galaxy->num_solar_systems || galaxy->star_systems == NULL) {
+        printf("Invalid Solar System index or no Solar Systems available.\n");
+        return;
+    }
+
+
     SolarSystem* solar_system = galaxy->star_systems[system_index];
 
+    if (solar_system->num_planets >= MAX_STAR_SYSTEMS) {
+        printf("This Solar System already has the maximum number of planets (%d).\n", MAX_STAR_SYSTEMS);
+        return; // Exit the function to prevent adding more planets
+    }
     // Gather details about the new planet
     char planet_name[MAX_PLANET_NAME];
     printf("Enter the name of the new Planet: ");
-    scanf("%49s", planet_name); // Use 49 to leave space for the null terminator
+    if (fgets(planet_name, sizeof(planet_name), stdin) == NULL) {
+        printf("Error reading planet name.\n");
+        return;
+    }
+    planet_name[strcspn(planet_name, "\n")] = '\0'; // Remove the newline character
 
     // Assume we have functions to get location and other details for Planet
     Location location = { 0 }; // Replace with actual user input or function to get location
+
+    char input_id[256];
     int planet_id;
     printf("Enter the ID for the new Planet: ");
-    scanf("%d", &planet_id);
+    if (fgets(input_id, sizeof(input_id), stdin) == NULL || input_id[strcspn(input_id, "\n")] != '\n') {
+        printf("Error reading planet ID or input too long.\n");
+        return;
+    }
+    input_id[strcspn(input_id, "\n")] = '\0';
+
+    // Validate and parse the planet ID
+    if (sscanf(input_id, "%d", &planet_id) != 1) {
+        printf("Invalid input for Planet ID.\n");
+        return;
+    }
+
+    // Check for duplicate planet ID
+    for (int i = 0; i < solar_system->num_planets; i++) {
+        if (solar_system->planets[i] != NULL && solar_system->planets[i]->ID == planet_id) {
+            printf("Planet with ID %d already exists in this Solar System.\n", planet_id);
+            return;
+        }
+    }
+    if (planet_id <= 0) {
+        printf("Invalid Planet ID. The ID must be a positive integer.\n");
+        return;
+    }
 
     // Create and add the planet to the chosen solar system
     if (solar_system->num_planets >= MAX_STAR_SYSTEMS) {
@@ -552,7 +623,7 @@ void display_all_planets(Galaxy* galaxy) {
 
 
 // Assuming a Galaxy structure is declared and initialized elsewhere in the program:
-// Galaxy *galaxy = /* ... initialization ... */;
+// Galaxy galaxy = / ... initialization ... */;
 
 // Main menu function (simplified for brevity)
 void main_menu(Galaxy* galaxy) {
@@ -643,11 +714,10 @@ int main() {
         fprintf(stderr, "Failed to allocate memory for Galaxy.\n");
         return EXIT_FAILURE;
     }
-
-    // Initialize the galaxy as per UML diagram
     gal->name = NULL;
-    gal->star_systems = NULL;
+    gal->star_systems = NULL; // Ensure this is NULL initially
     gal->num_solar_systems = 0;
+
 
     main_menu(gal); // Start the main menu
 

@@ -1,0 +1,5 @@
+﻿  main.c
+  universal_manager.c
+C:\Final Project\NivBuskila_AmitayManor\universal_manager.c(116,13): warning C4013: 'free_company' undefined; assuming extern returning int
+  Generating Code...
+  NivBuskila_AmitayManor.vcxproj -> C:\Final Project\NivBuskila_AmitayManor\x64\Debug\NivBuskila_AmitayManor.exe

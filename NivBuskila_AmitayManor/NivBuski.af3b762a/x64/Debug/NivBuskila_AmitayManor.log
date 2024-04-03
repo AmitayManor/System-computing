@@ -1,5 +1,4 @@
-﻿  main.c
-  universal_manager.c
-C:\Final Project\NivBuskila_AmitayManor\universal_manager.c(116,13): warning C4013: 'free_company' undefined; assuming extern returning int
-  Generating Code...
-  NivBuskila_AmitayManor.vcxproj -> C:\Final Project\NivBuskila_AmitayManor\x64\Debug\NivBuskila_AmitayManor.exe
+﻿  spacecraft.c
+C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\spacecraft.c(57,14): warning C4013: 'myGets' undefined; assuming extern returning int
+C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\spacecraft.c(72,13): warning C4101: 'c': unreferenced local variable
+  NivBuskila_AmitayManor.vcxproj -> C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\x64\Debug\NivBuskila_AmitayManor.exe

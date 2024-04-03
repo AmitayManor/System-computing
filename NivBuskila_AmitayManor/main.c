@@ -20,6 +20,7 @@ int main() {
         printf("7. Rename Planet\n");
         printf("8. Display All Planets\n");
         printf("9. Exit\n");
+        printf("10. Test - Companies interface\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -66,8 +67,15 @@ int main() {
             displayAllPlanets(&manager);
             break;
         }
+
         case 9: {
             printf("Exiting...\n");
+            break;
+        }
+
+        case 10: {
+            manage_company_operations(&manager);
+
             break;
         }
         default: {

@@ -1,6 +1,106 @@
 #include "interstellar_travel.h"
+#include "universal_manager.h"
 #include <stdlib.h>
 #include <string.h>
+
+
+char* get_travelCode_Src(UniversalManager* mg, InterstellarTravel* tr, Permission permission) {
+    if (mg && tr) {
+        
+        /* Step One: Display ALL Options */
+        
+
+        /* Step Two: Check permissions:
+        * 
+        * if 1. only travel between plantes in the SAME solar system AND Same Galaxy
+        * if 2. Travel in the SAME Galaxy, freely between Solar systems and Plantes
+        * if 3. Travel Freely
+        * 
+        */
+
+        int per = (int)&permission;
+        
+        switch (per) {
+        
+        case 1: {
+            printf("Limited Permission.\nCan travel only between Planets (in the same Solar system).\n");
+            
+            
+            break; }  //Between Plantes in the Same Solar System in the Same Galaxy
+
+        case 2: { 
+            printf("Flex Permission.\nCan travel only between Solar systems (in the same Galaxy).\n");
+            
+            
+            break; }  //Between Solar systems in the Same Galaxy
+
+        case 3: { 
+            printf("Deluxe Permission.\nFree to travel aound the universe.\n");
+            
+            
+            break; }  // Freely
+        
+        case 0: {
+            printf("No Permission is given.\n");
+            break; }  // No Permissions
+
+        default: {
+            printf("Error in given Permission.\n");
+        }
+        
+        }while (per != 0);
+        
+
+        /* Step Three: Choose based on Permission zone
+        *   Validate choice
+        */
+
+        /* Step Four: Initialize Values */
+
+    }
+    else {
+        printf("Error with manager and travels allocations");
+    }
+}
+
+char* get_travelCode_Dst(UniversalManager* mg, InterstellarTravel* tr, Permission permission) {
+    if (mg && tr) {
+
+        /* Step One: Check permissions:
+         *
+         * if 1. only travel between plantes in the SAME solar system AND Same Galaxy
+         * if 2. Travel in the SAME Galaxy, freely between Solar systems and Plantes
+         * if 3. Travel Freely
+         *
+         */
+
+         /* Step Two: Display ALL Options */
+
+         /* Step Three: Choose based on Permission zone
+         *   Validate choice
+         */
+
+         /* Step Four: Initialize Values */
+    }
+    else {
+        printf("Error with manager and travels allocations");
+    }
+}
+
+void get_departure_date(InterstellarTravel* tr){}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 InterstellarTravel* create_interstellar_travel(const char* code, SpaceCraft* craft, Date departure, Date arrival, double distance, int riskLevel) {
     InterstellarTravel* travel = (InterstellarTravel*)malloc(sizeof(InterstellarTravel));
@@ -89,8 +189,6 @@ void print_interstellar_travel(const InterstellarTravel* travel) {
 
 char extractTrcalCode(char code[MAX_CODE_LEN])
 {}
-
-
 
 void free_interstellar_travel(InterstellarTravel* travel) {
     if (travel) {

@@ -104,14 +104,6 @@ void get_SpaceCraft_speed(SpaceCraft* sp){
     } 
 }
 
-
-
-/*
-const char* get_spacecraft_model(SpaceCraft* craft) {
-    return craft ? craft->model : "Unknown";
-}
-*/
-
 void free_spacecraft(SpaceCraft* craft) {
     if (craft) {
         free(craft->name);

@@ -10,6 +10,7 @@ void initUniversalManager(UniversalManager* manager) {
         manager->numCompanies = 0;
     }
 }
+
 Galaxy* createGalaxy() {
     char name[MAX_GALAXY_NAME];
     printf("Enter Galaxy Name: ");
@@ -22,6 +23,7 @@ Galaxy* createGalaxy() {
     }
     return galaxy; // Return the pointer to the new Galaxy
 }
+
 void addGalaxy(UniversalManager* manager, Galaxy* galaxy) {
     if (manager && galaxy) {
         Galaxy** new_galaxies_array = realloc(manager->galaxies, (manager->numGalaxies + 1) * sizeof(Galaxy*));
@@ -32,6 +34,7 @@ void addGalaxy(UniversalManager* manager, Galaxy* galaxy) {
         }
     }
 }
+
 void addGalaxyToManager(UniversalManager* manager) {
     Galaxy* galaxy = createGalaxy(); // Create a new Galaxy
     if (galaxy) {
@@ -41,121 +44,48 @@ void addGalaxyToManager(UniversalManager* manager) {
         printf("Failed to create a new Galaxy.\n");
     }
 }
-/*
-Company* createCompany() {
+
+void createCompany(UniversalManager* mg) {
     
-    Company* company = (Company*)malloc(sizeof(Company));
-
-    char name[MAX_COMPANY_NAME];
-    int established, numOfSpaceCrafts, numOfTravels;
-    Permission permission;
+    Company* cm = (Company*)malloc(sizeof(Company));
     
-    printf("Enter Company Name: ");
-    scanf("%255s", name); // Get the company name from the user
+    if (cm) {
 
-    do {
-        printf("Enter Company's year of establishment: ");
-        scanf("%d", &established);
-    } while (established <= 0);
+        char name[MAX_COMPANY_NAME];
+        get_company_name(name);
+        int established = get_establishment_year();
+        int numOfSpaceCrafts = get_num_of_spacecrafts();
+        initialize_company_spacecrafts(cm, numOfSpaceCrafts);
+        Permission permission = get_permission_zone();
+        int numOfSpaceTravels = get_num_of_travels();
+        initialize_company_travels(mg, cm, numOfSpaceTravels);
 
-
-    do {
-        printf("Enter Company's amount of Space Crafts: ");
-        scanf("%d", &numOfSpaceCrafts);
-    } while (numOfSpaceCrafts < 0);
-    
-    SpaceCraft* spaceCrafts = NULL;
-    if (numOfSpaceCrafts > 0) {
-        spaceCrafts = malloc(numOfSpaceCrafts * sizeof(SpaceCraft));
-        for (int i = 0; i < numOfSpaceCrafts; i++) {
-            char craftName[MAX_LEN_SPACE_CRAFT], craftModel[MAX_LEN_SPACE_CRAFT];
-            double craftMaxSpeed = -1;
-            int id = i + 1;
-
-            printf("Enter name for spacecraft %d: ", id);
-            scanf("%99s", craftName);
-
-            printf("Enter model for spacecraft %d: ", id);
-            scanf("%99s", craftModel);
-
-            do {
-                printf("Enter max speed (in km/s) for spacecraft %d (0 - 300000): ", i + 1);
-                scanf("%lf", &craftMaxSpeed);
-                if (craftMaxSpeed < MIN_SPEED || craftMaxSpeed > MAX_SPEED) {
-                    printf("Invalid speed. Please enter a value between 0 and 300000.\n");
-                }
-            } while (craftMaxSpeed < MIN_SPEED || craftMaxSpeed > MAX_SPEED);
-
-            char* dynamicCraftName = strdup(craftName);
-            char* dynamicCraftModel = strdup(craftModel);
-
-            SpaceCraft* newCraft = create_spacecraft(dynamicCraftName, dynamicCraftModel, craftMaxSpeed, id);
-
-            if (!newCraft) {
-                printf("Failed to create spacecraft %d.\n", i + 1);
-                free(dynamicCraftName);
-                free(dynamicCraftModel);
-                break;
-            }
-            company->spaceCrafts[i] = newCraft;
-        }
+        cm->name = strdup(name);
+        cm->establishedYear = established;
+        cm->numSpacecrafts = numOfSpaceCrafts;
+        //cm->travels = NULL;  initialized via initialize_company_travels func //
+        cm->numTravels = 0;  numOfSpaceTravels;
+        cm->permissionsZone = permission;
+    }
+    Company** new_companies_array = realloc(mg->companies, (mg->numCompanies + 1) * sizeof(Company*));
+    if (new_companies_array) {
+        mg->companies = new_companies_array;
+        mg->companies[mg->numCompanies] = cm;
+        mg->numCompanies++;
     }
 
-    do {
-        printf("Enter permission zone (0: No Permission, 1: Planet, 2: SolarSystem, 3: Galaxy): ");
-        scanf("%d", (int*)&permission);
-    } while (permission < eNOPERMISSION || permission >= eNUMOFPERMISSION);
 
-
-    // Allocate memory for the new Company
-    if (company) {
-        company->name = strdup(name);
-        company->establishedYear = established;
-        company->numSpacecrafts = numOfSpaceCrafts;
-        company->travels = NULL;        // implement
-        company->numTravels = 0;        // implement
-        company->permissionsZone = permission;
-          
-    }
-    return company; // Return the pointer to the new Company
-}
-*/
-
-void addCompany(UniversalManager* manager, Company* company, Permission permission) {
-    if (manager && company) {
-        company->permissionsZone = permission;
-        Company** new_companies_array = realloc(manager->companies, (manager->numCompanies + 1) * sizeof(Company*));
-        if (new_companies_array) {
-            manager->companies = new_companies_array;
-            manager->companies[manager->numCompanies] = company;
-            manager->numCompanies++;
-        }
+    else {
+        printf("Failed to allocate memory for new Company.\n");
+        
     }
 }
+
 void addCompanyToManager(UniversalManager* manager) {
     
     if (manager) {
-
-        Company* company = (Company*)malloc(sizeof(Company));
-        test_createCompany(company);
-
-
-
-
-
+        createCompany(manager);
     }
-
-
-
-    /*
-    Company* company = createCompany(); // Create a new Company
-    if (company) {
-        addCompany(manager, company, company->permissionsZone); // Add the new Company to the UniversalManager
-    }
-    else {
-        printf("Failed to create a new Company.\n");
-    }
-    */
 }
 
 void printGalaxies(const UniversalManager* manager) {
@@ -223,7 +153,7 @@ void loadSystemData(UniversalManager* manager, const char* filename) {
                 Company* company = (Company*)malloc(sizeof(Company));
                 company->name = strdup(name); // Assuming Company struct has a name field
                 // Initialize other company fields and set permissions as needed...
-                addCompany(manager, company, eNOPERMISSION); // Example permission
+                //addCompany(manager, company, eNOPERMISSION); // Example permission
             }
         }
     }
@@ -345,13 +275,14 @@ void display_company_basic_data(Company* company){
     printf("Number of Travels: %d\n", company->numTravels);
     printf("Permissions Zone: %d\n", company->permissionsZone);
 }
+
 void display_company_spacecrafts(Company* company){
     printf("\n--- Company's Spacecrafts Fleet ---\n");
     for (int i = 0; i < company->numSpacecrafts; i++) {
-        SpaceCraft* craft = &(company->spaceCrafts[i]);
-        printf("Spacecraft %d: Name: %s, Model: %s, Max Speed: %.2f, ID: %d\n", i + 1, craft->name, craft->model, craft->maxSpeed, craft->craftId);
+        printf("Spacecraft %d: Name: %s, Model: %s, Max Speed: %.2f, ID: %d\n", i + 1, company->spaceCrafts[i]->name, company->spaceCrafts[i]->model, company->spaceCrafts[i]->maxSpeed, company->spaceCrafts[i]->craftId);
     }
 }
+
 void display_company_travels(Company* company){
     printf("\n--- Company's Incoming Travels ---\n");
     for (int i = 0; i < company->numTravels; i++) {

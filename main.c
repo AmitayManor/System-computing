@@ -63,7 +63,7 @@ int main() {
         }
         case 8: {
             // Display All Planets within Systems managed by UniversalManager
-            displayAllPlanets(&manager);
+            printGalaxies(&manager);
             break;
         }
 

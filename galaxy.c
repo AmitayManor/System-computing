@@ -53,7 +53,7 @@ void add_solar_system(Galaxy* galaxy) {
     galaxy->star_systems = new_array;
     galaxy->star_systems[galaxy->num_solar_systems] = system;
     galaxy->num_solar_systems++;
-    printf("New Solar System '%s' added successfully.\n", system->name);
+    printf("New Solar System '%s' added successfully to %s galaxy.\n", system->name, galaxy->name);
 }
 
 void display_subcomponents(Galaxy* galaxy) {

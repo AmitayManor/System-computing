@@ -78,13 +78,12 @@ void addCompanyToManager(UniversalManager* manager) {
 void printGalaxies(const UniversalManager* manager) {
     if (manager && manager->galaxies) {
         printf("List of Galaxies:\n");
-        printf("%99d", manager->numGalaxies);
         for (int i = 0; i < manager->numGalaxies; i++) {
-          //  if (manager->galaxies[i]) {
+           if (manager->galaxies[i]) {
                 printf("Galaxy %d: %s\n", i + 1, manager->galaxies[i]->name);
                // add_solar_system(manager->galaxies[i]);
                // display_system(manager->galaxies[i]);
-            //}
+            }
         }
     }
     else {
@@ -363,8 +362,8 @@ void manage_company_operations(UniversalManager* manager) {
 
 void addSolarSystemToManger(UniversalManager* manager) {
     int numberOfGalaxy;
+    printGalaxies(manager);
     printf("Enter the number galaxy of the solar system :\n");
-    printGalaxies(&manager);
     void flush_stdin();
     scanf("%d", &numberOfGalaxy); // need to enter do while
     add_solar_system(manager->galaxies[numberOfGalaxy - 1]);

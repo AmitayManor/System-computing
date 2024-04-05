@@ -48,7 +48,7 @@ int main() {
         }
         case 5: {
             // Add Company to UniversalManager
-            addCompanyToManager(&manager);
+            addPlanetToManager(&manager);
             break;
         }
         case 6: {

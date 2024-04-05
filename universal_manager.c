@@ -363,10 +363,26 @@ void manage_company_operations(UniversalManager* manager) {
 void addSolarSystemToManger(UniversalManager* manager) {
     int numberOfGalaxy;
     printGalaxies(manager);
-    printf("Enter the number galaxy of the solar system :\n");
+    printf("Enter galaxy number :\n");
     void flush_stdin();
     scanf("%d", &numberOfGalaxy); // need to enter do while
     add_solar_system(manager->galaxies[numberOfGalaxy - 1]);
+    
+}
+
+addPlanetToManager(UniversalManager* manager) {
+    int numberOfGalaxy;
+    printGalaxies(manager);
+    printf("Enter galaxy number :\n");
+    void flush_stdin();
+    scanf("%d", &numberOfGalaxy); // need to enter do while
+    int numberOfSolarSystems;
+    display_system(manager->galaxies[numberOfGalaxy - 1]);
+    printf("Enter solar system number :\n");
+    void flush_stdin();
+    scanf("%d", &numberOfSolarSystems); // need to enter do while
+    Planet* planet = create_planet();
+    add_planet_to_solar_system(manager->galaxies[numberOfGalaxy - 1]->star_systems[numberOfSolarSystems-1], planet);
     
 }
 
@@ -426,9 +442,8 @@ void manage_specific_company(UniversalManager* manager, Company* company) {
 void displaySolarSystem(const UniversalManager* manager) {
 
     int numberOfGalaxy;
-    printf("%99d", manager->numGalaxies);
-    printf("Enter the number galaxy of the solar system :\n");
-    printGalaxies(&manager);
+    printGalaxies(manager);
+    printf("Enter galaxy number :\n");
     flush_stdin();
     scanf("%d", &numberOfGalaxy); // need to enter do while
     display_system(manager->galaxies[numberOfGalaxy - 1]);

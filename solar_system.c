@@ -27,6 +27,7 @@ SolarSystem* create_solar_system() {
 void add_planet_to_solar_system(SolarSystem* system, Planet* planet) {
     if (system->num_planets < MAX_STAR_SYSTEMS) {
         system->planets[system->num_planets++] = planet;
+        printf("New planet '%s' added successfully to %s solar system.\n", planet->name, system->name);
     }
     else {
         fprintf(stderr, "SolarSystem has reached its maximum capacity of planets.\n");

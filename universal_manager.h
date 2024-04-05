@@ -18,7 +18,7 @@ void printGalaxies(const UniversalManager* manager);
 void printCompanies(const UniversalManager* manager);
 void freeUniversalManager(UniversalManager* manager);
 void increaseRiskLevels(UniversalManager* manager);
-
+addPlanetToManager(UniversalManager* manager);
 Galaxy* findGalaxy(UniversalManager* manager, const char* name);
 SolarSystem* findSolarSystem(Galaxy* galaxy, const char* name);
 Planet* findPlanet(SolarSystem* system, const char* name);

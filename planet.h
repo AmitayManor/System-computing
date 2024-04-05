@@ -12,7 +12,7 @@ typedef struct Planet {
     int riskLevel;
 } Planet;
 
-Planet* create_planet(const char* name, Location location, int ID, int riskLevel);
+Planet* create_planet();
 void free_planet(Planet* planet);
 void rename_planet(Planet* planet);
 

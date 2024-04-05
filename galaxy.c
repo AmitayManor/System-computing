@@ -26,6 +26,7 @@ void sort_solar_systems(Galaxy* galaxy, int sort_choice) {
 void display_solar_systems(Galaxy* galaxy) {
     printf("Galaxy Name: %s\n", galaxy->name);
     for (int i = 0; i < galaxy->num_solar_systems; i++) {
+        printf("%d. ", i + 1);
         display_solar_system(galaxy->star_systems[i]);
     }
 }

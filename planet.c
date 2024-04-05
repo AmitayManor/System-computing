@@ -46,6 +46,6 @@ void rename_planet(Planet* planet) {
     }
 }
 void free_planet(Planet* planet) {
-    // No dynamic memory inside Planet, just free the planet itself
+    
     free(planet);
 }

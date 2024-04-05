@@ -11,14 +11,14 @@ int main() {
 
     do {
         printf("\nMain Menu:\n");
-        printf("1. Load System Data\n");
+        printf("1. Add cosmic element\n");
         printf("2. Display Systems\n");
         printf("3. Display Subcomponents\n");
         printf("4. Add Galaxy\n");
         printf("5. Add Company\n");
         printf("6. display Solar System\n");
         printf("7. Rename Planet\n");
-        printf("8. Display All Planets\n");
+        printf("8. Display All Cosmic Elements\n");
         printf("9. Exit\n");
         printf("10. Test - Companies interface\n");
         printf("Enter your choice: ");
@@ -27,7 +27,7 @@ int main() {
         switch (choice) {
         case 1: {
             
-            addSolarSystemToManger(&manager);
+            addCosmicElement(&manager);
             
             break;
         }
@@ -48,7 +48,7 @@ int main() {
         }
         case 5: {
             // Add Company to UniversalManager
-            addPlanetToManager(&manager);
+            addCompanyToManager(&manager);
             break;
         }
         case 6: {
@@ -62,8 +62,8 @@ int main() {
             break;
         }
         case 8: {
-            // Display All Planets within Systems managed by UniversalManager
-            printGalaxies(&manager);
+            // Display All Cosmic elements managed by UniversalManager
+            displayCosmicElements(&manager);
             break;
         }
 

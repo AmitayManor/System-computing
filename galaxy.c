@@ -23,7 +23,7 @@ void sort_solar_systems(Galaxy* galaxy, int sort_choice) {
 }
 
 
-void display_system(Galaxy* galaxy) {
+void display_solar_systems(Galaxy* galaxy) {
     printf("Galaxy Name: %s\n", galaxy->name);
     for (int i = 0; i < galaxy->num_solar_systems; i++) {
         display_solar_system(galaxy->star_systems[i]);
@@ -56,17 +56,7 @@ void add_solar_system(Galaxy* galaxy) {
     printf("New Solar System '%s' added successfully to %s galaxy.\n", system->name, galaxy->name);
 }
 
-void display_subcomponents(Galaxy* galaxy) {
-    // Displaying planets in each solar system of the galaxy
-}
 
-void add_planet(Galaxy* galaxy) {
-    // Adding a new planet to a solar system in the galaxy
-}
-
-void display_all_planets(Galaxy* galaxy) {
-    // Displaying all planets in the galaxy
-}
 
 void free_galaxy(Galaxy* galaxy) {
     if (galaxy) {

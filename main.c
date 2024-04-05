@@ -58,7 +58,7 @@ int main() {
         }
         case 7: {
             // Rename a Planet within a System managed by UniversalManager
-            renamePlanet(&manager);
+            renameCosmicElement(&manager);
             break;
         }
         case 8: {

@@ -1,5 +1,11 @@
 #ifndef UTILITY_H
 #define UTILITY_H
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <math.h> 
+
 
 char* my_strdup(const char* s);
 char* safe_strdup(const char* s);

@@ -12,6 +12,7 @@ typedef struct Galaxy {
     SolarSystem** star_systems;
     int num_solar_systems;
     int riskLevel;
+    int radius;
 } Galaxy;
 
 void load_galaxy_from_binary(FILE* file, Galaxy* galaxy);
@@ -29,4 +30,6 @@ void add_planet(Galaxy* galaxy);
 void display_all_planets(Galaxy* galaxy);
 void free_galaxy(Galaxy* galaxy);
 Galaxy* create_galaxy();
+void rename_galaxy(Galaxy* galaxy);
+int isSolarSystemWithinGalaxy(Galaxy* galaxy, SolarSystem* system);
 #endif // GALAXY_H

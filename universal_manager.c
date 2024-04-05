@@ -180,6 +180,42 @@ void displayCosmicElements(const UniversalManager* manager) {
     }
 }
 
+void renameGalaxy(UniversalManager* manager) {
+    char galaxyName[MAX_GALAXY_NAME], newName[MAX_GALAXY_NAME];
+    printf("Enter Galaxy Name: ");
+    scanf("%49s", galaxyName);
+
+    Galaxy* galaxy = findGalaxy(manager, galaxyName);
+    if (!galaxy) {
+        printf("Galaxy '%s' not found.\n", galaxyName);
+        return;
+    }
+    rename_galaxy(galaxy);
+}
+
+void renameSolarSystem(UniversalManager* manager) {
+   
+        char galaxyName[MAX_GALAXY_NAME], systemName[MAX_SOLAR_SYSTEM_NAME] ,newName[MAX_SOLAR_SYSTEM_NAME];
+        printf("Enter Galaxy Name: ");
+        scanf("%49s", galaxyName);
+
+        Galaxy* galaxy = findGalaxy(manager, galaxyName);
+        if (!galaxy) {
+            printf("Galaxy '%s' not found.\n", galaxyName);
+            return;
+        }
+
+        printf("Enter Solar System Name: ");
+        scanf("%49s", systemName);
+
+        SolarSystem* system = findSolarSystem(galaxy, systemName);
+        if (!system) {
+            printf("Solar System '%s' not found in Galaxy '%s'.\n", systemName, galaxyName);
+            return;
+        }
+        rename_solarSystem(system);
+
+}
 void renamePlanet(UniversalManager* manager) {
     char galaxyName[MAX_GALAXY_NAME], systemName[MAX_SOLAR_SYSTEM_NAME], planetName[MAX_PLANET_NAME], newName[MAX_PLANET_NAME];
     printf("Enter Galaxy Name: ");
@@ -212,6 +248,38 @@ void renamePlanet(UniversalManager* manager) {
     // Rename the planet
     rename_planet(planet);
 }
+
+void renameCosmicElement(UniversalManager* manager) {
+    int choice;
+
+    do {
+        printf("\n--- Rename Cosmic Elements ---\n");
+        printf("1. Rename Galaxy\n");
+        printf("2. Rename Solar System\n");
+        printf("3. Rename Planet\n");
+        printf("4. Exit\n");
+        printf("Select an option: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+        case 1:
+            renameGalaxy(manager);
+            break;
+        case 2:
+            renameSolarSystem(manager);
+            break;
+        case 3:
+            renamePlanet(manager);
+            break;
+        case 4:
+            printf("Returning to main menu.\n");
+            break;
+        default:
+            printf("Invalid option. Please try again.\n");
+        }
+    } while (choice != 4);
+}
+
 
 void display_all_travels(const UniversalManager* manager) {
     if (!manager) {

@@ -1,8 +1,5 @@
 #include "utility.h"
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <stdio.h>
+
 
 char* my_strdup(const char* s) {
     if (!s) return NULL;
@@ -29,3 +26,4 @@ void flush_stdin() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {}  // Read and discard characters until newline or EOF
 }
+

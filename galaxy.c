@@ -40,20 +40,29 @@ void add_solar_system(Galaxy* galaxy) {
     // Allocate memory for the new Solar System
     SolarSystem* system = create_solar_system();
   
-
-    // Reallocate the galaxy's star_systems array to accommodate the new Solar System
-    SolarSystem** new_array = realloc(galaxy->star_systems, (galaxy->num_solar_systems + 1) * sizeof(SolarSystem*));
-    if (!new_array) {
-        fprintf(stderr, "Failed to reallocate memory for new solar systems.\n");
-        free(system);
-        return;
+    if (!isSolarSystemWithinGalaxy(galaxy, system)) 
+    {
+            printf("The System is outside the Galaxy");
+            free(system);
+            return;
     }
+    else
+    {
+            // Reallocate the galaxy's star_systems array to accommodate the new Solar System
+            SolarSystem** new_array = realloc(galaxy->star_systems, (galaxy->num_solar_systems + 1) * sizeof(SolarSystem*));
+            if (!new_array) {
+                fprintf(stderr, "Failed to reallocate memory for new solar systems.\n");
+                free(system);
+                return;
+            }
 
-    // Update galaxy's star_systems with the new array and increment the count
-    galaxy->star_systems = new_array;
-    galaxy->star_systems[galaxy->num_solar_systems] = system;
-    galaxy->num_solar_systems++;
-    printf("New Solar System '%s' added successfully to %s galaxy.\n", system->name, galaxy->name);
+            // Update galaxy's star_systems with the new array and increment the count
+            galaxy->star_systems = new_array;
+            galaxy->star_systems[galaxy->num_solar_systems] = system;
+            galaxy->num_solar_systems++;
+            printf("New Solar System '%s' added successfully to %s galaxy.\n", system->name, galaxy->name);
+
+    }
 }
 
 
@@ -88,9 +97,48 @@ Galaxy* create_galaxy() {
     }
     galaxy->num_solar_systems = 0;
     galaxy->star_systems = NULL;
+    printf("Enter the Galaxy location coordinates (x y z): ");
+    scanf("%d %d %d", &galaxy->portal_location.x, &galaxy->portal_location.y, &galaxy->portal_location.z);
+    printf("Enter the Galaxy radius: ");
+    scanf("%d", &galaxy->radius);
+    // Flush stdin to clear any leftover input
+    flush_stdin();
 
     printf("Galaxy '%s' has been created.\n", galaxy->name);
 
     // Return the pointer to the newly created and initialized Galaxy object
     return galaxy;
+}
+
+void rename_galaxy(Galaxy* galaxy)
+{
+    if (!galaxy) {
+        printf("Invalid input.\n");
+        return;
+    }
+
+    char newName[MAX_GALAXY_NAME];
+    printf("Enter new name for the Galaxy: ");
+    if (myGets(newName, MAX_GALAXY_NAME)) {
+        strncpy(galaxy->name, newName, MAX_GALAXY_NAME - 1);
+        galaxy->name[MAX_GALAXY_NAME - 1] = '\0';
+        printf("Galaxy successfully renamed to %s.\n", galaxy->name);
+    }
+    else {
+        printf("Failed to read new name.\n");
+    }
+}
+
+int isSolarSystemWithinGalaxy(Galaxy* galaxy, SolarSystem* system)
+{
+    // Calculate the distance between the planet and the solar system's portal location
+    double distance = calculateDistance(system->portal_location, galaxy->portal_location);
+
+    // Check if the distance is within the solar system's radius
+    if (distance <= galaxy->radius) {
+        return 1;  // The planet is within the solar system
+    }
+    else {
+        return 0;  // The planet is outside the solar system
+    }
 }

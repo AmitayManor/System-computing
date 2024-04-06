@@ -10,8 +10,9 @@ void initUniversalManager(UniversalManager* manager) {
         manager->numCompanies = 0;
     }
 }
+
 Galaxy* createGalaxy() {
-    char name[256];
+    char name[MAX_GALAXY_NAME];
     printf("Enter Galaxy Name: ");
     scanf("%255s", name); // Get the galaxy name from the user
 
@@ -22,6 +23,7 @@ Galaxy* createGalaxy() {
     }
     return galaxy; // Return the pointer to the new Galaxy
 }
+
 void addGalaxy(UniversalManager* manager, Galaxy* galaxy) {
     if (manager && galaxy) {
         Galaxy** new_galaxies_array = realloc(manager->galaxies, (manager->numGalaxies + 1) * sizeof(Galaxy*));
@@ -32,6 +34,7 @@ void addGalaxy(UniversalManager* manager, Galaxy* galaxy) {
         }
     }
 }
+
 void addGalaxyToManager(UniversalManager* manager) {
     Galaxy* galaxy = createGalaxy(); // Create a new Galaxy
     if (galaxy) {
@@ -41,38 +44,47 @@ void addGalaxyToManager(UniversalManager* manager) {
         printf("Failed to create a new Galaxy.\n");
     }
 }
-Company* createCompany() {
-    char name[256];
-    printf("Enter Company Name: ");
-    scanf("%255s", name); // Get the company name from the user
 
-    Company* company = (Company*)malloc(sizeof(Company)); // Allocate memory for the new Company
-    if (company) {
-        company->name = strdup(name); // Duplicate the name and assign it to the Company
-        // Initialize other Company attributes as needed...
-        company->permissionsZone = eNOPERMISSION; // Set default permissions
-    }
-    return company; // Return the pointer to the new Company
-}
+void createCompany(UniversalManager* mg) {
+    
+    Company* cm = (Company*)malloc(sizeof(Company));
+    
+    if (cm) {
 
-void addCompany(UniversalManager* manager, Company* company, Permission permission) {
-    if (manager && company) {
-        company->permissionsZone = permission;
-        Company** new_companies_array = realloc(manager->companies, (manager->numCompanies + 1) * sizeof(Company*));
-        if (new_companies_array) {
-            manager->companies = new_companies_array;
-            manager->companies[manager->numCompanies] = company;
-            manager->numCompanies++;
-        }
+        char name[MAX_COMPANY_NAME];
+        get_company_name(name);
+        int established = get_establishment_year();
+        int numOfSpaceCrafts = get_num_of_spacecrafts();
+        initialize_company_spacecrafts(cm, numOfSpaceCrafts);
+        Permission permission = get_permission_zone();
+        int numOfSpaceTravels = get_num_of_travels();
+        initialize_company_travels(mg, cm, numOfSpaceTravels);
+
+        cm->name = strdup(name);
+        cm->establishedYear = established;
+        cm->numSpacecrafts = numOfSpaceCrafts;
+        //cm->travels = NULL;  initialized via initialize_company_travels func //
+        cm->numTravels = 0;  numOfSpaceTravels;
+        cm->permissionsZone = permission;
     }
-}
-void addCompanyToManager(UniversalManager* manager) {
-    Company* company = createCompany(); // Create a new Company
-    if (company) {
-        addCompany(manager, company, company->permissionsZone); // Add the new Company to the UniversalManager
+    Company** new_companies_array = realloc(mg->companies, (mg->numCompanies + 1) * sizeof(Company*));
+    if (new_companies_array) {
+        mg->companies = new_companies_array;
+        mg->companies[mg->numCompanies] = cm;
+        mg->numCompanies++;
     }
+
+
     else {
-        printf("Failed to create a new Company.\n");
+        printf("Failed to allocate memory for new Company.\n");
+        
+    }
+}
+
+void addCompanyToManager(UniversalManager* manager) {
+    
+    if (manager) {
+        createCompany(manager);
     }
 }
 
@@ -141,7 +153,7 @@ void loadSystemData(UniversalManager* manager, const char* filename) {
                 Company* company = (Company*)malloc(sizeof(Company));
                 company->name = strdup(name); // Assuming Company struct has a name field
                 // Initialize other company fields and set permissions as needed...
-                addCompany(manager, company, eNOPERMISSION); // Example permission
+                //addCompany(manager, company, eNOPERMISSION); // Example permission
             }
         }
     }
@@ -230,4 +242,265 @@ void renamePlanet(UniversalManager* manager) {
     strncpy(planet->name, newName, sizeof(planet->name) - 1);
     planet->name[sizeof(planet->name) - 1] = '\0'; // Ensure null termination
     printf("Planet '%s' in Solar System '%s' of Galaxy '%s' renamed to '%s'.\n", planetName, systemName, galaxyName, newName);
+}
+
+void display_all_travels(const UniversalManager* manager) {
+    if (!manager) {
+        printf("No manager initialized.\n");
+        return;
+    }
+    printf("\n--- All Travels ---\n");
+    for (int i = 0; i < manager->numCompanies; i++) {
+        Company* company = manager->companies[i];
+        printf("\nCompany: %s\n", company->name);
+        for (int j = 0; j < company->numTravels; j++) {
+            InterstellarTravel* travel = company->travels[j];
+            printf("Travel %d: From %s to %s\n", j + 1, travel->travelCodeSrc, travel->travelCodeDst);
+            printf("  Spacecraft: %s (ID: %s, Model: %s, Max Speed: %.2f)\n",travel->spaceCraft->name, travel->spaceCraft->craftId ,travel->spaceCraft->model, travel->spaceCraft->maxSpeed);
+            
+            printf("  Departure: ");
+            print_date(&travel->departureDate);
+            
+            printf(", Arrival: ");
+            print_date(&travel->arrivalDate);
+            printf(", Distance: %.2f, Risk Level: %d, Completed: %s\n", travel->distance, travel->riskLevel, travel->isCompleted ? "Yes" : "No");
+        }
+    }
+}
+
+void display_company_basic_data(Company* company){
+    printf("\n--- Company Basic Data ---\n");
+    printf("Name: %s\n", company->name);
+    printf("Number of Spacecrafts: %d\n", company->numSpacecrafts);
+    printf("Number of Travels: %d\n", company->numTravels);
+    printf("Permissions Zone: %d\n", company->permissionsZone);
+}
+
+void display_company_spacecrafts(Company* company){
+    printf("\n--- Company's Spacecrafts Fleet ---\n");
+    for (int i = 0; i < company->numSpacecrafts; i++) {
+        printf("Spacecraft %d: Name: %s, Model: %s, Max Speed: %.2f, ID: %d\n", i + 1, company->spaceCrafts[i]->name, company->spaceCrafts[i]->model, company->spaceCrafts[i]->maxSpeed, company->spaceCrafts[i]->craftId);
+    }
+}
+
+void display_company_travels(Company* company){
+    printf("\n--- Company's Incoming Travels ---\n");
+    for (int i = 0; i < company->numTravels; i++) {
+        InterstellarTravel* travel = company->travels[i];
+        printf("Travel %d: Src: %s, Dst: %s, SpaceCraft: %s, Departure: ", i + 1, travel->travelCodeSrc, travel->travelCodeDst, travel->spaceCraft->name);
+        print_date(&travel->departureDate);
+        printf(", Arrival: ");
+        print_date(&travel->arrivalDate);
+        printf(", Distance: %.2f, Risk Level: %d\n", travel->distance, travel->riskLevel);
+    }
+}
+
+void add_spacecraft_to_company(Company* company, UniversalManager* manager){
+    
+    if (company->numSpacecrafts >= MAX_AMOUNT_OF_CRAFTS) {
+        printf("Maximum number of spacecrafts reached.\n");
+        return;
+    }
+
+    char* name = (char*)malloc(MAX_LEN_SPACE_CRAFT * sizeof(char));     // MAX = 100
+    char* model = (char*)malloc(MAX_LEN_SPACE_CRAFT * sizeof(char));    // MAX = 100
+    double maxSpeed;
+    int craftId = company->numSpacecrafts + 1;  // Example ID generation logic
+     
+    printf("Enter spacecraft name: ");                  // Name checker
+    scanf("%99s", name);
+    printf("Enter spacecraft model: ");                 // Model checker
+    scanf("%99s", model);
+    printf("Enter max speed Max speed is: 300,000: ");  // Speed checker
+    scanf("%lf", &maxSpeed);
+
+    // Ensure the company's spaceCrafts array is large enough to hold another spacecraft
+    company->spaceCrafts = realloc(company->spaceCrafts, (company->numSpacecrafts + 1) * sizeof(SpaceCraft));
+
+    // Allocate a new spacecraft in the array
+    SpaceCraft* newCraft = &company->spaceCrafts[company->numSpacecrafts];
+    newCraft->name = name;  // name is already dynamically allocated
+    newCraft->model = model;  // model is already dynamically allocated
+    newCraft->maxSpeed = maxSpeed;
+    newCraft->craftId = craftId;
+
+    company->numSpacecrafts++;
+
+    printf("Spacecraft '%s' added to company '%s'.\n", newCraft->name, company->name);
+
+    free(name);
+    free(model);
+
+}
+
+void add_travel_to_company(Company* company, UniversalManager* manager){}
+void edit_company_permissions(Company* company, UniversalManager* manager){}
+void export_company_data_to_bin(Company* company, const char* filename){}
+void export_company_data_to_txt(Company* company, const char* filename){}
+
+void manage_company_operations(UniversalManager* manager) {
+    if (!manager) {
+        printf("Universal Manager is not initialized.\n");
+        return;
+    }
+
+    int choice;
+    do {
+        printf("\nCompany Management Menu:\n");
+        printf("1. Show all Companies\n");
+        printf("2. Show all Travels\n");
+        printf("3. Manage Specific Company\n");
+        printf("4. Export all Data\n");
+        printf("5. Return to Main Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+        case 1:
+            printCompanies(manager);
+            break;
+        case 2:
+            display_all_travels(manager);
+            break;
+        case 3: {
+            char companyName[MAX_COMPANY_NAME];     // Max is 256 chars
+            printf("Enter Company Name: ");
+            scanf("%255s", companyName);  // Read the company name
+
+            Company* selectedCompany = NULL;
+            for (int i = 0; i < manager->numCompanies; i++) {
+                if (strcmp(manager->companies[i]->name, companyName) == 0) {
+                    selectedCompany = manager->companies[i];
+                    break;  // Company found, exit the loop
+                }
+            }
+
+            if (selectedCompany) {
+                manage_specific_company(manager, selectedCompany);
+            }
+            else {
+                printf("Company with name '%s' not found.\n", companyName);
+            }
+            break;
+        }
+
+        case 4:
+            
+            /*
+            Export all the companies data:
+                1. Export to Bin file
+                2. Export to txt file
+            */
+
+            break;
+        case 5:
+            printf("Returning to Main Menu...\n");
+            break;
+        default:
+            printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 5);
+}
+
+void manage_specific_company(UniversalManager* manager, Company* company) {
+    if (!company) {
+        printf("Company not found.\n");
+        return;
+    }
+
+    int choice;
+    do {
+        printf("\nManaging Company: %s\n", company->name);
+        printf("1. Display Basic Data\n");
+        printf("2. Display company's space crafts fleet\n");
+        printf("3. Display incomming Travels\n");
+        printf("4. Add Space craft\n");
+        printf("5. Add Travel\n");
+        printf("6. Edit Permissions\n");
+        printf("7. Return to Company Management Menu\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+        case 1:
+            // Display Basic Data (Company's name, ID, number of travels, number of space crafts, Flight Permissions)
+            display_company_basic_data(company);
+            break;
+        case 2:
+            // Display company's space crafts fleet (display for each space craft: name, model, maxSpeed, craftID)
+            display_company_spacecrafts(company);
+            break;
+        case 3:
+            // Display incomming Travels (display for each travel: travelCodeSrc,travelCodeDst, spaceCraft, departureDate, arrivalDate, distance, riskLevel)
+            display_company_travels(company);
+            break;
+        case 4:
+            // Add Space craft (add a new space craft from universalManager or create a new one and update also in universalManager)
+            add_spacecraft_to_company(company, manager);
+            break;
+        case 5:
+            // Add Travel (create a new travel based on the company' limitation: Permission zone and space crafts) 
+            add_travel_to_company(company, manager);
+            break;
+        case 6:
+            // Edit Permissions (downgrade or update permissions, needs to send a request to universalManager - and get an approval response from universalManager)
+            edit_company_permissions(company, manager);
+            break;
+        case 7:
+            printf("Returning to Company Management Menu...\n");
+            break;
+        default:
+            printf("Invalid choice. Please try again.\n");
+        }
+    } while (choice != 7);
+}
+
+void list_galaxies(UniversalManager* mg){
+
+    if (mg) {
+        // Print Galaxies
+        for (int i = 0; i < mg->numGalaxies; i++) {
+            printf("%d. Galaxy: %s |\tLocation: {%d,%d,%d}\n", i+1, mg->galaxies[i]->name, mg->galaxies[i]->portal_location.x, mg->galaxies[i]->portal_location.y, mg->galaxies[i]->portal_location.z);
+            // Print Solar Systems
+            list_solarsystems(mg->galaxies[i]);
+        }
+    }
+    else {
+        printf("Error with UniversalManager allocation\n");
+    }
+}
+
+void list_solarsystems(Galaxy* gx){
+    
+    if (gx) {
+        for (int i = 0;i < gx->num_solar_systems;i++) {
+            printf("%d. Solar System: %s |\tLocation: {%d,%d,%d}\n", i + 1, gx->star_systems[i]->name, gx->star_systems[i]->portal_location.x, gx->star_systems[i]->portal_location.y, gx->star_systems[i]->portal_location.z);
+            list_planets(gx->star_systems[i]);
+        }
+    }
+    else {
+        printf("Error with Galaxy allocation\n");
+    }
+}
+
+void list_planets(SolarSystem* ss){
+    if (ss) {
+        for (int i = 0;i < ss->num_planets;i++) {
+            printf("%d. Planet: %s |\tLocation: {%d,%d,%d}\n", i + 1, ss->planets[i]->name, ss->planets[i]->portal_location.x, ss->planets[i]->portal_location.y, ss->planets[i]->portal_location.z);
+        }
+    }
+    else {
+        printf("Error with Solar System allocation\n");
+    }
+}
+
+void display_galaxies_solarsystems_planets(UniversalManager* mg)
+{
+    if (mg) {
+        printf("----------- The Universe -----------\n");
+        list_galaxies(mg);
+    }
+
+
+
 }

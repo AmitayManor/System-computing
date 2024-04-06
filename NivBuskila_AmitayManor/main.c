@@ -20,6 +20,7 @@ int main() {
         printf("7. Rename Planet\n");
         printf("8. Display All Planets\n");
         printf("9. Exit\n");
+        printf("10. Test - Companies interface\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -66,9 +67,29 @@ int main() {
             displayAllPlanets(&manager);
             break;
         }
+
         case 9: {
             printf("Exiting...\n");
             break;
+        }
+
+        case 10: {
+            manage_company_operations(&manager);
+
+            break;
+        }
+        case 11: {
+            int galaxyID, systemID, planetID;
+            printf("Enter Galaxy ID: ");
+            scanf("%d", &galaxyID);
+            printf("Enter Solar System ID: ");
+            scanf("%d", &systemID);
+            printf("Enter Planet ID: ");
+            scanf("%d", &planetID);
+
+            char localSrcCode[MAX_CODE_LEN]; // Local array to store the generated code
+            snprintf(localSrcCode, MAX_CODE_LEN, "G%04dS%04dP%04d", galaxyID, systemID, planetID);
+            printf("% s", localSrcCode);
         }
         default: {
             printf("Invalid choice. Please try again.\n");

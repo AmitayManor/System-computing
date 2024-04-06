@@ -78,6 +78,19 @@ int main() {
 
             break;
         }
+        case 11: {
+            int galaxyID, systemID, planetID;
+            printf("Enter Galaxy ID: ");
+            scanf("%d", &galaxyID);
+            printf("Enter Solar System ID: ");
+            scanf("%d", &systemID);
+            printf("Enter Planet ID: ");
+            scanf("%d", &planetID);
+
+            char localSrcCode[MAX_CODE_LEN]; // Local array to store the generated code
+            snprintf(localSrcCode, MAX_CODE_LEN, "G%04dS%04dP%04d", galaxyID, systemID, planetID);
+            printf("% s", localSrcCode);
+        }
         default: {
             printf("Invalid choice. Please try again.\n");
         }

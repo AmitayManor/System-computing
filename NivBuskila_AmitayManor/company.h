@@ -27,6 +27,7 @@ int get_num_of_travels();
 void initialize_company_spacecrafts(Company* company, int numOfSpaceCrafts);
 void initialize_company_travels(UniversalManager* mg, Company* company, int numOfTravels);
 Permission get_permission_zone();
+int isCraftIdUnique(const Company* company, int craftId);
 
 void print_company(const Company* company);
 void upgrade_permission(Company* company);

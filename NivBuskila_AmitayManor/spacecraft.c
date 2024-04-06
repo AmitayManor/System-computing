@@ -45,6 +45,24 @@ void print_spacecraft(SpaceCraft* craft) {
 }
 
 
+void get_SpaceCraft_id(SpaceCraft* sp) {
+    if (sp) {
+        int id;
+        do {
+            printf("Enter wanted id (1-9999): ");
+            scanf("%d", &id);
+            if (id < MIN_ID || id > MAX_ID) {
+                printf("Invalid id. Please enter a value between 1 and 9999.\n");
+            }
+        } while (id < MIN_ID || id > MAX_ID);
+        sp->craftId = id;
+    }
+    else {
+        printf("Error! Space Craft's ID not initialized");
+    }
+
+
+}
 
 
 void get_SpaceCraft_name(SpaceCraft* sp){

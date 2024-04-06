@@ -1,13 +1,10 @@
-﻿  company.c
-C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\company.c(14,9): warning C4013: 'strncpy' undefined; assuming extern returning int
-C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\company.c(74,13): warning C4013: 'get_SpaceCraft_name' undefined; assuming extern returning int
-C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\company.c(75,13): warning C4013: 'get_SpaceCraft_model' undefined; assuming extern returning int
-C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\company.c(76,13): warning C4013: 'get_SpaceCraft_speed' undefined; assuming extern returning int
-C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\company.c(163,50): warning C4047: 'function': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
-C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\company.c(163,50): warning C4024: 'free_spacecraft': different types for formal and actual parameter 1
+﻿  interstellar_travel.c
   universal_manager.c
 C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\universal_manager.c(259,20): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 2 has type 'int'
 C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\universal_manager.c(259,20): warning C4313: 'printf': '%s' in format string conflicts with argument 2 of type 'int'
 C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\universal_manager.c(321,17): warning C4047: 'initializing': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
   Generating Code...
+C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\interstellar_travel.c(35,1): warning C4716: 'get_travelCode_Src': must return a value
+C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\interstellar_travel.c(99,1): warning C4716: 'get_travelCode_Dst': must return a value
+C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\interstellar_travel.c(202,1): warning C4716: 'extractTrcalCode': must return a value
   NivBuskila_AmitayManor.vcxproj -> C:\Users\lior\Desktop\Git Clones\System Computing\AmitayVer1.0.0\System-computing\NivBuskila_AmitayManor\x64\Debug\NivBuskila_AmitayManor.exe

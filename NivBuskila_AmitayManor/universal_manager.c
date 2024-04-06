@@ -455,3 +455,52 @@ void manage_specific_company(UniversalManager* manager, Company* company) {
     } while (choice != 7);
 }
 
+void list_galaxies(UniversalManager* mg){
+
+    if (mg) {
+        // Print Galaxies
+        for (int i = 0; i < mg->numGalaxies; i++) {
+            printf("%d. Galaxy: %s |\tLocation: {%d,%d,%d}\n", i+1, mg->galaxies[i]->name, mg->galaxies[i]->portal_location.x, mg->galaxies[i]->portal_location.y, mg->galaxies[i]->portal_location.z);
+            // Print Solar Systems
+            list_solarsystems(mg->galaxies[i]);
+        }
+    }
+    else {
+        printf("Error with UniversalManager allocation\n");
+    }
+}
+
+void list_solarsystems(Galaxy* gx){
+    
+    if (gx) {
+        for (int i = 0;i < gx->num_solar_systems;i++) {
+            printf("%d. Solar System: %s |\tLocation: {%d,%d,%d}\n", i + 1, gx->star_systems[i]->name, gx->star_systems[i]->portal_location.x, gx->star_systems[i]->portal_location.y, gx->star_systems[i]->portal_location.z);
+            list_planets(gx->star_systems[i]);
+        }
+    }
+    else {
+        printf("Error with Galaxy allocation\n");
+    }
+}
+
+void list_planets(SolarSystem* ss){
+    if (ss) {
+        for (int i = 0;i < ss->num_planets;i++) {
+            printf("%d. Planet: %s |\tLocation: {%d,%d,%d}\n", i + 1, ss->planets[i]->name, ss->planets[i]->portal_location.x, ss->planets[i]->portal_location.y, ss->planets[i]->portal_location.z);
+        }
+    }
+    else {
+        printf("Error with Solar System allocation\n");
+    }
+}
+
+void display_galaxies_solarsystems_planets(UniversalManager* mg)
+{
+    if (mg) {
+        printf("----------- The Universe -----------\n");
+        list_galaxies(mg);
+    }
+
+
+
+}

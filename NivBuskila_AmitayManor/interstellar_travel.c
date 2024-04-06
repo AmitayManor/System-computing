@@ -4,58 +4,21 @@
 #include <string.h>
 
 
-char* get_travelCode_Src(UniversalManager* mg, InterstellarTravel* tr, Permission permission) {
+char* get_travelCode_Src(UniversalManager* mg, InterstellarTravel* tr) {
     if (mg && tr) {
         
-        /* Step One: Display ALL Options */
-        
+       
+        display_galaxies_solarsystems_planets(mg);
 
-        /* Step Two: Check permissions:
-        * 
-        * if 1. only travel between plantes in the SAME solar system AND Same Galaxy
-        * if 2. Travel in the SAME Galaxy, freely between Solar systems and Plantes
-        * if 3. Travel Freely
-        * 
-        */
+        int galaxyID, systemID, planetID;
+        printf("Enter Galaxy ID: ");
+        scanf("%d", &galaxyID);
+        printf("Enter Solar System ID: ");
+        scanf("%d", &systemID);
+        printf("Enter Planet ID: ");
+        scanf("%d", &planetID);
 
-        int per = (int)&permission;
-        
-        switch (per) {
-        
-        case 1: {
-            printf("Limited Permission.\nCan travel only between Planets (in the same Solar system).\n");
-            
-            
-            break; }  //Between Plantes in the Same Solar System in the Same Galaxy
-
-        case 2: { 
-            printf("Flex Permission.\nCan travel only between Solar systems (in the same Galaxy).\n");
-            
-            
-            break; }  //Between Solar systems in the Same Galaxy
-
-        case 3: { 
-            printf("Deluxe Permission.\nFree to travel aound the universe.\n");
-            
-            
-            break; }  // Freely
-        
-        case 0: {
-            printf("No Permission is given.\n");
-            break; }  // No Permissions
-
-        default: {
-            printf("Error in given Permission.\n");
-        }
-        
-        }while (per != 0);
-        
-
-        /* Step Three: Choose based on Permission zone
-        *   Validate choice
-        */
-
-        /* Step Four: Initialize Values */
+        snprintf(tr->travelCodeSrc, MAX_CODE_LEN, "G%04dS%04dP%04d", galaxyID, systemID, planetID);
 
     }
     else {
@@ -66,21 +29,61 @@ char* get_travelCode_Src(UniversalManager* mg, InterstellarTravel* tr, Permissio
 char* get_travelCode_Dst(UniversalManager* mg, InterstellarTravel* tr, Permission permission) {
     if (mg && tr) {
 
-        /* Step One: Check permissions:
-         *
-         * if 1. only travel between plantes in the SAME solar system AND Same Galaxy
-         * if 2. Travel in the SAME Galaxy, freely between Solar systems and Plantes
-         * if 3. Travel Freely
-         *
-         */
+        switch (permission) {
 
-         /* Step Two: Display ALL Options */
+        case ePLANET: {
+            printf("Limited Permission.\nCan travel only between Planets (in the same Solar system).\n");
+            /*  Functions to add:
+            *       1. list galaxies
+            *       2. list solar systemes
+            *       3. list planets
+            *
+            *       Choose any Planet (ONLY)
+            *       Generate SrcCode
+            */
 
-         /* Step Three: Choose based on Permission zone
-         *   Validate choice
-         */
+            break;
+        }  //Between Plantes in the Same Solar System in the Same Galaxy
 
-         /* Step Four: Initialize Values */
+        case eSOLARSYSTEM: {
+            printf("Flex Permission.\nCan travel only between Solar systems (in the same Galaxy).\n");
+            /*  Functions to add:
+            *       1. list galaxies
+            *       2. list solar systemes
+            *       3. list planets
+            *
+            *       Choose any Planet Or Solar System
+            *       Generate SrcCode
+            */
+
+            break;
+        }  //Between Solar systems in the Same Galaxy
+
+        case eGALAXY: {
+            printf("Deluxe Permission.\nFree to travel aound the universe.\n");
+            /*  Functions to add:
+            *       1. list galaxies
+            *       2. list solar systemes
+            *       3. list planets
+            *
+            *       Choose any Planet Or Solar System Or Galaxyw
+            *       Generate SrcCode
+            */
+
+            break;
+        }  // Freely
+
+        case eNOPERMISSION: {
+            printf("No Permission is given.\n");
+            break;
+        }  // No Permissions
+
+        default: {
+            printf("Error in given Permission.\n");
+        }
+
+        }while (permission != eNOPERMISSION);
+        
     }
     else {
         printf("Error with manager and travels allocations");

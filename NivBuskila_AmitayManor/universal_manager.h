@@ -42,4 +42,10 @@ void edit_company_permissions(Company* company, UniversalManager* manager);
 void export_company_data_to_bin(Company* company, const char* filename);
 void export_company_data_to_txt(Company* company, const char* filename);
 
+void list_galaxies(UniversalManager* mg);
+void list_solarsystems(Galaxy* gx);
+void list_planets(SolarSystem* ss);
+void display_galaxies_solarsystems_planets(UniversalManager* mg);
+
+
 #endif // UNIVERSAL_MANAGER_H

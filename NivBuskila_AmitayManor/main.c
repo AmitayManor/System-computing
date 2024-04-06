@@ -11,14 +11,14 @@ int main() {
 
     do {
         printf("\nMain Menu:\n");
-        printf("1. Load System Data\n");
+        printf("1. Add cosmic element\n");
         printf("2. Display Systems\n");
         printf("3. Display Subcomponents\n");
         printf("4. Add Galaxy\n");
         printf("5. Add Company\n");
-        printf("6. Increase Risk Levels\n");
+        printf("6. display Solar System\n");
         printf("7. Rename Planet\n");
-        printf("8. Display All Planets\n");
+        printf("8. Display All Cosmic Elements\n");
         printf("9. Exit\n");
         printf("10. Test - Companies interface\n");
         printf("Enter your choice: ");
@@ -26,10 +26,9 @@ int main() {
 
         switch (choice) {
         case 1: {
-            char filename[256];
-            printf("Enter filename to load system data: ");
-            scanf("%255s", filename);
-            loadSystemData(&manager, filename);
+            
+            addCosmicElement(&manager);
+            
             break;
         }
         case 2: {
@@ -54,17 +53,17 @@ int main() {
         }
         case 6: {
             // Increase Risk Levels across Systems managed by UniversalManager
-            increaseRiskLevels(&manager);
+            displaySolarSystem(&manager);
             break;
         }
         case 7: {
             // Rename a Planet within a System managed by UniversalManager
-            renamePlanet(&manager);
+            renameCosmicElement(&manager);
             break;
         }
         case 8: {
-            // Display All Planets within Systems managed by UniversalManager
-            displayAllPlanets(&manager);
+            // Display All Cosmic elements managed by UniversalManager
+            displayCosmicElements(&manager);
             break;
         }
 
@@ -77,19 +76,6 @@ int main() {
             manage_company_operations(&manager);
 
             break;
-        }
-        case 11: {
-            int galaxyID, systemID, planetID;
-            printf("Enter Galaxy ID: ");
-            scanf("%d", &galaxyID);
-            printf("Enter Solar System ID: ");
-            scanf("%d", &systemID);
-            printf("Enter Planet ID: ");
-            scanf("%d", &planetID);
-
-            char localSrcCode[MAX_CODE_LEN]; // Local array to store the generated code
-            snprintf(localSrcCode, MAX_CODE_LEN, "G%04dS%04dP%04d", galaxyID, systemID, planetID);
-            printf("% s", localSrcCode);
         }
         default: {
             printf("Invalid choice. Please try again.\n");

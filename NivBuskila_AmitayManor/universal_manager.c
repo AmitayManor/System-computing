@@ -11,19 +11,6 @@ void initUniversalManager(UniversalManager* manager) {
     }
 }
 
-Galaxy* createGalaxy() {
-    char name[MAX_GALAXY_NAME];
-    printf("Enter Galaxy Name: ");
-    scanf("%255s", name); // Get the galaxy name from the user
-
-    Galaxy* galaxy = (Galaxy*)malloc(sizeof(Galaxy)); // Allocate memory for the new Galaxy
-    if (galaxy) {
-        galaxy->name = strdup(name); // Duplicate the name and assign it to the Galaxy
-        // Initialize other Galaxy attributes as needed...
-    }
-    return galaxy; // Return the pointer to the new Galaxy
-}
-
 void addGalaxy(UniversalManager* manager, Galaxy* galaxy) {
     if (manager && galaxy) {
         Galaxy** new_galaxies_array = realloc(manager->galaxies, (manager->numGalaxies + 1) * sizeof(Galaxy*));
@@ -36,7 +23,7 @@ void addGalaxy(UniversalManager* manager, Galaxy* galaxy) {
 }
 
 void addGalaxyToManager(UniversalManager* manager) {
-    Galaxy* galaxy = createGalaxy(); // Create a new Galaxy
+    Galaxy* galaxy = create_galaxy();; // Create a new Galaxy
     if (galaxy) {
         addGalaxy(manager, galaxy); // Add the new Galaxy to the UniversalManager
     }
@@ -92,8 +79,10 @@ void printGalaxies(const UniversalManager* manager) {
     if (manager && manager->galaxies) {
         printf("List of Galaxies:\n");
         for (int i = 0; i < manager->numGalaxies; i++) {
-            if (manager->galaxies[i]) {
+           if (manager->galaxies[i]) {
                 printf("Galaxy %d: %s\n", i + 1, manager->galaxies[i]->name);
+               // add_solar_system(manager->galaxies[i]);
+               // display_solar_systems(manager->galaxies[i]);
             }
         }
     }
@@ -131,35 +120,6 @@ void freeUniversalManager(UniversalManager* manager) {
     }
 }
 
-void loadSystemData(UniversalManager* manager, const char* filename) {
-    FILE* file = fopen(filename, "r");
-    if (!file) {
-        printf("Failed to open file %s\n", filename);
-        return;
-    }
-
-    char line[256];
-    while (fgets(line, sizeof(line), file)) {
-        // Assuming each line contains either "Galaxy" or "Company" followed by respective names and attributes
-        char type[10], name[50];
-        if (sscanf(line, "%s %s", type, name) == 2) {
-            if (strcmp(type, "Galaxy") == 0) {
-                Galaxy* galaxy = (Galaxy*)malloc(sizeof(Galaxy));
-                galaxy->name = strdup(name); // Assuming Galaxy struct has a name field
-                // Initialize other galaxy fields as needed...
-                addGalaxy(manager, galaxy);
-            }
-            else if (strcmp(type, "Company") == 0) {
-                Company* company = (Company*)malloc(sizeof(Company));
-                company->name = strdup(name); // Assuming Company struct has a name field
-                // Initialize other company fields and set permissions as needed...
-                //addCompany(manager, company, eNOPERMISSION); // Example permission
-            }
-        }
-    }
-
-    fclose(file);
-}
 
 void increaseRiskLevels(UniversalManager* manager) {
     if (manager && manager->galaxies) {
@@ -202,23 +162,64 @@ Planet* findPlanet(SolarSystem* system, const char* name) {
     return NULL; // Not found
 }
 
-void displayAllPlanets(const UniversalManager* manager) {
-    // Assuming the UniversalManager has a method to iterate through all galaxies and their solar systems
-    printf("Displaying all planets in the Universal Manager:\n");
-    // This is a simplified placeholder. Actual iteration and display logic goes here...
-    printf("Planet display functionality is not implemented yet.\n");
+void displayCosmicElements(const UniversalManager* manager) {
+    printf("\n--- Displaying Cosmic Elements ---\n");
+    for (int i = 0; i < manager->numGalaxies; ++i) {
+        Galaxy* galaxy = manager->galaxies[i];
+        printf("Galaxy %d: %s\n", i + 1, galaxy->name);
+
+        for (int j = 0; j < galaxy->num_solar_systems; ++j) {
+            SolarSystem* solarSystem = galaxy->star_systems[j];
+            printf("\tSolar System %d: %s\n", j + 1, solarSystem->name);
+
+            for (int k = 0; k < solarSystem->num_planets; ++k) {
+                Planet* planet = solarSystem->planets[k];
+                printf("\t\tPlanet %d: %s\n", k + 1, planet->name);
+            }
+        }
+    }
 }
 
-void renamePlanet(UniversalManager* manager) {
-    char galaxyName[256], systemName[256], planetName[256], newName[256];
+void renameGalaxy(UniversalManager* manager) {
+    char galaxyName[MAX_GALAXY_NAME], newName[MAX_GALAXY_NAME];
     printf("Enter Galaxy Name: ");
-    scanf("%255s", galaxyName);
-    printf("Enter Solar System Name: ");
-    scanf("%255s", systemName);
-    printf("Enter Planet Name: ");
-    scanf("%255s", planetName);
-    printf("Enter New Planet Name: ");
-    scanf("%255s", newName);
+    scanf("%49s", galaxyName);
+
+    Galaxy* galaxy = findGalaxy(manager, galaxyName);
+    if (!galaxy) {
+        printf("Galaxy '%s' not found.\n", galaxyName);
+        return;
+    }
+    rename_galaxy(galaxy);
+}
+
+void renameSolarSystem(UniversalManager* manager) {
+   
+        char galaxyName[MAX_GALAXY_NAME], systemName[MAX_SOLAR_SYSTEM_NAME] ,newName[MAX_SOLAR_SYSTEM_NAME];
+        printf("Enter Galaxy Name: ");
+        scanf("%49s", galaxyName);
+
+        Galaxy* galaxy = findGalaxy(manager, galaxyName);
+        if (!galaxy) {
+            printf("Galaxy '%s' not found.\n", galaxyName);
+            return;
+        }
+
+        printf("Enter Solar System Name: ");
+        scanf("%49s", systemName);
+
+        SolarSystem* system = findSolarSystem(galaxy, systemName);
+        if (!system) {
+            printf("Solar System '%s' not found in Galaxy '%s'.\n", systemName, galaxyName);
+            return;
+        }
+        rename_solarSystem(system);
+
+}
+void renamePlanet(UniversalManager* manager) {
+    char galaxyName[MAX_GALAXY_NAME], systemName[MAX_SOLAR_SYSTEM_NAME], planetName[MAX_PLANET_NAME], newName[MAX_PLANET_NAME];
+    printf("Enter Galaxy Name: ");
+    scanf("%49s", galaxyName);
 
     Galaxy* galaxy = findGalaxy(manager, galaxyName);
     if (!galaxy) {
@@ -226,11 +227,17 @@ void renamePlanet(UniversalManager* manager) {
         return;
     }
 
+    printf("Enter Solar System Name: ");
+    scanf("%49s", systemName);
+
     SolarSystem* system = findSolarSystem(galaxy, systemName);
     if (!system) {
         printf("Solar System '%s' not found in Galaxy '%s'.\n", systemName, galaxyName);
         return;
     }
+
+    printf("Enter Planet Name: ");
+    scanf("%49s", planetName);
 
     Planet* planet = findPlanet(system, planetName);
     if (!planet) {
@@ -239,10 +246,40 @@ void renamePlanet(UniversalManager* manager) {
     }
 
     // Rename the planet
-    strncpy(planet->name, newName, sizeof(planet->name) - 1);
-    planet->name[sizeof(planet->name) - 1] = '\0'; // Ensure null termination
-    printf("Planet '%s' in Solar System '%s' of Galaxy '%s' renamed to '%s'.\n", planetName, systemName, galaxyName, newName);
+    rename_planet(planet);
 }
+
+void renameCosmicElement(UniversalManager* manager) {
+    int choice;
+
+    do {
+        printf("\n--- Rename Cosmic Elements ---\n");
+        printf("1. Rename Galaxy\n");
+        printf("2. Rename Solar System\n");
+        printf("3. Rename Planet\n");
+        printf("4. Exit\n");
+        printf("Select an option: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+        case 1:
+            renameGalaxy(manager);
+            break;
+        case 2:
+            renameSolarSystem(manager);
+            break;
+        case 3:
+            renamePlanet(manager);
+            break;
+        case 4:
+            printf("Returning to main menu.\n");
+            break;
+        default:
+            printf("Invalid option. Please try again.\n");
+        }
+    } while (choice != 4);
+}
+
 
 void display_all_travels(const UniversalManager* manager) {
     if (!manager) {
@@ -402,6 +439,66 @@ void manage_company_operations(UniversalManager* manager) {
     } while (choice != 5);
 }
 
+void addSolarSystemToManger(UniversalManager* manager) {
+    int numberOfGalaxy;
+    printGalaxies(manager);
+    printf("Enter galaxy number :\n");
+    void flush_stdin();
+    scanf("%d", &numberOfGalaxy); // need to enter do while
+    add_solar_system(manager->galaxies[numberOfGalaxy - 1]);
+    
+}
+
+addPlanetToManager(UniversalManager* manager) {
+    int numberOfGalaxy;
+    printGalaxies(manager);
+    printf("Enter galaxy number :\n");
+    void flush_stdin();
+    scanf("%d", &numberOfGalaxy); // need to enter do while
+    int numberOfSolarSystems;
+    display_solar_systems(manager->galaxies[numberOfGalaxy - 1]);
+    printf("Enter solar system number :\n");
+    void flush_stdin();
+    scanf("%d", &numberOfSolarSystems); // need to enter do while
+    Planet* planet = create_planet();
+    add_planet_to_solar_system(manager->galaxies[numberOfGalaxy - 1]->star_systems[numberOfSolarSystems-1], planet);
+    
+}
+
+void addCosmicElement(UniversalManager* manager) {
+    int choice;
+
+    do {
+        printf("\n--- Adding cosmic element system ---\n");
+        printf("1. Add Galaxy\n");
+        printf("2. Add Solar System\n");
+        printf("3. Add Planet\n");
+        printf("4. Exit\n");
+        printf("Select an option: ");
+        //flush_stdin();
+        scanf("%d", &choice);
+       
+
+        switch (choice) {
+        case 1:
+            addGalaxyToManager(manager);
+            break;
+        case 2:
+            addSolarSystemToManger(manager);
+            break;
+        case 3:
+            addPlanetToManager(manager);
+            break;
+        case 4:
+            printf("Exiting adding cosmic element system.\n");
+            break;
+        default:
+            printf("Invalid option. Please try again.\n");
+        }
+    } while (choice != 4);
+}
+
+
 void manage_specific_company(UniversalManager* manager, Company* company) {
     if (!company) {
         printf("Company not found.\n");
@@ -455,52 +552,12 @@ void manage_specific_company(UniversalManager* manager, Company* company) {
     } while (choice != 7);
 }
 
-void list_galaxies(UniversalManager* mg){
+void displaySolarSystem(const UniversalManager* manager) {
 
-    if (mg) {
-        // Print Galaxies
-        for (int i = 0; i < mg->numGalaxies; i++) {
-            printf("%d. Galaxy: %s |\tLocation: {%d,%d,%d}\n", i+1, mg->galaxies[i]->name, mg->galaxies[i]->portal_location.x, mg->galaxies[i]->portal_location.y, mg->galaxies[i]->portal_location.z);
-            // Print Solar Systems
-            list_solarsystems(mg->galaxies[i]);
-        }
-    }
-    else {
-        printf("Error with UniversalManager allocation\n");
-    }
-}
-
-void list_solarsystems(Galaxy* gx){
-    
-    if (gx) {
-        for (int i = 0;i < gx->num_solar_systems;i++) {
-            printf("%d. Solar System: %s |\tLocation: {%d,%d,%d}\n", i + 1, gx->star_systems[i]->name, gx->star_systems[i]->portal_location.x, gx->star_systems[i]->portal_location.y, gx->star_systems[i]->portal_location.z);
-            list_planets(gx->star_systems[i]);
-        }
-    }
-    else {
-        printf("Error with Galaxy allocation\n");
-    }
-}
-
-void list_planets(SolarSystem* ss){
-    if (ss) {
-        for (int i = 0;i < ss->num_planets;i++) {
-            printf("%d. Planet: %s |\tLocation: {%d,%d,%d}\n", i + 1, ss->planets[i]->name, ss->planets[i]->portal_location.x, ss->planets[i]->portal_location.y, ss->planets[i]->portal_location.z);
-        }
-    }
-    else {
-        printf("Error with Solar System allocation\n");
-    }
-}
-
-void display_galaxies_solarsystems_planets(UniversalManager* mg)
-{
-    if (mg) {
-        printf("----------- The Universe -----------\n");
-        list_galaxies(mg);
-    }
-
-
-
+    int numberOfGalaxy;
+    printGalaxies(manager);
+    printf("Enter galaxy number :\n");
+    flush_stdin();
+    scanf("%d", &numberOfGalaxy); // need to enter do while
+    display_solar_systems(manager->galaxies[numberOfGalaxy - 1]);
 }

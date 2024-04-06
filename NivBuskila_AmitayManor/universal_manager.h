@@ -1,6 +1,6 @@
 #ifndef UNIVERSAL_MANAGER_H
 #define UNIVERSAL_MANAGER_H
-
+#include "utility.h"
 #include "galaxy.h"
 #include "company.h"
 
@@ -17,22 +17,24 @@ void addGalaxy(UniversalManager* manager, Galaxy* galaxy);
 void printGalaxies(const UniversalManager* manager);
 void printCompanies(const UniversalManager* manager);
 void freeUniversalManager(UniversalManager* manager);
-void loadSystemData(UniversalManager* manager, const char* filename);
 void increaseRiskLevels(UniversalManager* manager);
 
 Galaxy* findGalaxy(UniversalManager* manager, const char* name);
 SolarSystem* findSolarSystem(Galaxy* galaxy, const char* name);
 Planet* findPlanet(SolarSystem* system, const char* name);
-void displayAllPlanets(const UniversalManager* manager);
+void displaySolarSystem(const UniversalManager* manager);
+void displayCosmicElements(const UniversalManager* manager);
 void renamePlanet(UniversalManager* manager);
+void renameSolarSystem(UniversalManager* manager);
+void renameGalaxy(UniversalManager* manager);
+void renameCosmicElement(UniversalManager* manager);
 void createCompany(UniversalManager* mg);
 void addCompanyToManager(UniversalManager* manager);
-Galaxy* createGalaxy();
 void addGalaxyToManager(UniversalManager* manager);
 void manage_company_operations(UniversalManager* manager);
 void manage_specific_company(UniversalManager* manager, Company* company);
 void display_all_travels(const UniversalManager* manager);
-
+void addSolarSystemToManger(UniversalManager* manager);
 void display_company_basic_data(Company* company);
 void display_company_spacecrafts(Company* company);
 void display_company_travels(Company* company);
@@ -41,11 +43,5 @@ void add_travel_to_company(Company* company, UniversalManager* manager);
 void edit_company_permissions(Company* company, UniversalManager* manager);
 void export_company_data_to_bin(Company* company, const char* filename);
 void export_company_data_to_txt(Company* company, const char* filename);
-
-void list_galaxies(UniversalManager* mg);
-void list_solarsystems(Galaxy* gx);
-void list_planets(SolarSystem* ss);
-void display_galaxies_solarsystems_planets(UniversalManager* mg);
-
-
+void addCosmicElement(UniversalManager* manager);
 #endif // UNIVERSAL_MANAGER_H

@@ -43,22 +43,6 @@ int get_num_of_travels() {
     return numOfSpaceTravels;
 }
 
-int isCraftIdUnique(const Company* company, int craftId) {
-    if (!company || !company->spaceCrafts || company->numSpacecrafts <= 0) {
-        return 1; 
-    }
-
-    for (int i = 0; i < company->numSpacecrafts; ++i) {
-        if (company->spaceCrafts[i]->craftId == craftId) {
-           
-            return 0;
-        }
-    }
-
-    return 1;
-}
-
-
 void initialize_company_spacecrafts(Company* company, int numOfSpaceCrafts) {
     if (numOfSpaceCrafts > 0) {
         company->spaceCrafts = malloc(numOfSpaceCrafts * sizeof(SpaceCraft*));
@@ -86,17 +70,7 @@ void initialize_company_spacecrafts(Company* company, int numOfSpaceCrafts) {
                 return;
             }
 
-            int idFlag = 0;
-            do {
-                get_SpaceCraft_id(newCraft->craftId);
-                if (isCraftIdUnique(company, newCraft->craftId)) {
-                   idFlag = 1;
-                }
-                else {
-                    printf("\n\n Generated ID is not Unique. Try Again/\n\n");
-                }
-            } while (!idFlag);
-
+            newCraft->craftId = i + 1;
             get_SpaceCraft_name(newCraft);
             get_SpaceCraft_model(newCraft);
             get_SpaceCraft_speed(newCraft);

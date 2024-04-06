@@ -145,6 +145,7 @@
     <ClCompile Include="date.c" />
     <ClCompile Include="galaxy.c" />
     <ClCompile Include="interstellar_travel.c" />
+    <ClCompile Include="location.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="planet.c" />
     <ClCompile Include="solar_system.c" />

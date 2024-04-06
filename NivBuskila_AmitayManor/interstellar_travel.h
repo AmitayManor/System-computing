@@ -22,7 +22,7 @@ typedef struct {
     int travelID;
 } InterstellarTravel;
 
-char* get_travelCode_Src(UniversalManager* mg, InterstellarTravel* tr);
+char* get_travelCode_Src(UniversalManager* mg, InterstellarTravel* tr, Permission permission);
 
 char* get_travelCode_Dst(UniversalManager* mg, InterstellarTravel* tr, Permission permission);
 

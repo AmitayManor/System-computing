@@ -2,7 +2,7 @@
 #define PLANET_H
 
 #include "location.h"
-
+#include "utility.h"
 #define MAX_PLANET_NAME 50
 
 typedef struct Planet {
@@ -12,7 +12,8 @@ typedef struct Planet {
     int riskLevel;
 } Planet;
 
-Planet* create_planet(const char* name, Location location, int ID, int riskLevel);
+Planet* create_planet();
 void free_planet(Planet* planet);
+void rename_planet(Planet* planet);
 
 #endif // PLANET_H

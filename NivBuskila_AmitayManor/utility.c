@@ -1,8 +1,5 @@
 #include "utility.h"
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <stdio.h>
+
 
 char* my_strdup(const char* s) {
     if (!s) return NULL;
@@ -16,6 +13,7 @@ char* safe_strdup(const char* s) {
 }
 
 char* myGets(char* buffer, int size) {
+    flush_stdin();
     if (!buffer || size <= 0) return NULL;
     if (fgets(buffer, size, stdin)) {
         size_t len = strlen(buffer);
@@ -24,3 +22,8 @@ char* myGets(char* buffer, int size) {
     }
     return NULL;
 }
+void flush_stdin() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {}  // Read and discard characters until newline or EOF
+}
+

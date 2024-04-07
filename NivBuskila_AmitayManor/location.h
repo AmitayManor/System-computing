@@ -1,6 +1,7 @@
 #ifndef LOCATION_H
 #define LOCATION_H
 
+#include "macros.h"
 #include "utility.h"
 
 typedef struct Location {

@@ -1,2 +1,12 @@
-﻿  main.c
-  NivBuskila_AmitayManor.vcxproj -> C:\Final Project\NivBuskila_AmitayManor\x64\Debug\NivBuskila_AmitayManor.exe
+﻿  universal_manager.c
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\universal_manager.c(45,14): warning C4047: 'initializing': 'Company *' differs in levels of indirection from 'Company **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\universal_manager.c(274,39): warning C4101: 'newName': unreferenced local variable
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\universal_manager.c(388,20): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 2 has type 'int'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\universal_manager.c(388,20): warning C4313: 'printf': '%s' in format string conflicts with argument 2 of type 'int'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\universal_manager.c(439,11): warning C4047: 'initializing': 'char *' differs in levels of indirection from 'char **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\universal_manager.c(440,11): warning C4047: 'initializing': 'char *' differs in levels of indirection from 'char **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\universal_manager.c(458,17): warning C4047: 'initializing': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\universal_manager.c(500,19): warning C4047: 'initializing': 'char *' differs in levels of indirection from 'char **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\universal_manager.c(570,11): warning C4047: 'initializing': 'char *' differs in levels of indirection from 'char **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\universal_manager.c(766,11): warning C4047: 'initializing': 'char *' differs in levels of indirection from 'char **'
+  NivBuskila_AmitayManor.vcxproj -> C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\x64\Debug\NivBuskila_AmitayManor.exe

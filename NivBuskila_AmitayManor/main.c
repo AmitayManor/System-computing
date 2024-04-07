@@ -10,10 +10,11 @@ int main() {
     int choice;
 
     do {
+       
         printf("\nMain Menu:\n");
         printf("1. Add cosmic element\n");
-        printf("2. Display Systems\n");
-        printf("3. Display Subcomponents\n");
+        printf("2. Display The Universe\n");
+        printf("3. Display All Companies\n");
         printf("4. Add Galaxy\n");
         printf("5. Add Company\n");
         printf("6. display Solar System\n");
@@ -33,7 +34,10 @@ int main() {
         }
         case 2: {
             // Display Systems managed by UniversalManager
-            printGalaxies(&manager);
+            displayCosmicElements(&manager);
+
+            // Note: Considare removing "printGalaxies(&manager);"
+
             break;
         }
         case 3: {

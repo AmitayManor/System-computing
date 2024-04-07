@@ -1,9 +1,14 @@
 #include "utility.h"
 
+void generic_print(void* entity, void (*print_func)(void*)) {
+    if (entity != NULL && print_func != NULL) {
+        print_func(entity);
+    }
+}
 
 char* my_strdup(const char* s) {
     if (!s) return NULL;
-    char* new_str = (char*)malloc(strlen(s) + 1);
+    char* new_str = ALLOCATE(char*, strlen(s) + 1);
     if (new_str) strcpy(new_str, s);
     return new_str;
 }
@@ -24,6 +29,6 @@ char* myGets(char* buffer, int size) {
 }
 void flush_stdin() {
     int c;
-    while ((c = getchar()) != '\n' && c != EOF) {}  // Read and discard characters until newline or EOF
+    while ((c = getchar()) != '\n' && c != EOF) {}  
 }
 

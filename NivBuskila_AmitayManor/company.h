@@ -3,13 +3,15 @@
 
 #define MAX_AMOUNT_OF_CRAFTS 50
 #define MAX_COMPANY_NAME 256
+
+#include "macros.h"
 #include "permission.h"
 #include "interstellar_travel.h"
 #include "spacecraft.h"
 #include "utility.h"
 
 
-typedef struct {
+typedef struct Company {
     char* name;
     int establishedYear;
     int numSpacecrafts;
@@ -19,6 +21,9 @@ typedef struct {
     Permission permissionsZone;
 } Company;
 
+int compareCompanyByNumTravels(const void* a, const void* b);
+int compareCompanyByName(const void* a, const void* b);
+int compareCompanyByNumSpaceCrafts(const void* a, const void* b);
 
 void get_company_name(char* name);
 int get_establishment_year();
@@ -27,8 +32,10 @@ int get_num_of_travels();
 void initialize_company_spacecrafts(Company* company, int numOfSpaceCrafts);
 void initialize_company_travels(UniversalManager* mg, Company* company, int numOfTravels);
 Permission get_permission_zone();
+int isCraftIdUnique(const Company* company, int craftId);
 
-void print_company(const Company* company);
+void print_company(void* cmp);
+//void print_company(const Company* company);
 void upgrade_permission(Company* company);
 void add_spacecraft(Company* company, SpaceCraft** spacecraft);
 void add_interstellar_travel(Company* company, InterstellarTravel* travel);

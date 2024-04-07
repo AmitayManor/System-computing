@@ -1,14 +1,16 @@
 #ifndef INTERSTELLAR_TRAVEL_H
 #define INTERSTELLAR_TRAVEL_H
 
+#include "macros.h"
 #include "date.h"
 #include "spacecraft.h"
 #include "permission.h"
+//#include "company.h"
 
 #define MAX_CODE_LEN 16     // Travel code format: G####S####P####
 
 typedef struct UniversalManager UniversalManager;
-
+typedef struct  Company Company;
 
 typedef struct {
     char travelCodeSrc[MAX_CODE_LEN];
@@ -16,26 +18,32 @@ typedef struct {
     SpaceCraft* spaceCraft;
     Date departureDate;
     Date arrivalDate;
-    double distance;    
+    double distance;
     int riskLevel;
     int isCompleted;
     int travelID;
 } InterstellarTravel;
 
-char* get_travelCode_Src(UniversalManager* mg, InterstellarTravel* tr, Permission permission);
+int compareTravelByID(const void* a, const void* b);
 
+int compareTravelByDepartureDate(const void* a, const void* b);
+
+int compareTravelByDistance(const void* a, const void* b);
+
+char* get_travelCode_Src(UniversalManager* mg, InterstellarTravel* tr);
 char* get_travelCode_Dst(UniversalManager* mg, InterstellarTravel* tr, Permission permission);
+void get_arrival_date(UniversalManager* mg, InterstellarTravel* tr);
 
-void get_departure_date(InterstellarTravel* tr);
-
+int check_unique_travel_id(Company* cm, const int id);
 
 InterstellarTravel* create_interstellar_travel(const char* code, SpaceCraft* craft, Date departure, Date arrival, double distance, int riskLevel);
-void calculate_arrival_date(InterstellarTravel* travel);
 Date advance_date(Date date, int daysToAdd);
 int calculate_risk_level(InterstellarTravel* travel);
 int is_travel_successful(InterstellarTravel* travel);
-void print_interstellar_travel(const InterstellarTravel* travel);
-char extractTrcalCode(char code[MAX_CODE_LEN]);                     
+
+void print_travel(void* tr);
+//void print_interstellar_travel(const InterstellarTravel* travel);
+char extractTrcalCode(char code[MAX_CODE_LEN]);
 void free_interstellar_travel(InterstellarTravel* travel);
 
 #endif // INTERSTELLAR_TRAVEL_H

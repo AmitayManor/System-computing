@@ -5,7 +5,8 @@
 
 
 SpaceCraft* create_spacecraft(const char* name, const char* model, double maxSpeed, int id) {
-    SpaceCraft* craft = (SpaceCraft*)malloc(sizeof(SpaceCraft));
+    SpaceCraft* craft = ALLOCATE(SpaceCraft*, 1);
+//    SpaceCraft* craft = (SpaceCraft*)malloc(sizeof(SpaceCraft));
     if (craft) {
         craft->name = strdup(name); // Assuming strdup is available or implemented
         craft->model = strdup(model);
@@ -41,17 +42,6 @@ void print_spacecraft(void* sc) {
     printf("SpaceCraft ID: %d, Model: %s, Max Speed: %.2f\n", spacecraft->craftId, spacecraft->model, spacecraft->maxSpeed);
 }
 
-/*
-void print_spacecraft(SpaceCraft* craft) {
-    if (craft) {
-        printf("Space Craft Name: %s\n", craft->name);
-        printf("Space Craft ID: %d\n", craft->craftId);
-        printf("Model: %s\n", craft->model);
-        printf("Space Craft ID: %d\n", craft->craftId);
-        printf("Max Speed: %.2f\n", craft->maxSpeed);
-    }
-}
-*/
 void get_SpaceCraft_id(SpaceCraft* sp) {
     if (sp) {
         int id;
@@ -72,12 +62,14 @@ void get_SpaceCraft_id(SpaceCraft* sp) {
 void get_SpaceCraft_name(SpaceCraft* sp) {
 
     if (sp) {
-        char* name = (char*)malloc(MAX_LEN_SPACE_CRAFT * sizeof(char));
+        char* name = ALLOCATE(char*, MAX_LEN_SPACE_CRAFT);
+        //char* name = (char*)malloc(MAX_LEN_SPACE_CRAFT * sizeof(char));
         printf("Enter name for spacecraft %d: ", sp->craftId);
         int c;
         while ((c = getchar()) != '\n' && c != EOF);
         if (!myGets(name, MAX_LEN_SPACE_CRAFT)) {
-            fprintf(stderr, "Error reading company name.\n");
+            LOG_DEBUG("Error reading company name.\n");
+//            fprintf(stderr, "Error reading company name.\n");
             strncpy(name, "DefaultCompany", MAX_LEN_SPACE_CRAFT - 1);
             name[MAX_LEN_SPACE_CRAFT - 1] = '\0';
         }
@@ -89,12 +81,14 @@ void get_SpaceCraft_name(SpaceCraft* sp) {
 void get_SpaceCraft_model(SpaceCraft* sp) {
 
     if (sp) {
-        char* model = (char*)malloc(MAX_LEN_SPACE_CRAFT * sizeof(char));
+        char* model = ALLOCATE(char*, MAX_LEN_SPACE_CRAFT);
+        //char* model = (char*)malloc(MAX_LEN_SPACE_CRAFT * sizeof(char));
         printf("Enter model for spacecraft %d: ", sp->craftId);
         int c;
         //while ((c = getchar()) != '\n' && c != EOF);
         if (!myGets(model, MAX_LEN_SPACE_CRAFT)) {
-            fprintf(stderr, "Error reading company name.\n");
+            LOG_DEBUG("Error reading company name.\n");
+//            fprintf(stderr, "Error reading company name.\n");
             strncpy(model, "DefaultCompany", MAX_LEN_SPACE_CRAFT - 1);
             model[MAX_LEN_SPACE_CRAFT - 1] = '\0';
         }
@@ -135,16 +129,17 @@ int compareSpaceCraftByID(const void* a, const void* b) {
 int compareSpaceCraftByName(const void* a, const void* b) {
     const SpaceCraft* scA = *(const SpaceCraft**)a;
     const SpaceCraft* scB = *(const SpaceCraft**)b;
-    return strcmp(scA->name, scB->name);
+
+    return STR_EQUAL(scA->name, scB->name);
+    //return strcmp(scA->name, scB->name);
 }
 
 int compareSpaceCraftByModel(const void* a, const void* b) {
     const SpaceCraft* scA = *(const SpaceCraft**)a;
     const SpaceCraft* scB = *(const SpaceCraft**)b;
-    return strcmp(scA->model, scB->model);
+    return STR_EQUAL(scA->model, scB->model);
+    //return strcmp(scA->model, scB->model);
 }
-
-
 
 void free_spacecraft(SpaceCraft* craft) {
     if (craft) {

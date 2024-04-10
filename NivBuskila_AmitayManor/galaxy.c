@@ -42,7 +42,8 @@ void display_solar_systems(Galaxy* galaxy) {
 
 void add_solar_system(Galaxy* galaxy) {
     if (!galaxy) {
-        fprintf(stderr, "Galaxy pointer is NULL.\n");
+        LOG_DEBUG("Galaxy pointer is NULL.\n");
+        //fprintf(stderr, "Galaxy pointer is NULL.\n");
         return;
     }
     
@@ -54,7 +55,8 @@ void add_solar_system(Galaxy* galaxy) {
         SolarSystem** new_array = realloc(galaxy->star_systems, (galaxy->num_solar_systems + 1) * sizeof(SolarSystem*));
                
         if (!new_array) {
-            fprintf(stderr, "Failed to reallocate memory for new solar systems.\n");
+            LOG_DEBUG("Failed to reallocate memory for new solar systems.\n");
+//            fprintf(stderr, "Failed to reallocate memory for new solar systems.\n");
             free(system);
             return;
         }
@@ -78,17 +80,20 @@ void free_galaxy(Galaxy* galaxy) {
 }
 
 Galaxy* create_galaxy(UniversalManager* mg) {
-    
-    Galaxy* galaxy = (Galaxy*)malloc(sizeof(Galaxy));
+
+    Galaxy* galaxy = ALLOCATE(Galaxy*, 1);
+    //Galaxy* galaxy = (Galaxy*)malloc(sizeof(Galaxy));
     if (!galaxy) {
-        fprintf(stderr, "Failed to allocate memory for Galaxy.\n");
+        LOG_DEBUG("Failed to allocate memory for Galaxy.\n");
+        //fprintf(stderr, "Failed to allocate memory for Galaxy.\n");
         return NULL;
     }
 
     printf("Enter the name for the galaxy (up to %d characters): ", MAX_GALAXY_NAME - 1);
 
     if (!myGets(galaxy->name, MAX_GALAXY_NAME)) {
-        fprintf(stderr, "Failed to read Galaxy name or input was empty.\n");
+        LOG_DEBUG("Failed to read Galaxy name or input was empty.\n");
+        //fprintf(stderr, "Failed to read Galaxy name or input was empty.\n");
         free(galaxy);  
         return NULL;
     }

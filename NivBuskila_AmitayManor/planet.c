@@ -10,7 +10,8 @@ void print_planet(void* p) {
 }
 
 Planet* create_planet(SolarSystem* system) {
-    Planet* newPlanet = (Planet*)malloc(sizeof(Planet));
+    Planet* newPlanet = ALLOCATE(Planet*, 1);
+//    Planet* newPlanet = (Planet*)malloc(sizeof(Planet));
     if (newPlanet == NULL) {
         printf("Memory allocation failed\n");
         return NULL;
@@ -20,7 +21,8 @@ Planet* create_planet(SolarSystem* system) {
 
     // Use myGets to safely read the name into the galaxy's name field
     if (!myGets(newPlanet->name, MAX_PLANET_NAME)) {
-        fprintf(stderr, "Failed to read Planet name or input was empty.\n");
+        LOG_DEBUG("Failed to read Planet name or input was empty.\n");
+//        fprintf(stderr, "Failed to read Planet name or input was empty.\n");
         free(newPlanet);  // Cleanup the allocated memory if input fails
         return NULL;
     }

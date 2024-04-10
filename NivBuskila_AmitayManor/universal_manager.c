@@ -181,7 +181,6 @@ Planet* findPlanet_byID(SolarSystem* system, const int id) {
 
 }
 
-
 Galaxy* findGalaxy(UniversalManager* manager, const char* name) {
   
     for (int i = 0; i < manager->numGalaxies; i++) {

@@ -14,7 +14,6 @@ static int (*compareTravelFunctions[])(const void*, const void*) = {
     compareTravelByDistance
 };
 
-
 /*----Finished----*/
 
 void get_company_name(char* name) {
@@ -22,7 +21,8 @@ void get_company_name(char* name) {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
     if (!myGets(name, MAX_COMPANY_NAME)) {
-        fprintf(stderr, "Error reading company name.\n");
+        LOG_DEBUG("Error reading company name.\n");
+        //fprintf(stderr, "Error reading company name.\n");
         strncpy(name, "DefaultCompany", MAX_COMPANY_NAME - 1);
         name[MAX_COMPANY_NAME - 1] = '\0';
     }
@@ -70,24 +70,24 @@ int isCraftIdUnique(const Company* company, int craftId) {
     return 1;
 }
 
-
 void initialize_company_spacecrafts(Company* company, int numOfSpaceCrafts) {
     if (numOfSpaceCrafts > 0) {
-        company->spaceCrafts = malloc(numOfSpaceCrafts * sizeof(SpaceCraft*));
+        company->spaceCrafts = ALLOCATE(SpaceCraft**, numOfSpaceCrafts);
+//        company->spaceCrafts = malloc(numOfSpaceCrafts * sizeof(SpaceCraft*));
         if (company->spaceCrafts == NULL) {
-
-            fprintf(stderr, "Error: Failed to allocate memory for spacecrafts.\n");
+            LOG_DEBUG("Error: Failed to allocate memory for spacecrafts.\n");
+            //fprintf(stderr, "Error: Failed to allocate memory for spacecrafts.\n");
             return;
         }
 
         for (int i = 0; i < numOfSpaceCrafts; i++) {
             //SpaceCraft* newCraft = create_individual_spacecraft(i + 1);
-
-            SpaceCraft* newCraft = (SpaceCraft*)malloc(sizeof(SpaceCraft));
+            SpaceCraft* newCraft = ALLOCATE(SpaceCraft*, 1);
+            //SpaceCraft* newCraft = (SpaceCraft*)malloc(sizeof(SpaceCraft));
 
             if (newCraft == NULL) {
-
-                fprintf(stderr, "Error: Failed to create spacecraft %d.\n", i + 1);
+                LOG_DEBUG("Error: Failed to create spacecraft %d.\n", i + 1);
+                //fprintf(stderr, "Error: Failed to create spacecraft %d.\n", i + 1);
 
                 for (int j = 0; j < i; j++) {
                     free_spacecraft(company->spaceCrafts[j]);
@@ -124,20 +124,21 @@ void initialize_company_spacecrafts(Company* company, int numOfSpaceCrafts) {
 void initialize_company_travels(UniversalManager* mg, Company* company, int numOfTravels) {
 
     if (numOfTravels > 0) {
-        company->travels = malloc(numOfTravels * sizeof(InterstellarTravel*));
+        company->travels = ALLOCATE(InterstellarTravel**, numOfTravels);
+//        company->travels = malloc(numOfTravels * sizeof(InterstellarTravel*));
         if (company->travels == NULL) {
-
-            fprintf(stderr, "Error: Failed to allocate memory for travels.\n");
+            LOG_DEBUG("Error: Failed to allocate memory for travels.\n");
+//            fprintf(stderr, "Error: Failed to allocate memory for travels.\n");
             return;
         }
 
         for (int i = 0; i < numOfTravels; i++) {
-
-            InterstellarTravel* newTravel = (InterstellarTravel*)malloc(sizeof(InterstellarTravel));
+            InterstellarTravel* newTravel = ALLOCATE(InterstellarTravel*, 1);
+            //InterstellarTravel* newTravel = (InterstellarTravel*)malloc(sizeof(InterstellarTravel));
 
             if (newTravel == NULL) {
-
-                fprintf(stderr, "Error: Failed to create travel %d.\n", i + 1);
+                LOG_DEBUG("Error: Failed to create travel %d.\n", i + 1);
+                //fprintf(stderr, "Error: Failed to create travel %d.\n", i + 1);
 
                 for (int j = 0; j < i; j++) {
                     free_interstellar_travel(company->travels[j]);
@@ -195,18 +196,6 @@ void print_company(void* cmp) {
     }
 }
 
-/*
-void print_company(const Company* company) {
-    if (company) {
-        printf("Company Name: %s\n", company->name);
-        printf("Established Year: %d\n", company->establishedYear);
-        printf("Number of Spacecrafts: %d\n", company->numSpacecrafts);
-        printf("Number of Interstellar Travels: %d\n", company->numTravels);
-        printf("Permission Zone: %d\n", company->permissionsZone);
-    }
-}
-*/
-
 void free_company(Company* company) {
     if (company) {
         free(company->name);
@@ -232,7 +221,8 @@ int compareCompanyByNumTravels(const void* a, const void* b) {
 int compareCompanyByName(const void* a, const void* b) {
     const Company* cA = *(const Company**)a;
     const Company* cB = *(const Company**)b;
-    return strcmp(cA->name, cB->name);
+    return STR_EQUAL(cA->name, cB->name);
+    //    return strcmp(cA->name, cB->name);
 }
 
 int compareCompanyByNumSpaceCrafts(const void* a, const void* b) {
@@ -243,7 +233,8 @@ int compareCompanyByNumSpaceCrafts(const void* a, const void* b) {
 
 void searchSpaceCraft(Company* company) {
     int attribute, searchID;
-    char* searchString = (char*)malloc(MAX_LEN_SPACE_CRAFT * sizeof(char));
+    char* searchString = ALLOCATE(char*, MAX_LEN_SPACE_CRAFT);
+//    char* searchString = (char*)malloc(MAX_LEN_SPACE_CRAFT * sizeof(char));
 
     printf("Search SpaceCraft by: 1. ID\n2. Name\n3. Model\nEnter choice: ");
     scanf("%d", &attribute);
@@ -324,14 +315,13 @@ void searchTravel(Company* company) {
     }
 }
 
-
-
 /*----Needs to be finished----*/
 void upgrade_permission(Company* company) {
     if (company && company->permissionsZone < eNUMOFPERMISSION - 1) {
         company->permissionsZone++;
     }
 }
+
 void downgrade_permission(Company* company) {
     if (company && company->permissionsZone > eNOPERMISSION) {
         company->permissionsZone--;

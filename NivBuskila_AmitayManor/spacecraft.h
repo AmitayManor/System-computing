@@ -1,7 +1,6 @@
 #ifndef SPACECRAFT_H
 #define SPACECRAFT_H
 
-
 #include "macros.h"
 
 #define MAX_LEN_SPACE_CRAFT 100     //Defines the max length of the name or model of a space craft
@@ -13,6 +12,7 @@
 typedef struct {
     char* name;
     char* model;
+    // enum type
     double maxSpeed;
     int craftId;
 } SpaceCraft;

@@ -3,8 +3,8 @@
 #include <stdio.h>
 
 void addPlanet(SolarSystem* system, Planet* planet) {
-    
-    PlanetNode* newNode = (PlanetNode*)malloc(sizeof(PlanetNode));
+    PlanetNode* newNode = ALLOCATE(PlanetNode*, 1);
+//    PlanetNode* newNode = (PlanetNode*)malloc(sizeof(PlanetNode));
     if (newNode == NULL) {
         printf("Failed to allocate memory for the new planet node.\n");
         return;
@@ -66,13 +66,14 @@ void print_solar_system(void* ss) {
 }
 
 SolarSystem* create_solar_system(Galaxy* galaxy) {
-    
-    SolarSystem* system = malloc(sizeof(SolarSystem));
+    SolarSystem* system = ALLOCATE(SolarSystem*, 1);
+//    SolarSystem* system = malloc(sizeof(SolarSystem));
     if (system) {
        
         printf("Enter Solar System Name: ");
         if (!myGets(system->name, MAX_SOLAR_SYSTEM_NAME)) {
-            fprintf(stderr, "Failed to read Solar System name.\n");
+            LOG_DEBUG("Failed to read Solar System name.\n");
+//            fprintf(stderr, "Failed to read Solar System name.\n");
             free(system);
             return NULL;
         }
@@ -119,7 +120,8 @@ SolarSystem* create_solar_system(Galaxy* galaxy) {
 
     }
     else {
-        fprintf(stderr, "Memory allocation failed for SolarSystem.\n");
+        LOG_DEBUG("Memory allocation failed for SolarSystem.\n");
+//        fprintf(stderr, "Memory allocation failed for SolarSystem.\n");
     }
     return system;
 }

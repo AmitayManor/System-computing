@@ -18,7 +18,7 @@ char* safe_strdup(const char* s) {
 }
 
 char* myGets(char* buffer, int size) {
-    flush_stdin();
+    //flush_stdin();
     if (!buffer || size <= 0) return NULL;
     if (fgets(buffer, size, stdin)) {
         size_t len = strlen(buffer);

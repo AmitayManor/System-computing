@@ -9,9 +9,7 @@
 
 #define MAX_GALAXY_NAME 50
 
-
 typedef struct UniversalManager UniversalManager;
-
 
 typedef struct Galaxy {
     char name[MAX_GALAXY_NAME];

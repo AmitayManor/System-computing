@@ -9,6 +9,7 @@
 
 typedef struct SolarSystem SolarSystem;
 
+typedef unsigned char BYTE;
 
 typedef struct Planet {
     char name[MAX_PLANET_NAME];
@@ -17,6 +18,16 @@ typedef struct Planet {
     int riskLevel;
     int size;
 } Planet;
+
+void createSamplePlanet(Planet* pPl);
+int comparePlanets(const Planet* pPl1, const Planet* pPl2);
+void testPlanetReadWrite();
+void debugComparePlanets(const Planet* pPl1, const Planet* pPl2);
+
+void readPlanetFromText(FILE* fp, Planet* planet);
+void writePlanetToText(FILE* fp, const Planet* planet);
+int readPlanetFromBinaryFileCompressed(Planet* pPl, FILE* fp);
+int savePlanetToBinaryFileCompressed(const Planet* pPl, FILE* fp);
 
 void print_planet(void* p);
 Planet* create_planet(SolarSystem* system);

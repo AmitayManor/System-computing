@@ -247,24 +247,6 @@ void displayCosmicElements(const UniversalManager* manager) {
         for (int i = 0; i < manager->numGalaxies; i++)
             generic_print(manager->galaxies[i], print_galaxy);
     }
-
-    /*
-    printf("\n--- Displaying Cosmic Elements ---\n");
-    for (int i = 0; i < manager->numGalaxies; ++i) {
-        Galaxy* galaxy = manager->galaxies[i];
-        printf("Galaxy %d: %s | ID: %d\n", i + 1, galaxy->name, galaxy->id);
-
-        for (int j = 0; j < galaxy->num_solar_systems; ++j) {
-            SolarSystem* solarSystem = galaxy->star_systems[j];
-            printf("\tSolar System %d: %s| ID: %d\n", j + 1, solarSystem->name, solarSystem->id);
-
-            for (int k = 0; k < solarSystem->num_planets; ++k) {
-                Planet* planet = solarSystem->planets[k];
-                printf("\t\tPlanet %d: %s| ID: %d\n", k + 1, planet->name, planet->id);
-            }
-        }
-    }
-    */
 }
 
 /*Add do-while loop*/

@@ -90,7 +90,7 @@ Galaxy* create_galaxy(UniversalManager* mg) {
     }
 
     printf("Enter the name for the galaxy (up to %d characters): ", MAX_GALAXY_NAME - 1);
-
+    
     if (!myGets(galaxy->name, MAX_GALAXY_NAME)) {
         LOG_DEBUG("Failed to read Galaxy name or input was empty.\n");
         //fprintf(stderr, "Failed to read Galaxy name or input was empty.\n");

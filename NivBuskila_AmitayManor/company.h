@@ -1,15 +1,14 @@
 #ifndef COMPANY_H
 #define COMPANY_H
 
-#define MAX_AMOUNT_OF_CRAFTS 50
-#define MAX_COMPANY_NAME 256
-
 #include "macros.h"
 #include "permission.h"
 #include "interstellar_travel.h"
 #include "spacecraft.h"
 #include "utility.h"
 
+#define MAX_AMOUNT_OF_CRAFTS 50
+#define MAX_COMPANY_NAME 256
 
 typedef struct Company {
     char* name;

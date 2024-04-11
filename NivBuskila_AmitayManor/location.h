@@ -4,6 +4,8 @@
 #include "macros.h"
 #include "utility.h"
 
+typedef unsigned char BYTE;
+
 typedef struct Location {
     int x, y, z;
 } Location;

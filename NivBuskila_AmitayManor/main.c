@@ -1,12 +1,113 @@
 #include <stdio.h>
+#include <assert.h>
 #include "universal_manager.h"
 #include "galaxy.h"
 #include "company.h"
 
-int main() {
+   // testPlanetAndSolarSystemReadWrite();
+    //testPlanetReadWrite();
+
+void testCreateGalaxy() {
     UniversalManager manager;
     initUniversalManager(&manager);
+    Galaxy* galaxy = create_galaxy(&manager);
 
+    assert(galaxy != NULL); // Galaxy should be created successfully.
+    assert(strlen(galaxy->name) > 0); // Name should not be empty.
+    printf("\ngalaxy->name: %s\n", galaxy->name);
+    assert(galaxy->id > 0 && galaxy->id < 10000);
+    printf("\ngalaxy->id: %d\n", galaxy->id);
+    assert(galaxy->size > 0); // Size should be positive.
+    printf("\ngalaxy->size: %d\n", galaxy->size);
+    assert(check_unique_galaxy_id(&manager, galaxy->id));
+    
+    int initialCount = manager.numGalaxies;
+    printf("\ninitialCount:%d\n", initialCount);
+    addGalaxy(&manager, galaxy);
+    //addGalaxyToManager(&manager);
+
+    assert(manager.numGalaxies == initialCount + 1); // The number of galaxies should increase by 1.
+    printf("\ninitialCount:%d\n", manager.numGalaxies);
+    assert(manager.galaxies[initialCount] != NULL); // The new galaxy should be added to the end of the manager's array.
+
+    
+}
+
+
+void testCreateSolarSystem() {
+    UniversalManager manager;
+    initUniversalManager(&manager); // Assume this initializes a UniversalManager and its galaxies
+    Galaxy galaxy = { "Amitay",{1,1,1}, NULL, 0,10,100,1 };
+        
+    SolarSystem* system = ALLOCATE(SolarSystem*, 1);
+    add_solar_system(&galaxy, system);
+
+    
+    assert(system != NULL);
+    assert(strlen(system->name) > 0);
+    
+    /*
+    assert(system->id > 0 && system->id < 10000); // ID should be within valid range
+    assert(system->size > 0); // Size should be positive
+    assert(check_unique_solarSystem_id(&galaxy, system->id)); // ID should be unique within the galaxy
+    assert(check_unique_solarSystem_location(&galaxy, system->portal_location)); // Location should be unique within the galaxy
+    assert(isSolarSystemWithinGalaxy(&galaxy, system)); // SolarSystem should be within its parent Galaxy
+  */
+   
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+int main() {
+  
+    //testCreateGalaxy();
+    testCreateSolarSystem();
+    printf("\nDone\n");
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    /*
     int choice;
 
     do {
@@ -91,4 +192,5 @@ int main() {
     freeUniversalManager(&manager);
 
     return 0;
+    */
 }

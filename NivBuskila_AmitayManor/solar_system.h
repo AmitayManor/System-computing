@@ -28,6 +28,12 @@ typedef struct SolarSystem {
     int id;
 } SolarSystem;
 
+int compareSolarSystems(const SolarSystem* pSS1, const SolarSystem* pSS2);
+void debugCompareSS(const SolarSystem* pSS1, const SolarSystem* pSS2);
+void testPlanetAndSolarSystemReadWrite();
+void readSolarSystemFromText(FILE* fp, SolarSystem* system);
+void writeSolarSystemToText(FILE* fp, const SolarSystem* system);
+
 void addPlanet(SolarSystem* system, Planet* planet);
 
 void removePlanet(SolarSystem* system, int planetID);

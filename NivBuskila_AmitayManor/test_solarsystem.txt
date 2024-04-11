@@ -1,0 +1,13 @@
+SolarSystem Name: Sol
+Portal Location: 100 200 300
+Risk Level: 2
+Size: 1
+ID: 0
+Number of Planets: 1
+Planet Name: Earth
+Portal Location: 1 2 3
+Planet ID: 45
+Risk Level: 10
+Size: 1000
+---
+===

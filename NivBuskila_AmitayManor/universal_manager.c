@@ -181,7 +181,7 @@ Planet* findPlanet_byID(SolarSystem* system, const int id) {
 
 }
 
-Galaxy* findGalaxy(UniversalManager* manager, const char* name) {
+Galaxy* findGalaxy(UniversalManager* manager, const char name[MAX_GALAXY_NAME]) {
   
     for (int i = 0; i < manager->numGalaxies; i++) {
 
@@ -191,7 +191,7 @@ Galaxy* findGalaxy(UniversalManager* manager, const char* name) {
     return NULL;
 }
 
-SolarSystem* findSolarSystem(Galaxy* galaxy, const char* name) {
+SolarSystem* findSolarSystem(Galaxy* galaxy, const char name[MAX_SOLAR_SYSTEM_NAME]) {
  
     for (int i = 0; i < galaxy->num_solar_systems; i++) {
 
@@ -201,7 +201,7 @@ SolarSystem* findSolarSystem(Galaxy* galaxy, const char* name) {
     return NULL; 
 }
 
-Planet* findPlanet(SolarSystem* system, const char* name) {
+Planet* findPlanet(SolarSystem* system, const name[MAX_PLANET_NAME]) {
     
     if (!system || !system->planetsHead || !name) {
         return NULL; 
@@ -576,8 +576,8 @@ void addSolarSystemToManger(UniversalManager* manager) {
 
 void addPlanetToManager(UniversalManager* manager) {
     flush_stdin();
-    char* galaxyName = ALLOCATE(char*, MAX_GALAXY_NAME);
-//    char galaxyName[MAX_GALAXY_NAME];
+    //char* galaxyName = ALLOCATE(char*, MAX_GALAXY_NAME);
+    char galaxyName[MAX_GALAXY_NAME];
     Galaxy* galaxy = NULL;
 
     printGalaxies(manager);
@@ -585,7 +585,7 @@ void addPlanetToManager(UniversalManager* manager) {
         printf("Enter galaxy's name :\n");
         if (!myGets(galaxyName, MAX_GALAXY_NAME)) {
             LOG_DEBUG("Failed to read input. Please try again.\n");
-//            printf("Failed to read input. Please try again.\n");
+
             continue;
         }
 
@@ -595,7 +595,11 @@ void addPlanetToManager(UniversalManager* manager) {
         }
     } while (!galaxy);
 
-    display_solar_systems(galaxy);
+    /*replace to genric print*/
+
+    print_galaxy(galaxy);
+
+    //display_solar_systems(galaxy);
     char systemName[MAX_SOLAR_SYSTEM_NAME];  // Assuming there's a constant for solar system names
     SolarSystem* system = NULL;
     do {

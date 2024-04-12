@@ -1,11 +1,1 @@
-﻿  company.c
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(73,30): warning C4047: '=': 'SpaceCraft **' differs in levels of indirection from 'SpaceCraft ***'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(83,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(80,25): warning C4047: 'initializing': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(120,26): warning C4047: '=': 'InterstellarTravel **' differs in levels of indirection from 'InterstellarTravel ***'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(130,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(127,33): warning C4047: 'initializing': 'InterstellarTravel *' differs in levels of indirection from 'InterstellarTravel **'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(194,50): warning C4047: 'function': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(194,50): warning C4024: 'free_spacecraft': different types for formal and actual parameter 1
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(227,11): warning C4047: 'initializing': 'char *' differs in levels of indirection from 'char **'
-  NivBuskila_AmitayManor.vcxproj -> C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\x64\Debug\NivBuskila_AmitayManor.exe
+﻿  NivBuskila_AmitayManor.vcxproj -> C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\x64\Debug\NivBuskila_AmitayManor.exe

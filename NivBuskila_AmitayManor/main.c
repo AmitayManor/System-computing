@@ -5,7 +5,7 @@
 #include "company.h"
 
 int main() {
-  
+    /*
     Planet planet1 = { "Bijo", {4,1,2},1,2,15 };
     Planet planet2 = { "Eden", {5,1,2},2,2,15 };
     Planet planet3 = { "Omri", {4,1,7},3,2,15 };
@@ -52,9 +52,9 @@ int main() {
     addCompanyToManager(&manager);
     
     manage_company_operations(&manager);
-    
-    
-    /*
+    */
+    UniversalManager* manager = ALLOCATE(UniversalManager*, 1);
+    initUniversalManager(&manager);
     int choice;
 
     do {
@@ -139,5 +139,5 @@ int main() {
     freeUniversalManager(&manager);
 
     return 0;
-    */
+    
 }

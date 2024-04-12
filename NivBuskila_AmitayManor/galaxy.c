@@ -33,7 +33,7 @@ int check_unique_solarSystem_location(Galaxy* galaxy, Location sSytemLoc) {
 }
 
 void display_solar_systems(Galaxy* galaxy) {
-    printf("Galaxy Name: \n", galaxy->name);
+    printf("Galaxy Name: %s\n", galaxy->name);
     for (int i = 0; i < galaxy->num_solar_systems; i++) {
         printf("%d. ", i + 1);
         display_solar_system(galaxy->star_systems[i]);
@@ -66,6 +66,7 @@ void add_solar_system(Galaxy* galaxy) {
         galaxy->num_solar_systems++;
         printf("New Solar System '%s' added successfully to %s galaxy.\n", system->name, galaxy->name);
     }
+
 }
 
 void free_galaxy(Galaxy* galaxy) {

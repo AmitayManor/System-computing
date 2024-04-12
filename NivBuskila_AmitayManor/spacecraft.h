@@ -12,7 +12,6 @@
 typedef struct {
     char* name;
     char* model;
-    // enum type
     double maxSpeed;
     int craftId;
 } SpaceCraft;

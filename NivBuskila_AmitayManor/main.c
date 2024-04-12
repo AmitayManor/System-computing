@@ -4,107 +4,54 @@
 #include "galaxy.h"
 #include "company.h"
 
-   // testPlanetAndSolarSystemReadWrite();
-    //testPlanetReadWrite();
-
-void testCreateGalaxy() {
-    UniversalManager manager;
-    initUniversalManager(&manager);
-    Galaxy* galaxy = create_galaxy(&manager);
-
-    assert(galaxy != NULL); // Galaxy should be created successfully.
-    assert(strlen(galaxy->name) > 0); // Name should not be empty.
-    printf("\ngalaxy->name: %s\n", galaxy->name);
-    assert(galaxy->id > 0 && galaxy->id < 10000);
-    printf("\ngalaxy->id: %d\n", galaxy->id);
-    assert(galaxy->size > 0); // Size should be positive.
-    printf("\ngalaxy->size: %d\n", galaxy->size);
-    assert(check_unique_galaxy_id(&manager, galaxy->id));
-    
-    int initialCount = manager.numGalaxies;
-    printf("\ninitialCount:%d\n", initialCount);
-    addGalaxy(&manager, galaxy);
-    //addGalaxyToManager(&manager);
-
-    assert(manager.numGalaxies == initialCount + 1); // The number of galaxies should increase by 1.
-    printf("\ninitialCount:%d\n", manager.numGalaxies);
-    assert(manager.galaxies[initialCount] != NULL); // The new galaxy should be added to the end of the manager's array.
-
-    
-}
-
-
-void testCreateSolarSystem() {
-    UniversalManager manager;
-    initUniversalManager(&manager); // Assume this initializes a UniversalManager and its galaxies
-    Galaxy galaxy = { "Amitay",{1,1,1}, NULL, 0,10,100,1 };
-        
-    SolarSystem* system = ALLOCATE(SolarSystem*, 1);
-    add_solar_system(&galaxy, system);
-
-    
-    assert(system != NULL);
-    assert(strlen(system->name) > 0);
-    
-    /*
-    assert(system->id > 0 && system->id < 10000); // ID should be within valid range
-    assert(system->size > 0); // Size should be positive
-    assert(check_unique_solarSystem_id(&galaxy, system->id)); // ID should be unique within the galaxy
-    assert(check_unique_solarSystem_location(&galaxy, system->portal_location)); // Location should be unique within the galaxy
-    assert(isSolarSystemWithinGalaxy(&galaxy, system)); // SolarSystem should be within its parent Galaxy
-  */
-   
-
-
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 int main() {
   
-    //testCreateGalaxy();
-    testCreateSolarSystem();
-    printf("\nDone\n");
+    Planet planet1 = { "Bijo", {4,1,2},1,2,15 };
+    Planet planet2 = { "Eden", {5,1,2},2,2,15 };
+    Planet planet3 = { "Omri", {4,1,7},3,2,15 };
+    PlanetNode pNode3 = { (void*)&planet3,NULL };
+    PlanetNode pNode2 = { (void*)&planet2,&pNode3 };
+    PlanetNode pNode1 = { (void*)&planet1,&pNode2 };
+
+    SolarSystem system = { "Niv",{2, 2, 2},5, &pNode1,3, 1000, 32 };
+    SolarSystem** star_system = ALLOCATE(SolarSystem**,1);
+    star_system[0] = &system;
+    Galaxy galaxy = { "Amitay",{1,1,1}, star_system, 1,10,100,1 };
+
+    Galaxy** galaxies = ALLOCATE(Galaxy**, 1);
+    galaxies[0] = &galaxy;
+
+
+    SpaceCraft sp1 = {"f1","t",1500,1};
+    SpaceCraft sp2 = { "f2","q",1500,2 };
+    SpaceCraft sp3 = { "f3","a",1500,3 };
+    SpaceCraft sp4 = { "f4","z",1500,4 };
+
+    SpaceCraft** sCrafts = ALLOCATE(SpaceCraft**, 1);
+    sCrafts[0] = &sp1;
+    sCrafts[1] = &sp2;
+    sCrafts[2] = &sp3;
+    sCrafts[3] = &sp4;
+
+
+    Company cm1 = {"SpaceX", 1997, 4, sCrafts, NULL, 0,eGALAXY };
+    Company cm2 = { "China", 2000, 4, sCrafts, NULL, 0,eSOLARSYSTEM };
+    Company cm3 = { "USA", 1968, 4, sCrafts, NULL, 0,ePLANET };
+
+    Company** companies = ALLOCATE(Company**, 3);
+
+    companies[0] = &cm1;
+    companies[1] = &cm2;
+    companies[2] = &cm3;
+
+
+    UniversalManager manager = { galaxies,1, companies,3 };
     
+    printCompanies(&manager);
     
+    addCompanyToManager(&manager);
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    manage_company_operations(&manager);
     
     
     /*

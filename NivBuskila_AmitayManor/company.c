@@ -14,15 +14,13 @@ static int (*compareTravelFunctions[])(const void*, const void*) = {
     compareTravelByDistance
 };
 
-/*----Finished----*/
 
 void get_company_name(char* name) {
     printf("Enter Company Name: ");
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF);
+    
     if (!myGets(name, MAX_COMPANY_NAME)) {
         LOG_DEBUG("Error reading company name.\n");
-        //fprintf(stderr, "Error reading company name.\n");
+        
         strncpy(name, "DefaultCompany", MAX_COMPANY_NAME - 1);
         name[MAX_COMPANY_NAME - 1] = '\0';
     }
@@ -73,21 +71,16 @@ int isCraftIdUnique(const Company* company, int craftId) {
 void initialize_company_spacecrafts(Company* company, int numOfSpaceCrafts) {
     if (numOfSpaceCrafts > 0) {
         company->spaceCrafts = ALLOCATE(SpaceCraft**, numOfSpaceCrafts);
-//        company->spaceCrafts = malloc(numOfSpaceCrafts * sizeof(SpaceCraft*));
         if (company->spaceCrafts == NULL) {
             LOG_DEBUG("Error: Failed to allocate memory for spacecrafts.\n");
-            //fprintf(stderr, "Error: Failed to allocate memory for spacecrafts.\n");
             return;
         }
 
         for (int i = 0; i < numOfSpaceCrafts; i++) {
-            //SpaceCraft* newCraft = create_individual_spacecraft(i + 1);
             SpaceCraft* newCraft = ALLOCATE(SpaceCraft*, 1);
-            //SpaceCraft* newCraft = (SpaceCraft*)malloc(sizeof(SpaceCraft));
 
             if (newCraft == NULL) {
                 LOG_DEBUG("Error: Failed to create spacecraft %d.\n", i + 1);
-                //fprintf(stderr, "Error: Failed to create spacecraft %d.\n", i + 1);
 
                 for (int j = 0; j < i; j++) {
                     free_spacecraft(company->spaceCrafts[j]);
@@ -100,7 +93,7 @@ void initialize_company_spacecrafts(Company* company, int numOfSpaceCrafts) {
 
             int idFlag = 0;
             do {
-                get_SpaceCraft_id(newCraft->craftId);
+                get_SpaceCraft_id(newCraft);
                 if (isCraftIdUnique(company, newCraft->craftId)) {
                     idFlag = 1;
                 }
@@ -125,20 +118,16 @@ void initialize_company_travels(UniversalManager* mg, Company* company, int numO
 
     if (numOfTravels > 0) {
         company->travels = ALLOCATE(InterstellarTravel**, numOfTravels);
-//        company->travels = malloc(numOfTravels * sizeof(InterstellarTravel*));
         if (company->travels == NULL) {
             LOG_DEBUG("Error: Failed to allocate memory for travels.\n");
-//            fprintf(stderr, "Error: Failed to allocate memory for travels.\n");
             return;
         }
 
         for (int i = 0; i < numOfTravels; i++) {
             InterstellarTravel* newTravel = ALLOCATE(InterstellarTravel*, 1);
-            //InterstellarTravel* newTravel = (InterstellarTravel*)malloc(sizeof(InterstellarTravel));
 
             if (newTravel == NULL) {
                 LOG_DEBUG("Error: Failed to create travel %d.\n", i + 1);
-                //fprintf(stderr, "Error: Failed to create travel %d.\n", i + 1);
 
                 for (int j = 0; j < i; j++) {
                     free_interstellar_travel(company->travels[j]);
@@ -155,8 +144,10 @@ void initialize_company_travels(UniversalManager* mg, Company* company, int numO
                 printf("\nEnter an ID for this Travel (1-9999):\n");
                 scanf("%d", &trId);
 
-                if (check_unique_travel_id(company, trId))
+                if (check_unique_travel_id(company, trId)){
                     newTravel->travelID = trId;
+                    idFlag = 1;
+                }
                 else
                     printf("\nError! This ID is not valid. Try again.\n");
 

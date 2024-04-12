@@ -123,19 +123,17 @@ void writeSolarSystemToText(FILE* fp, const SolarSystem* system) {
 
 void addPlanet(SolarSystem* system, Planet* planet) {
     PlanetNode* newNode = ALLOCATE(PlanetNode*, 1);
-//    PlanetNode* newNode = (PlanetNode*)malloc(sizeof(PlanetNode));
     if (newNode == NULL) {
         printf("Failed to allocate memory for the new planet node.\n");
         return;
     }
 
-    // Assign the planet to the node and insert it at the head of the list
+    
     newNode->planet = planet;
     newNode->next = system->planetsHead;
     system->planetsHead = newNode;
     system->num_planets++;
 
-    free(newNode);
 }
 
 void removePlanet(SolarSystem* system, int planetID) {
@@ -257,26 +255,6 @@ int isPlanetWithinSolarSystem(SolarSystem* solarSystem , Planet* planet) {
     else return 0;  
     
 }
-
-/*  Needs do-while loop 
-void add_planet_to_solar_system(SolarSystem* system, Planet* planet) {
-    
-    if (!isPlanetWithinSolarSystem(system, planet))
-    {
-        printf("The planet is outside the solar system radius.\n");
-    }
-    else
-    {
-        if (system->num_planets < MAX_STAR_SYSTEMS) {
-            system->planets[system->num_planets++] = planet;
-            printf("New planet '%s' added successfully to %s solar system.\n", planet->name, system->name);
-        }
-        else {
-            fprintf(stderr, "SolarSystem has reached its maximum capacity of planets.\n");
-        }
-    
-    }
-}*/
 
 void display_solar_system(const SolarSystem* system) {
     if (system) {

@@ -199,6 +199,8 @@ int savePlanetToBinaryFileCompressed(const Planet* pPl, FILE* fp) {
     */
 }
 
+
+
 void print_planet(void* p) {
     Planet* planet = (Planet*)p;
     printf("Planet ID: %d, Name: %s, Risk Level: %d\n", planet->id, planet->name, planet->riskLevel);
@@ -206,7 +208,6 @@ void print_planet(void* p) {
 
 Planet* create_planet(SolarSystem* system) {
     Planet* newPlanet = ALLOCATE(Planet*, 1);
-//    Planet* newPlanet = (Planet*)malloc(sizeof(Planet));
     if (newPlanet == NULL) {
         printf("Memory allocation failed\n");
         return NULL;
@@ -214,11 +215,10 @@ Planet* create_planet(SolarSystem* system) {
 
     printf("Enter the name for the Planet (up to %d characters): ", MAX_PLANET_NAME - 1);
 
-    // Use myGets to safely read the name into the galaxy's name field
     if (!myGets(newPlanet->name, MAX_PLANET_NAME)) {
         LOG_DEBUG("Failed to read Planet name or input was empty.\n");
-//        fprintf(stderr, "Failed to read Planet name or input was empty.\n");
-        free(newPlanet);  // Cleanup the allocated memory if input fails
+
+        free(newPlanet);  
         return NULL;
     }
        

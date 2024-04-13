@@ -4,44 +4,10 @@
 #include "galaxy.h"
 #include "company.h"
 
-void test_planet_io() {
-    Planet writePlanet = { "Earth", {0, 100, 200}, 1, 5, 1000 };
-    FILE* fp = fopen("test_planet.txt", "w+");
-    if (fp == NULL) {
-        perror("Failed to open file");
-        return;
-    }
-    writePlanetToText(fp, &writePlanet);
-    rewind(fp);  // Reset file pointer for reading
-
-    Planet readPlanet;
-    if (readPlanetFromText(fp, &readPlanet)) {
-        printf("Planet read successfully:\n");
-        printf("Name: %s\n", readPlanet.name);
-        printf("Location: %d %d %d\n", readPlanet.portal_location.x, readPlanet.portal_location.y, readPlanet.portal_location.z);
-        printf("ID: %d\n", readPlanet.id);
-        printf("Risk Level: %d\n", readPlanet.riskLevel);
-        printf("Size: %d\n", readPlanet.size);
-    }
-    else {
-        printf("Failed to read planet from file.\n");
-    }
-
-    fclose(fp);
-}
-
-
-
-
-
 
 int main() {
-
-    testInterstellarTravelIO();
-    testSpaceCraftIO();
-//    testGalaxyBinaryIO();
-
-
+    
+    /*
     Planet planet1 = { "Bijo", {4,1,2},1,2,15 };
     Planet planet2 = { "Eden", {5,1,2},2,2,15 };
     Planet planet3 = { "Omri", {4,1,7},3,2,15 };
@@ -76,10 +42,16 @@ int main() {
     sCrafts[2] = &sp3;
     sCrafts[3] = &sp4;
 
+    InterstellarTravel tr1 = { "G0001S0032P0001","G0001S0032P0003", &sp1, {12,12,2024},{12,12,2024}, 5, 2, 1,1 };
+    InterstellarTravel tr2 = { "G0001S0032P0001","G0001S0032P0002", &sp1, {13,12,2024},{13,12,2024}, 1, 2, 1,2 };
 
-    Company cm1 = {"SpaceX", 1997, 4, sCrafts, NULL, 0,eGALAXY };
-    Company cm2 = { "China", 2000, 4, sCrafts, NULL, 0,eSOLARSYSTEM };
-    Company cm3 = { "USA", 1968, 4, sCrafts, NULL, 0,ePLANET };
+    InterstellarTravel** travels = ALLOCATE(InterstellarTravel**, 2);
+    travels[0] = &tr1;
+    travels[1] = &tr2;
+
+    Company cm1 = {"SpaceX", 1997, 4, sCrafts, travels, 2,eGALAXY };
+    Company cm2 = { "China", 2000, 4, sCrafts, travels, 2,eSOLARSYSTEM };
+    Company cm3 = { "USA", 1968, 4, sCrafts, travels, 2,ePLANET };
 
     Company** companies = ALLOCATE(Company**, 3);
 
@@ -89,7 +61,12 @@ int main() {
 
     UniversalManager manager = { galaxies,1, companies,3 };
     
+    */
+
     int choice;
+    UniversalManager manager;
+    initUniversalManager(&manager);
+   
 
     do {
        
@@ -100,7 +77,8 @@ int main() {
         printf("4. Display All Companies\n");
         printf("5. Rename cosmic element\n");
         printf("6. Export all data to file\n");
-        printf("7. Exit\n");
+        printf("7. Import all data to file\n");
+        printf("8. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
@@ -127,11 +105,16 @@ int main() {
             break;
         }
         case 6: {
-            //Export all data
+            
+            exportData(&manager);
             break;
         }
         
         case 7: {
+            importData(&manager);
+            break;
+        }
+        case 8: {
             printf("Exiting...\n");
             break;
         }
@@ -140,7 +123,7 @@ int main() {
             printf("Invalid choice. Please try again.\n");
         }
         }
-    } while (choice != 7);
+    } while (choice != 8);
 
     freeUniversalManager(&manager);
 

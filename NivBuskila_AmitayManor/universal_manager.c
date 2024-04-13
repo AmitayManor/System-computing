@@ -7,7 +7,6 @@ static int (*compareCompanyFunctions[])(const void*, const void*) = {
     compareCompanyByName,
     compareCompanyByNumSpaceCrafts
 };
-
 /* ----- Manues ----- */
 void manage_company_operations(UniversalManager* manager) {
 
@@ -142,16 +141,117 @@ void addCosmicElement(UniversalManager* manager) {
 }
 
 /* ----- Files -----*/
+void importData(UniversalManager* manager) {
+   
+    int success = 0;
+    FILE* fp;
+    int choice;
+    printf("\n--- Importing Data ---\n");
+    if (!manager) {
+        LOG_DEBUG("Error! no information.");
+        return;
+    }
+
+
+    printf("Choose how to import the data:\n1. from .txt\n2. from .bin\n");
+    scanf("%d", &choice);
+
+    switch (choice) {
+    case 1: 
+        fp = fopen("universal_manager.txt", "r");
+        if (fp == NULL) {
+            printf("Failed to open file for reading.\n");
+            return;
+        }
+        success = readUniversalManagerFromText(fp, manager);
+        if (success) {
+            printf("Data imported successfully from universal_manager.txt\n");
+        }
+        else {
+            printf("Failed to read data from text file.\n");
+        }
+        fclose(fp);
+        break;
+    case 2: 
+        fp = fopen("universal_manager.bin", "rb");
+        if (fp == NULL) {
+            printf("Failed to open file for reading.\n");
+            return;
+        }
+        success = readUniversalManagerFromBinaryFile(manager, fp);
+        if (success) {
+            printf("Data imported successfully from universal_manager.bin\n");
+        }
+        else {
+            printf("Failed to read data from binary file.\n");
+        }
+        fclose(fp);
+        break;
+    default:
+        printf("Invalid import type selected.\n");
+        break;
+    }
+}
+
+void exportData(const UniversalManager* manager) {
+
+    FILE* fp;
+    int choice;
+    printf("\n--- Exporting the Data ---\n");
+    if (!manager) {
+        LOG_DEBUG("Error! no information.");
+        return;
+    }
+
+    
+        printf("Choose how to export the data:\n1. to .txt\n2. to .bin\n");
+        scanf("%d", &choice);
+
+
+        switch (choice) {
+        case 1:  
+            fp = fopen("universal_manager.txt", "w");
+            if (fp == NULL) {
+                printf("Failed to open file for writing.\n");
+                return;
+            }
+            writeUniversalManagerToText(fp, manager);
+            printf("Data exported successfully to universal_manager.txt\n");
+            fclose(fp);
+            break;
+        case 2:  
+            fp = fopen("universal_manager.bin", "wb");
+            if (fp == NULL) {
+                printf("Failed to open file for writing.\n");
+                return;
+            }
+            if (writeUniversalManagerToBinaryFile(manager, fp)) {
+                printf("Data exported successfully to universal_manager.bin\n");
+            }
+            else {
+                printf("Failed to write data to binary file.\n");
+            }
+            fclose(fp);
+            break;
+
+
+        default:
+            printf("Invalid export type selected.\n");
+            break;
+        }
+    
+}
+
 void writeUniversalManagerToText(FILE* fp, const UniversalManager* manager) {
     fprintf(fp, "Number of Galaxies: %d\n", manager->numGalaxies);
     for (int i = 0; i < manager->numGalaxies; i++) {
-        fprintf(fp, "Galaxy %d:\n", i + 1);
+        
         writeGalaxyToText(fp, manager->galaxies[i]);
     }
 
     fprintf(fp, "Number of Companies: %d\n", manager->numCompanies);
     for (int j = 0; j < manager->numCompanies; j++) {
-        fprintf(fp, "Company %d:\n", j + 1);
+        
         writeCompanyToText(fp, manager->companies[j]);
     }
 }
@@ -213,7 +313,6 @@ int readUniversalManagerFromBinaryFile(UniversalManager* manager, FILE* fp) {
 
     return 1;
 }
-
 
 /* ----- Functions ----- */
 void initUniversalManager(UniversalManager* manager) {
@@ -396,29 +495,6 @@ Planet* findPlanet(SolarSystem* system, const name[MAX_PLANET_NAME]) {
         current = current->next; 
     }
     return NULL;
-}
-
-int check_unique_galaxy_location(UniversalManager* mg, Location galaxyLoc){
-   
-    if (!mg || !mg->galaxies || mg->numGalaxies <= 0)
-        return 1;
-    for (int i = 0; i < mg->numGalaxies; ++i) {
-        if (isSameLocation(mg->galaxies[i]->portal_location, galaxyLoc))
-            return 0;
-    }
-    return 1;
-}
-
-int check_unique_galaxy_id(UniversalManager* mg, int id) {
- 
-    if (!mg || !mg->galaxies || mg->numGalaxies <= 0) 
-        return 1;
-
-    for (int i = 0; i < mg->numGalaxies; ++i) {
-        if (mg->galaxies[i]->id == id) 
-            return 0;
-    }
-    return 1;
 }
 
 void displayCosmicElements(const UniversalManager* manager) {

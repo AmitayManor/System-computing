@@ -19,12 +19,12 @@ void writeCompanyToText(FILE* fp, const Company* company) {
     fprintf(fp, "Established Year: %d\n", company->establishedYear);
     fprintf(fp, "Number of SpaceCrafts: %d\n", company->numSpacecrafts);
     for (int i = 0; i < company->numSpacecrafts; i++) {
-        fprintf(fp, "SpaceCraft %d:\n", i + 1);
+        //fprintf(fp, "SpaceCraft %d:\n", i + 1);
         writeSpaceCraftToText(fp, company->spaceCrafts[i]);
     }
     fprintf(fp, "Number of Travels: %d\n", company->numTravels);
     for (int j = 0; j < company->numTravels; j++) {
-        fprintf(fp, "Travel %d:\n", j + 1);
+        //fprintf(fp, "Travel %d:\n", j + 1);
         writeInterstellarTravelToText(fp, company->travels[j]);
     }
     fprintf(fp, "Permissions Zone: %d\n", company->permissionsZone);
@@ -331,18 +331,7 @@ Permission get_permission_zone() {
     return permission;
 }
 
-void print_company(void* cmp) {
-    Company* company = (Company*)cmp;
-    printf("Company Name: %s, Number of SpaceCrafts: %d, Number of Travels: %d\n", company->name, company->numSpacecrafts, company->numTravels);
 
-    for (int i = 0; i < company->numSpacecrafts; i++) {
-        generic_print(company->spaceCrafts[i], print_spacecraft);  // Use generic_print for each SpaceCraft
-    }
-
-    for (int i = 0; i < company->numTravels; i++) {
-        generic_print(company->travels[i], print_travel);  // Use generic_print for each Travel
-    }
-}
 
 void free_company(Company* company) {
     if (company) {
@@ -480,33 +469,6 @@ void searchTravel(Company* company) {
 }
 
 /*----Needs to be finished----*/
-void upgrade_permission(Company* company) {
-    if (company && company->permissionsZone < eNUMOFPERMISSION - 1) {
-        company->permissionsZone++;
-    }
-}
-
-void downgrade_permission(Company* company) {
-    if (company && company->permissionsZone > eNOPERMISSION) {
-        company->permissionsZone--;
-    }
-}
-
-void add_spacecraft(Company* company, SpaceCraft** spacecraft) {
-    if (company && spacecraft) {
-        company->numSpacecrafts++;
-        company->spaceCrafts = realloc(company->spaceCrafts, company->numSpacecrafts * sizeof(SpaceCraft*));
-        company->spaceCrafts[company->numSpacecrafts - 1] = *spacecraft;
-    }
-}
-
-void add_interstellar_travel(Company* company, InterstellarTravel* travel) {
-    if (company && travel) {
-        company->numTravels++;
-        company->travels = realloc(company->travels, company->numTravels * sizeof(InterstellarTravel*));
-        company->travels[company->numTravels - 1] = travel;
-    }
-}
 
 
 

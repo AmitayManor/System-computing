@@ -41,12 +41,6 @@ void initialize_company_spacecrafts(Company* company, int numOfSpaceCrafts);
 void initialize_company_travels(UniversalManager* mg, Company* company, int numOfTravels);
 Permission get_permission_zone();
 int isCraftIdUnique(const Company* company, int craftId);
-
-void print_company(void* cmp);
-void upgrade_permission(Company* company);
-void add_spacecraft(Company* company, SpaceCraft** spacecraft);
-void add_interstellar_travel(Company* company, InterstellarTravel* travel);
-void downgrade_permission(Company* company);
 void free_company(Company* company);
 
 

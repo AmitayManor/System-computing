@@ -25,33 +25,24 @@ typedef struct {
 } InterstellarTravel;
 
 
-void testInterstellarTravelIO();
 
 int writeInterstellarTravelToText(FILE* fp, const InterstellarTravel* travel);
 int readInterstellarTravelFromText(FILE* fp, InterstellarTravel* travel, Company* company);
 int writeInterstellarTravelToBinaryFile(const InterstellarTravel* travel, FILE* fp);
 int readInterstellarTravelFromBinaryFile(InterstellarTravel* travel, FILE* fp, Company* company);
-
 int compareTravelByID(const void* a, const void* b);
-
 int compareTravelByDepartureDate(const void* a, const void* b);
-
 int compareTravelByDistance(const void* a, const void* b);
-
-void initialize_interstellar_travel(InterstellarTravel* travel, UniversalManager* manager, Company* company);
 void get_travelID(Company* company, InterstellarTravel* tr);
 void get_departureDate(InterstellarTravel* tr);
 void get_spaceCraft(Company* company,InterstellarTravel* tr);
 void get_travelCode_Src(UniversalManager* mg, InterstellarTravel* tr);
 void get_travelCode_Dst(UniversalManager* mg, InterstellarTravel* tr, Permission permission);
 void get_arrival_date(UniversalManager* mg, InterstellarTravel* tr);
-
 int check_unique_travel_id(Company* cm, const int id);
-
 Date advance_date(Date date, int daysToAdd);
 int calculate_risk_level(InterstellarTravel* travel);
 int is_travel_successful(InterstellarTravel* travel);
-
 void print_travel(void* tr);
 void free_interstellar_travel(InterstellarTravel* travel);
 

@@ -16,25 +16,16 @@ typedef struct {
     int craftId;
 } SpaceCraft;
 
-void testSpaceCraftIO();
 
 void writeSpaceCraftToText(FILE* fp, const SpaceCraft* craft);
 int readSpaceCraftFromText(FILE* fp, SpaceCraft* craft);
 int writeSpaceCraftToBinaryFile(const SpaceCraft* craft, FILE* fp);
 int readSpaceCraftFromBinaryFile(SpaceCraft* craft, FILE* fp);
-
-
 int compareSpaceCraftByID(const void* a, const void* b);
-
 int compareSpaceCraftByName(const void* a, const void* b);
-
 int compareSpaceCraftByModel(const void* a, const void* b);
-
 SpaceCraft* create_spacecraft(const char* name, const char* model, double maxSpeed, int id);
-
 void print_spacecraft(void* sc);
-
-//void print_spacecraft(SpaceCraft* craft);
 void get_SpaceCraft_id(SpaceCraft* sp);
 void get_SpaceCraft_name(SpaceCraft* sp);
 void get_SpaceCraft_model(SpaceCraft* sp);

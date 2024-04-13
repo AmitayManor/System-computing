@@ -23,11 +23,6 @@ typedef struct Galaxy {
     int id;
 } Galaxy;
 
-void testGalaxyIO();
-
-void testGalaxyBinaryIO();
-
-
 void print_galaxy(void* g);
 
 void updateGalaxyRiskLevel(Galaxy* galaxy);
@@ -39,8 +34,6 @@ int readGalaxyFromBinaryFile(Galaxy* galaxy, FILE* fp);
 int writeGalaxyToBinaryFile(const Galaxy* galaxy, FILE* fp);
 void writeGalaxyToText(FILE* fp, const Galaxy* galaxy);
 int readGalaxyFromText(FILE* fp, Galaxy* galaxy);
-void sort_solar_systems(Galaxy* galaxy, int sort_choice);
-
 void display_solar_systems(Galaxy* galaxy);
 void add_solar_system(Galaxy* galaxy);
 

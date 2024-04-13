@@ -26,10 +26,6 @@ typedef struct PlanetNode {
     struct PlanetNode* next;
 } PlanetNode;
 
-void createSamplePlanet(Planet* pPl);
-int comparePlanets(const Planet* pPl1, const Planet* pPl2);
-void testPlanetReadWrite();
-void debugComparePlanets(const Planet* pPl1, const Planet* pPl2);
 
 int readPlanetFromText(FILE* fp, Planet* planet);
 void writePlanetToText(FILE* fp, const Planet* planet);

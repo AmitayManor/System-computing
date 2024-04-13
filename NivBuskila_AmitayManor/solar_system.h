@@ -26,14 +26,9 @@ typedef struct SolarSystem {
     int id;
 } SolarSystem;
 
-void testSolarSystemIO();
-void testSolarSystemBinaryIO();
 
 void updateSolarSystemRiskLevel(SolarSystem* system);
 void add_planet_to_solar_system(SolarSystem* system);
-int compareSolarSystems(const SolarSystem* pSS1, const SolarSystem* pSS2);
-void debugCompareSS(const SolarSystem* pSS1, const SolarSystem* pSS2);
-void testPlanetAndSolarSystemReadWrite();
 
 int readSolarSystemFromText(FILE* fp, SolarSystem* system);
 void writeSolarSystemToText(FILE* fp, const SolarSystem* system);
@@ -42,7 +37,6 @@ int writeSolarSystemToBinaryFile(const SolarSystem* system, FILE* fp);
 int readSolarSystemFromBinaryFile(SolarSystem* system, FILE* fp);
 
 
-void removePlanet(SolarSystem* system, int planetID);
 void freePlanetList(SolarSystem* system);
 void print_solar_system(void* ss);
 void display_solar_system(const SolarSystem* system);

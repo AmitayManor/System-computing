@@ -1,146 +1,10 @@
 #include "solar_system.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
 
-void testSolarSystemIO() {
-    // Create a sample SolarSystem with planets
-    //SolarSystem system = { "SolarSystemX", {1, 2, 3}, 5, NULL, 3, 300, 123 };
-    Planet planet1 = { "Bijo", {4,1,2},1,2,15 };
-    Planet planet2 = { "Eden", {5,1,2},2,2,15 };
-    Planet planet3 = { "Omri", {4,1,7},3,2,15 };
-
-    PlanetNode pNode3 = { &planet3,NULL };
-    PlanetNode pNode2 = { &planet2,&pNode3 };
-    PlanetNode pNode1 = { &planet1,&pNode2 };
-
-    SolarSystem system = { "Niv",{2, 2, 2},5, &pNode1,3, 1000, 32 };
-
-    // Write the system to a file
-    FILE* fp = fopen("test_solarsystem.txt", "w");
-    assert(fp != NULL);
-    writeSolarSystemToText(fp, &system);
-    fclose(fp);
-
-    // Read the system back from the file
-    SolarSystem readSystem = { 0 };
-    fp = fopen("test_solarsystem.txt", "r");
-    assert(fp != NULL);
-    assert(readSolarSystemFromText(fp, &readSystem) == 1);
-    fclose(fp);
-
-    // Assertions to check system properties
-    assert(strcmp(system.name, readSystem.name) == 0);
-    assert(system.portal_location.x == readSystem.portal_location.x);
-    assert(system.risk_level == readSystem.risk_level);
-    assert(system.num_planets == readSystem.num_planets);
-    assert(system.size == readSystem.size);
-    assert(system.id == readSystem.id);
-
-    // Assertions to check planets
-    PlanetNode* orig = system.planetsHead;
-    PlanetNode* read = readSystem.planetsHead;
-    while (orig && read) {
-        assert(strcmp(orig->planet->name, read->planet->name) == 0);
-        assert(orig->planet->id == read->planet->id);
-        assert(orig->planet->riskLevel == read->planet->riskLevel);
-        assert(orig->planet->size == read->planet->size);
-        orig = orig->next;
-        read = read->next;
-    }
-    assert(orig == NULL && read == NULL);  // Ensure both lists end at the same time
-
-}
-
-void testSolarSystemBinaryIO() {
-    FILE* fp = fopen("test_solarsystem.bin", "w+b");
-    if (!fp) return;
-
-    Planet planet1 = { "Bijo", {4,1,2},1,2,15 };
-    Planet planet2 = { "Eden", {5,1,2},2,2,15 };
-    Planet planet3 = { "Omri", {4,1,7},3,2,15 };
-
-    PlanetNode pNode3 = { &planet3,NULL };
-    PlanetNode pNode2 = { &planet2,&pNode3 };
-    PlanetNode pNode1 = { &planet1,&pNode2 };
-
-    SolarSystem system = { "Niv",{2, 2, 2},5, &pNode1,3, 1000, 32 };
-
-    assert(writeSolarSystemToBinaryFile(&system, fp));
-    rewind(fp);
-    SolarSystem loadedSystem;
-    assert(readSolarSystemFromBinaryFile(&loadedSystem, fp));
-
-    // Implement assert conditions to verify the integrity of loadedSystem
-    fclose(fp);
-}
-
-
-
-
-
-
-
-
-
-
-
-void debugCompareSS(const SolarSystem* pSS1, const SolarSystem* pSS2) {
-    printf("Comparing Planets...\n");
-    printf("Name: %s - %s\n", pSS1->name, pSS2->name);
-    printf("Location X: %d - %d\n", pSS1->portal_location.x, pSS2->portal_location.x);
-    printf("Location Y: %d - %d\n", pSS1->portal_location.y, pSS2->portal_location.y);
-    printf("Location Z: %d - %d\n", pSS1->portal_location.z, pSS2->portal_location.z);
-    printf("ID: %d - %d\n", pSS1->id, pSS2->id);
-    printf("Risk Level: %d - %d\n", pSS1->risk_level, pSS2->risk_level);
-    printf("Size: %d - %d\n", pSS1->size, pSS2->size);
-    printf("\n\n");
-    debugComparePlanets(pSS1->planetsHead, pSS2->planetsHead);
-}
-
-void testPlanetAndSolarSystemReadWrite() {
-    // Create a sample planet and solar system
-    Planet earth = { "Earth", {1, 2, 3}, 45, 10, 1000 };
-    SolarSystem sol = { "Sol", {100, 200, 300}, 2, 9000, 1, 1 };
-
-    PlanetNode earthNode = { &earth, NULL };
-    sol.planetsHead = &earthNode;
-
-    // Write to text file
-    FILE* fp = fopen("test_solarsystem.txt", "w");
-    writeSolarSystemToText(fp, &sol);
-    fclose(fp);
-
-    // Read back
-    SolarSystem solRead;
-    fp = fopen("test_solarsystem.txt", "r");
-    readSolarSystemFromText(fp, &solRead);
-    fclose(fp);
-
-    debugCompareSS(&sol, &solRead);
-    // Implement comparison functions and assert results
-    //assert(comparePlanets(&earth, solRead.planetsHead->planet));
-    assert(compareSolarSystems(&sol, &solRead));
-
-
-    // Free dynamically allocated memory
-    // Free planet nodes in solRead
-}
-
-int compareSolarSystems(const SolarSystem* pSS1, const SolarSystem* pSS2) {
-    if (strcmp(pSS1->name, pSS2->name) != 0) return 0;
-    if (pSS1->portal_location.x != pSS2->portal_location.x ||
-        pSS1->portal_location.y != pSS2->portal_location.y ||
-        pSS1->portal_location.z != pSS2->portal_location.z) return 0;
-    if (pSS1->id != pSS2->id) return 0;
-    if (pSS1->risk_level != pSS2->risk_level) return 0;
-    if (pSS1->size != pSS2->size) return 0;
-    if (!comparePlanets(pSS1->planetsHead, pSS2->planetsHead)) return 0;
-    return 1;
-}
 
 int writeSolarSystemToBinaryFile(const SolarSystem* system, FILE* fp) {
-    // Write SolarSystem attributes
+   
     fwrite(system->name, sizeof(char), MAX_SOLAR_SYSTEM_NAME, fp);
     fwrite(&system->portal_location, sizeof(Location), 1, fp);
     fwrite(&system->risk_level, sizeof(int), 1, fp);
@@ -148,7 +12,7 @@ int writeSolarSystemToBinaryFile(const SolarSystem* system, FILE* fp) {
     fwrite(&system->size, sizeof(int), 1, fp);
     fwrite(&system->id, sizeof(int), 1, fp);
 
-    // Write each planet in the linked list
+    
     PlanetNode* current = system->planetsHead;
     while (current != NULL) {
         savePlanetToBinaryFileCompressed(current->planet, fp);
@@ -157,8 +21,9 @@ int writeSolarSystemToBinaryFile(const SolarSystem* system, FILE* fp) {
 
     return 1;
 }
+
 int readSolarSystemFromBinaryFile(SolarSystem* system, FILE* fp) {
-    // Read SolarSystem attributes
+    
     fread(system->name, sizeof(char), MAX_SOLAR_SYSTEM_NAME, fp);
     fread(&system->portal_location, sizeof(Location), 1, fp);
     fread(&system->risk_level, sizeof(int), 1, fp);
@@ -166,11 +31,11 @@ int readSolarSystemFromBinaryFile(SolarSystem* system, FILE* fp) {
     fread(&system->size, sizeof(int), 1, fp);
     fread(&system->id, sizeof(int), 1, fp);
 
-    // Initialize the linked list head to NULL
+    
     system->planetsHead = NULL;
     PlanetNode* lastNode = NULL;
 
-    // Read each planet and reconstruct the linked list
+    
     for (int i = 0; i < system->num_planets; i++) {
         PlanetNode* newNode = malloc(sizeof(PlanetNode));
         if (newNode == NULL) return 0;
@@ -196,7 +61,6 @@ int readSolarSystemFromBinaryFile(SolarSystem* system, FILE* fp) {
 
     return 1;
 }
-
 
 int readSolarSystemFromText(FILE* fp, SolarSystem* system) {
     char buffer[MAX_SOLAR_SYSTEM_NAME + 1];
@@ -255,9 +119,6 @@ void writeSolarSystemToText(FILE* fp, const SolarSystem* system) {
         current = current->next;
     }
 }
-
-
-
 
 SolarSystem* create_solar_system(Galaxy* galaxy) {
 
@@ -373,29 +234,6 @@ void add_planet_to_solar_system(SolarSystem* system) {
     }
     else {
         printf("Failed to create a new Planet.\n");
-    }
-}
-
-void removePlanet(SolarSystem* system, int planetID) {
-   
-    PlanetNode* current = system->planetsHead;
-    PlanetNode* prev = NULL;
-
-    while (current != NULL) {
-        Planet* p = (Planet*)current->planet;
-        if (p->id == planetID) {
-            if (prev == NULL) {
-                system->planetsHead = current->next;
-            }
-            else {
-                prev->next = current->next;
-            }
-            free(current);
-            system->num_planets--;
-            return;
-        }
-        prev = current;
-        current = current->next;
     }
 }
 

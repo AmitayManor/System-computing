@@ -4,70 +4,6 @@
 #include <assert.h>
 
 
-void testGalaxyIO() {
-    Planet planet1 = { "Bijo", {4,1,2},1,2,15 };
-    Planet planet2 = { "Eden", {5,1,2},2,2,15 };
-    Planet planet3 = { "Omri", {4,1,7},3,2,15 };
-    Planet planet11 = { "avi", {43,1,77},1,2,10 };
-
-    PlanetNode pNode3 = { &planet3,NULL };
-    PlanetNode pNode2 = { &planet2,&pNode3 };
-    PlanetNode pNode1 = { &planet1,&pNode2 };
-    PlanetNode pNode11 = { &planet11,NULL };
-
-    SolarSystem system = { "Niv",{2, 2, 2},5, &pNode1,3, 1000, 32 };
-    SolarSystem system2 = { "Milky",{1, 2, 43},6, &pNode11,1, 1000, 32 };
-
-    SolarSystem** star_system = ALLOCATE(SolarSystem**, 2);
-    star_system[0] = &system;
-    star_system[1] = &system2;
-
-    Galaxy galaxy = { "Amitay",{1,1,1}, star_system, 2,10,100,1 };
-
-    FILE* fp = fopen("test_galaxy.txt", "w+");
-    assert(fp != NULL);
-    writeGalaxyToText(fp, &galaxy);
-    rewind(fp);
-
-    Galaxy loadedGalaxy;
-    assert(readGalaxyFromText(fp, &loadedGalaxy));
-    fclose(fp);
-}
-
-void testGalaxyBinaryIO() {
-    FILE* fp = fopen("test_galaxy.bin", "w+b");
-    if (!fp) return;
-
-    Planet planet1 = { "Bijo", {4,1,2},1,2,15 };
-    Planet planet2 = { "Eden", {5,1,2},2,2,15 };
-    Planet planet3 = { "Omri", {4,1,7},3,2,15 };
-    Planet planet11 = { "avi", {43,1,77},1,2,10 };
-
-    PlanetNode pNode3 = { &planet3,NULL };
-    PlanetNode pNode2 = { &planet2,&pNode3 };
-    PlanetNode pNode1 = { &planet1,&pNode2 };
-    PlanetNode pNode11 = { &planet11,NULL };
-
-    SolarSystem system = { "Niv",{2, 2, 2},5, &pNode1,3, 1000, 32 };
-    SolarSystem system2 = { "Milky",{1, 2, 43},6, &pNode11,1, 1000, 32 };
-
-    SolarSystem** star_system = ALLOCATE(SolarSystem**, 2);
-    star_system[0] = &system;
-    star_system[1] = &system2;
-
-    Galaxy galaxy = { "Amitay",{1,1,1}, star_system, 2,10,100,1 };
-
-    assert(writeGalaxyToBinaryFile(&galaxy, fp));
-    rewind(fp);
-
-    Galaxy loadedGalaxy;
-    assert(readGalaxyFromBinaryFile(&loadedGalaxy, fp));
-
-    // Add assertions to check all properties of loadedGalaxy
-    fclose(fp);
-
-}
-
 
 int readGalaxyFromBinaryFile(Galaxy* galaxy, FILE* fp) {
     
@@ -96,7 +32,6 @@ int readGalaxyFromBinaryFile(Galaxy* galaxy, FILE* fp) {
     return 1;
 }
 
-
 int writeGalaxyToBinaryFile(const Galaxy* galaxy, FILE* fp) {
    
     fwrite(galaxy->name, sizeof(char), MAX_GALAXY_NAME, fp);
@@ -116,7 +51,6 @@ int writeGalaxyToBinaryFile(const Galaxy* galaxy, FILE* fp) {
     return 1;
 }
 
-
 void writeGalaxyToText(FILE* fp, const Galaxy* galaxy) {
     fprintf(fp, "Galaxy Name: %s\n", galaxy->name);
     fprintf(fp, "Portal Location: %d %d %d\n", galaxy->portal_location.x, galaxy->portal_location.y, galaxy->portal_location.z);
@@ -129,7 +63,6 @@ void writeGalaxyToText(FILE* fp, const Galaxy* galaxy) {
         writeSolarSystemToText(fp, galaxy->star_systems[i]);
     }
 }
-
 
 int readGalaxyFromText(FILE* fp, Galaxy* galaxy) {
     char buffer[MAX_GALAXY_NAME + 1];
@@ -158,12 +91,6 @@ int readGalaxyFromText(FILE* fp, Galaxy* galaxy) {
     return 1;
 }
 
-
-void sort_solar_systems(Galaxy* galaxy, int sort_choice) {
-    // Sorting logic based on sort_choice
-}
-
-
 void display_solar_systems(Galaxy* galaxy) {
     printf("Galaxy Name: %s\n", galaxy->name);
     for (int i = 0; i < galaxy->num_solar_systems; i++) {
@@ -171,7 +98,6 @@ void display_solar_systems(Galaxy* galaxy) {
         display_solar_system(galaxy->star_systems[i]);
     }
 }
-
 
 void add_solar_system(Galaxy* galaxy) {
     if (!galaxy) {
@@ -200,8 +126,6 @@ void add_solar_system(Galaxy* galaxy) {
         printf("Failed to create a new Solar System.\n");
     }
 }
-
-
 
 void free_galaxy(Galaxy* galaxy) {
     if (galaxy) {
@@ -287,7 +211,6 @@ void rename_galaxy(Galaxy* galaxy)
     }
 }
 
-
 int isSolarSystemIDUnique(const Galaxy* galaxy, const int id) {
     for (int i = 0; i < galaxy->num_solar_systems; i++) {
         if (galaxy->star_systems[i]->id == id) {
@@ -296,6 +219,7 @@ int isSolarSystemIDUnique(const Galaxy* galaxy, const int id) {
     }
     return 1;
 }
+
 int isSolarSystemLocationUnique(const Galaxy* galaxy,const Location loc) {
     for (int i = 0; i < galaxy->num_solar_systems; i++) {
         if (isSameLocation(galaxy->star_systems[i]->portal_location, loc)) {
@@ -304,6 +228,7 @@ int isSolarSystemLocationUnique(const Galaxy* galaxy,const Location loc) {
     }
     return 1;  
 }
+
 int isSolarSystemWithinGalaxy(const Galaxy* galaxy,const Location newSystemLoc) {
     double distance = calculateDistance(galaxy->portal_location, newSystemLoc);
     if (distance <= galaxy->size) {
@@ -311,6 +236,7 @@ int isSolarSystemWithinGalaxy(const Galaxy* galaxy,const Location newSystemLoc) 
     }
     return 0;  
 }
+
 void updateGalaxyRiskLevel(Galaxy* galaxy) {
     if (galaxy == NULL || galaxy->num_solar_systems == 0) {
         printf("Error: No galaxy provided or no solar systems exist within the galaxy.\n");

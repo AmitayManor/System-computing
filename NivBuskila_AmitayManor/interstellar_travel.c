@@ -5,108 +5,6 @@
 #include <string.h>
 #include <assert.h>
 
-void testInterstellarTravelIO() {
-    // Setup
-    Planet planet1 = { "Bijo", {4,1,2},1,2,15 };
-    Planet planet2 = { "Eden", {5,1,2},2,2,15 };
-    Planet planet3 = { "Omri", {4,1,7},3,2,15 };
-    Planet planet11 = { "avi", {43,1,77},1,2,10 };
-
-    PlanetNode pNode3 = { &planet3,NULL };
-    PlanetNode pNode2 = { &planet2,&pNode3 };
-    PlanetNode pNode1 = { &planet1,&pNode2 };
-    PlanetNode pNode11 = { &planet11,NULL };
-
-    SolarSystem system = { "Niv",{2, 2, 2},5, &pNode1,3, 1000, 32 };
-    SolarSystem system2 = { "Milky",{1, 2, 43},6, &pNode11,1, 1000, 32 };
-
-    SolarSystem** star_system = ALLOCATE(SolarSystem**, 2);
-    star_system[0] = &system;
-    star_system[1] = &system2;
-
-    Galaxy galaxy = { "Amitay",{1,1,1}, star_system, 2,10,100,1 };
-
-    Galaxy** galaxies = ALLOCATE(Galaxy**, 1);
-    galaxies[0] = &galaxy;
-
-
-    SpaceCraft sp1 = { "f1","t",1500,1 };
-    SpaceCraft sp2 = { "f2","q",1500,2 };
-    SpaceCraft sp3 = { "f3","a",1500,3 };
-    SpaceCraft sp4 = { "f4","z",1500,4 };
-
-    SpaceCraft** sCrafts = ALLOCATE(SpaceCraft**, 4);
-    sCrafts[0] = &sp1;
-    sCrafts[1] = &sp2;
-    sCrafts[2] = &sp3;
-    sCrafts[3] = &sp4;
-
-
-    Company cm1 = { "SpaceX", 1997, 4, sCrafts, NULL, 0,eGALAXY };
-    Company cm2 = { "China", 2000, 4, sCrafts, NULL, 0,eSOLARSYSTEM };
-    Company cm3 = { "USA", 1968, 4, sCrafts, NULL, 0,ePLANET };
-
-    Company** companies = ALLOCATE(Company**, 3);
-
-    companies[0] = &cm1;
-    companies[1] = &cm2;
-    companies[2] = &cm3;
-
-    UniversalManager manager = { galaxies,1, companies,3 };
-
-
-    Company company = { "SpaceX", 1997, 4, sCrafts, NULL, 0,eGALAXY };
-    InterstellarTravel travel = {
-        "CodeSRC123", "CodeDST456",
-        searchSpaceCraftFromFile(&company, 1),  // Assuming a SpaceCraft with ID 101 exists
-        {1, 12, 2022}, {5, 1, 2023},  // Departure and arrival dates
-        1000000.0, 5, 1, 999  // Distance, risk level, completion status, travel ID
-    };
-
-    // Write to text file
-    FILE* fp = fopen("test_travel.txt", "w+");
-    assert(fp != NULL);
-    assert(writeInterstellarTravelToText(&travel, fp));
-    rewind(fp);
-
-    // Read from text file
-    InterstellarTravel loadedTravel;
-    assert(readInterstellarTravelFromText(fp, &loadedTravel, &company));
-    fclose(fp);
-
-    // Verify text file IO
-    assert(strcmp(travel.travelCodeSrc, loadedTravel.travelCodeSrc) == 0);
-    assert(strcmp(travel.travelCodeDst, loadedTravel.travelCodeDst) == 0);
-    assert(travel.spaceCraft->craftId == loadedTravel.spaceCraft->craftId);
-    assert(travel.departureDate.day == loadedTravel.departureDate.day);
-    assert(travel.arrivalDate.day == loadedTravel.arrivalDate.day);
-    assert(travel.distance == loadedTravel.distance);
-    assert(travel.riskLevel == loadedTravel.riskLevel);
-    assert(travel.isCompleted == loadedTravel.isCompleted);
-    assert(travel.travelID == loadedTravel.travelID);
-
-    // Write to binary file
-    fp = fopen("test_travel.bin", "wb+");
-    assert(fp != NULL);
-    assert(writeInterstellarTravelToBinaryFile(&travel, fp));
-    rewind(fp);
-
-    // Read from binary file
-    assert(readInterstellarTravelFromBinaryFile(&loadedTravel, fp, &company));
-    fclose(fp);
-
-    // Verify binary file IO
-    assert(strcmp(travel.travelCodeSrc, loadedTravel.travelCodeSrc) == 0);
-    assert(strcmp(travel.travelCodeDst, loadedTravel.travelCodeDst) == 0);
-    assert(travel.spaceCraft->craftId == loadedTravel.spaceCraft->craftId);
-    assert(travel.departureDate.day == loadedTravel.departureDate.day);
-    assert(travel.arrivalDate.day == loadedTravel.arrivalDate.day);
-    assert(travel.distance == loadedTravel.distance);
-    assert(travel.riskLevel == loadedTravel.riskLevel);
-    assert(travel.isCompleted == loadedTravel.isCompleted);
-    assert(travel.travelID == loadedTravel.travelID);
-
-    }
 
 int writeInterstellarTravelToText(FILE* fp, const InterstellarTravel* travel) {
     if (fp && travel) {
@@ -459,7 +357,6 @@ int compareTravelByDistance(const void* a, const void* b) {
     return 0;
 }
 
-
 void print_travel(void* tr) {
     InterstellarTravel* travel = (InterstellarTravel*)tr;
     printf("Travel ID: %d, SRC: %s, DST: %s, Departure Date: %d/%d/%d\n",travel->travelID ,travel->travelCodeSrc, travel->travelCodeDst, travel->departureDate.day, travel->departureDate.month, travel->departureDate.year);
@@ -490,51 +387,44 @@ void get_travelID(Company* company, InterstellarTravel* tr) {
     }
 }
 
-
 void free_interstellar_travel(InterstellarTravel* travel) {
     if (travel) {
         free(travel);
     }
 }
 
-
-/*------Needs to be finished------*/
 int calculate_risk_level(InterstellarTravel* travel) {
     if (travel) {
-        // Implement logic to calculate the risk level based on travel details
-        // You may need to consider the source, destination, distance, spacecraft model, etc.
-        // For simplicity, let's assume a fixed risk level based on distance
+        
         if (travel->distance < 1000000.0) {
-            return 1; // Low risk
+            return 1; 
         }
         else if (travel->distance < 5000000.0) {
-            return 2; // Medium risk
+            return 2; 
         }
         else {
-            return 3; // High risk
+            return 3; 
         }
     }
-    return 0; // Invalid travel
+    return 0;
 }
 
 int is_travel_successful(InterstellarTravel* travel) {
     if (travel) {
-        // Implement logic to determine if the travel was successful based on risk level and other factors
-        // You may need to consider the risk level, spacecraft model, and any other relevant factors
-        // For simplicity, let's assume a random success/failure based on risk level
+        
         int randomValue = rand() % 100;
         switch (travel->riskLevel) {
-        case 1: // Low risk
-            return randomValue < 90; // 90% success rate
-        case 2: // Medium risk
-            return randomValue < 70; // 70% success rate
-        case 3: // High risk
-            return randomValue < 50; // 50% success rate
+        case 1: 
+            return randomValue < 90;
+        case 2: 
+            return randomValue < 70; 
+        case 3: 
+            return randomValue < 50; 
         default:
-            return 0; // Failure
+            return 0; 
         }
     }
-    return 0; // Invalid travel
+    return 0; 
 }
 
 

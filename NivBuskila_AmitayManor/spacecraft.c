@@ -5,34 +5,6 @@
 #include <assert.h>
 
 
-void testSpaceCraftIO() {
-    SpaceCraft craft = { "Enterprise", "NX-01", 250000, 1701 };
-    FILE* fp = fopen("test_spacecraft.txt", "w+");
-    assert(fp != NULL);
-    writeSpaceCraftToText(fp, &craft);
-    rewind(fp);
-    SpaceCraft loadedCraft;
-    assert(readSpaceCraftFromText(fp, &loadedCraft));
-    fclose(fp);
-
-    fp = fopen("test_spacecraft.bin", "w+b");
-    assert(fp != NULL);
-    writeSpaceCraftToBinaryFile(&craft, fp);
-    rewind(fp);
-    assert(readSpaceCraftFromBinaryFile(&loadedCraft, fp));
-    fclose(fp);
-
-    // Assertions to verify all properties
-    assert(strcmp(craft.name, loadedCraft.name) == 0);
-    assert(strcmp(craft.model, loadedCraft.model) == 0);
-    assert(craft.maxSpeed == loadedCraft.maxSpeed);
-    assert(craft.craftId == loadedCraft.craftId);
-
-    free(loadedCraft.name);
-    free(loadedCraft.model);
-}
-
-
 void writeSpaceCraftToText(FILE* fp, const SpaceCraft* craft) {
     if (craft && fp) {
         fprintf(fp, "Name: %s\n", craft->name);
@@ -96,7 +68,6 @@ int readSpaceCraftFromBinaryFile(SpaceCraft* craft, FILE* fp) {
     return 1;
 }
 
-
 SpaceCraft* create_spacecraft(const char* name, const char* model, double maxSpeed, int id) {
     SpaceCraft* craft = ALLOCATE(SpaceCraft*, 1);
 //    SpaceCraft* craft = (SpaceCraft*)malloc(sizeof(SpaceCraft));
@@ -107,27 +78,6 @@ SpaceCraft* create_spacecraft(const char* name, const char* model, double maxSpe
         craft->craftId = id;
     }
     return craft;
-}
-
-SpaceCraft* create_individual_spacecraft(int id) {
-    char craftName[MAX_LEN_SPACE_CRAFT], craftModel[MAX_LEN_SPACE_CRAFT];
-    double craftMaxSpeed = -1;
-
-    printf("Enter name for spacecraft %d: ", id);
-    scanf("%99s", craftName);
-
-    printf("Enter model for spacecraft %d: ", id);
-    scanf("%99s", craftModel);
-
-    do {
-        printf("Enter max speed (in km/s) for spacecraft %d (0 - 300000): ", id);
-        scanf("%lf", &craftMaxSpeed);
-        if (craftMaxSpeed < MIN_SPEED || craftMaxSpeed > MAX_SPEED) {
-            printf("Invalid speed. Please enter a value between 0 and 300000.\n");
-        }
-    } while (craftMaxSpeed < MIN_SPEED || craftMaxSpeed > MAX_SPEED);
-
-    return create_spacecraft(craftName, craftModel, craftMaxSpeed, id);
 }
 
 void print_spacecraft(void* sc) {

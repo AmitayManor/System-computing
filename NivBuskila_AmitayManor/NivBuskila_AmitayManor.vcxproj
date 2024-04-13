@@ -133,6 +133,7 @@
     <ClInclude Include="galaxy.h" />
     <ClInclude Include="interstellar_travel.h" />
     <ClInclude Include="location.h" />
+    <ClInclude Include="macros.h" />
     <ClInclude Include="permission.h" />
     <ClInclude Include="planet.h" />
     <ClInclude Include="solar_system.h" />

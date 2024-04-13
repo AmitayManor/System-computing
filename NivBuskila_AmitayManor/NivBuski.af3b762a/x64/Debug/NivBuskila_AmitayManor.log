@@ -1,1 +1,44 @@
-﻿  NivBuskila_AmitayManor.vcxproj -> C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\x64\Debug\NivBuskila_AmitayManor.exe
+﻿  company.c
+  date.c
+  galaxy.c
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\company.c(74,13): warning C4013: 'get_SpaceCraft_name' undefined; assuming extern returning int
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\company.c(75,13): warning C4013: 'get_SpaceCraft_model' undefined; assuming extern returning int
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\company.c(76,13): warning C4013: 'get_SpaceCraft_speed' undefined; assuming extern returning int
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\company.c(163,50): warning C4047: 'function': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\company.c(163,50): warning C4024: 'free_spacecraft': different types for formal and actual parameter 1
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\galaxy.c(96,14): warning C4013: 'isGalaxyIDUnique' undefined; assuming extern returning int
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\galaxy.c(109,10): warning C4013: 'isGalaxyLocationUnique' undefined; assuming extern returning int
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\galaxy.c(112,9): warning C4033: 'create_galaxy' must return a value
+  interstellar_travel.c
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\interstellar_travel.c(21,35): warning C4311: 'type cast': pointer truncation from 'Permission *' to 'int'
+  location.c
+  main.c
+  planet.c
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\planet.c(27,14): warning C4013: 'isPlanetIDUnique' undefined; assuming extern returning int
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\planet.c(45,10): warning C4013: 'isPlanetLocationUnique' undefined; assuming extern returning int
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\planet.c(45,55): warning C4013: 'isPlanetWithinSolarSystem' undefined; assuming extern returning int
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\planet.c(48,9): warning C4033: 'create_planet' must return a value
+  solar_system.c
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\solar_system.c(32,14): warning C4013: 'isSolarSystemIDUnique' undefined; assuming extern returning int
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\solar_system.c(46,10): warning C4013: 'isSolarSystemLocationUnique' undefined; assuming extern returning int
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\solar_system.c(46,55): warning C4013: 'isSolarSystemWithinGalaxy' undefined; assuming extern returning int
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\solar_system.c(49,9): warning C4033: 'create_solar_system' must return a value
+  spacecraft.c
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\spacecraft.c(57,14): warning C4013: 'myGets' undefined; assuming extern returning int
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\spacecraft.c(72,13): warning C4101: 'c': unreferenced local variable
+  universal_manager.c
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\universal_manager.c(219,39): warning C4101: 'newName': unreferenced local variable
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\universal_manager.c(233,78): warning C4101: 'newName': unreferenced local variable
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\universal_manager.c(255,103): warning C4101: 'newName': unreferenced local variable
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\universal_manager.c(331,20): warning C4477: 'printf' : format string '%s' requires an argument of type 'char *', but variadic argument 2 has type 'int'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\universal_manager.c(331,20): warning C4313: 'printf': '%s' in format string conflicts with argument 2 of type 'int'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\universal_manager.c(393,17): warning C4047: 'initializing': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
+  utility.c
+  Generating Code...
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\solar_system.c(60,1): warning C4715: 'create_solar_system': not all control paths return a value
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\planet.c(69,1): warning C4715: 'create_planet': not all control paths return a value
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\interstellar_travel.c(88,1): warning C4716: 'get_travelCode_Dst': must return a value
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\interstellar_travel.c(64,1): warning C4716: 'get_travelCode_Src': must return a value
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\interstellar_travel.c(191,1): warning C4716: 'extractTrcalCode': must return a value
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\galaxy.c(125,1): warning C4715: 'create_galaxy': not all control paths return a value
+  NivBuskila_AmitayManor.vcxproj -> C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.4\NivBuskila_AmitayManor\x64\Debug\NivBuskila_AmitayManor.exe

@@ -1,8 +1,6 @@
 #ifndef DATE_H
 #define DATE_H
 
-#include "macros.h"
-
 typedef struct Date {
     int day, month, year;
 } Date;

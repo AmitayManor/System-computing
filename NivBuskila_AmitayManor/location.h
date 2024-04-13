@@ -1,10 +1,7 @@
 #ifndef LOCATION_H
 #define LOCATION_H
 
-#include "macros.h"
 #include "utility.h"
-
-typedef unsigned char BYTE;
 
 typedef struct Location {
     int x, y, z;

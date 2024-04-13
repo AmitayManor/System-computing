@@ -141,6 +141,79 @@ void addCosmicElement(UniversalManager* manager) {
     } while (choice != 4);
 }
 
+/* ----- Files -----*/
+void writeUniversalManagerToText(FILE* fp, const UniversalManager* manager) {
+    fprintf(fp, "Number of Galaxies: %d\n", manager->numGalaxies);
+    for (int i = 0; i < manager->numGalaxies; i++) {
+        fprintf(fp, "Galaxy %d:\n", i + 1);
+        writeGalaxyToText(fp, manager->galaxies[i]);
+    }
+
+    fprintf(fp, "Number of Companies: %d\n", manager->numCompanies);
+    for (int j = 0; j < manager->numCompanies; j++) {
+        fprintf(fp, "Company %d:\n", j + 1);
+        writeCompanyToText(fp, manager->companies[j]);
+    }
+}
+
+int readUniversalManagerFromText(FILE* fp, UniversalManager* manager) {
+    int numGalaxies, numCompanies;
+
+    fscanf(fp, "Number of Galaxies: %d\n", &numGalaxies);
+    manager->galaxies = ALLOCATE(Galaxy**,numGalaxies);
+    for (int i = 0; i < numGalaxies; i++) {
+        manager->galaxies[i] = ALLOCATE(Galaxy*,1);
+        if (!readGalaxyFromText(fp, manager->galaxies[i])) return 0;
+    }
+    manager->numGalaxies = numGalaxies;
+
+    fscanf(fp, "Number of Companies: %d\n", &numCompanies);
+    manager->companies = ALLOCATE(Company**,numCompanies);
+    for (int j = 0; j < numCompanies; j++) {
+        manager->companies[j] = ALLOCATE(Company*,1);
+        if (!readCompanyFromText(fp, manager->companies[j])) return 0;
+    }
+    manager->numCompanies = numCompanies;
+
+    return 1;
+}
+
+int writeUniversalManagerToBinaryFile(const UniversalManager* manager, FILE* fp) {
+    fwrite(&manager->numGalaxies, sizeof(int), 1, fp);
+    for (int i = 0; i < manager->numGalaxies; i++) {
+        writeGalaxyToBinaryFile(manager->galaxies[i], fp);
+    }
+
+    fwrite(&manager->numCompanies, sizeof(int), 1, fp);
+    for (int j = 0; j < manager->numCompanies; j++) {
+        writeCompanyToBinaryFile(manager->companies[j], fp);
+    }
+
+    return 1;
+}
+
+int readUniversalManagerFromBinaryFile(UniversalManager* manager, FILE* fp) {
+    int numGalaxies, numCompanies;
+
+    fread(&numGalaxies, sizeof(int), 1, fp);
+    manager->galaxies = ALLOCATE(Galaxy**,numGalaxies);
+    for (int i = 0; i < numGalaxies; i++) {
+        manager->galaxies[i] = ALLOCATE(Galaxy*,1);
+        readGalaxyFromBinaryFile(manager->galaxies[i], fp);
+    }
+    manager->numGalaxies = numGalaxies;
+
+    fread(&numCompanies, sizeof(int), 1, fp);
+    manager->companies = ALLOCATE(Company**,numCompanies);
+    for (int j = 0; j < numCompanies; j++) {
+        manager->companies[j] = ALLOCATE(Company*,1);
+        readCompanyFromBinaryFile(manager->companies[j], fp);
+    }
+    manager->numCompanies = numCompanies;
+
+    return 1;
+}
+
 
 /* ----- Functions ----- */
 void initUniversalManager(UniversalManager* manager) {

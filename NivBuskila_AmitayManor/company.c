@@ -14,6 +14,96 @@ static int (*compareTravelFunctions[])(const void*, const void*) = {
     compareTravelByDistance
 };
 
+void writeCompanyToText(FILE* fp, const Company* company) {
+    fprintf(fp, "Company Name: %s\n", company->name);
+    fprintf(fp, "Established Year: %d\n", company->establishedYear);
+    fprintf(fp, "Number of SpaceCrafts: %d\n", company->numSpacecrafts);
+    for (int i = 0; i < company->numSpacecrafts; i++) {
+        fprintf(fp, "SpaceCraft %d:\n", i + 1);
+        writeSpaceCraftToText(fp, company->spaceCrafts[i]);
+    }
+    fprintf(fp, "Number of Travels: %d\n", company->numTravels);
+    for (int j = 0; j < company->numTravels; j++) {
+        fprintf(fp, "Travel %d:\n", j + 1);
+        writeInterstellarTravelToText(fp, company->travels[j]);
+    }
+    fprintf(fp, "Permissions Zone: %d\n", company->permissionsZone);
+}
+
+int readCompanyFromText(FILE* fp, Company* company) {
+    char buffer[MAX_COMPANY_NAME];
+    if (fscanf(fp, "Company Name: %[^\n]\n", buffer) != 1) return 0;
+    company->name = strdup(buffer);
+
+    if (fscanf(fp, "Established Year: %d\n", &company->establishedYear) != 1) return 0;
+
+    int numSpacecrafts;
+    fscanf(fp, "Number of SpaceCrafts: %d\n", &numSpacecrafts);
+    company->spaceCrafts = ALLOCATE(SpaceCraft**, numSpacecrafts);
+    for (int i = 0; i < numSpacecrafts; i++) {
+        company->spaceCrafts[i] = ALLOCATE(SpaceCraft*,1);
+        if (!readSpaceCraftFromText(fp, company->spaceCrafts[i])) return 0;
+    }
+    company->numSpacecrafts = numSpacecrafts;
+
+    int numTravels;
+    fscanf(fp, "Number of Travels: %d\n", &numTravels);
+    company->travels = ALLOCATE(InterstellarTravel**, numTravels);
+    for (int j = 0; j < numTravels; j++) {
+        company->travels[j] = ALLOCATE(InterstellarTravel*,1);
+        if (!readInterstellarTravelFromText(fp, company->travels[j], company)) return 0;
+    }
+    company->numTravels = numTravels;
+
+    fscanf(fp, "Permissions Zone: %d\n", &company->permissionsZone);
+
+    return 1;
+}
+
+int writeCompanyToBinaryFile(const Company* company, FILE* fp) {
+    int nameLen = strlen(company->name) + 1;  // Include null terminator
+    fwrite(&nameLen, sizeof(int), 1, fp);
+    fwrite(company->name, sizeof(char), nameLen, fp);
+    fwrite(&company->establishedYear, sizeof(int), 1, fp);
+    fwrite(&company->numSpacecrafts, sizeof(int), 1, fp);
+    for (int i = 0; i < company->numSpacecrafts; i++) {
+        writeSpaceCraftToBinaryFile(company->spaceCrafts[i], fp);
+    }
+    fwrite(&company->numTravels, sizeof(int), 1, fp);
+    for (int j = 0; j < company->numTravels; j++) {
+        writeInterstellarTravelToBinaryFile(company->travels[j], fp);
+    }
+    fwrite(&company->permissionsZone, sizeof(int), 1, fp);
+
+    return 1;
+}
+
+int readCompanyFromBinaryFile(Company* company, FILE* fp) {
+    int nameLen;
+    fread(&nameLen, sizeof(int), 1, fp);
+    company->name = ALLOCATE(char*,nameLen);
+    fread(company->name, sizeof(char), nameLen, fp);
+    fread(&company->establishedYear, sizeof(int), 1, fp);
+    int numSpacecrafts;
+    fread(&numSpacecrafts, sizeof(int), 1, fp);
+    company->spaceCrafts = ALLOCATE(SpaceCraft**,numSpacecrafts);
+    for (int i = 0; i < numSpacecrafts; i++) {
+        company->spaceCrafts[i] = ALLOCATE(SpaceCraft*,1);
+        readSpaceCraftFromBinaryFile(company->spaceCrafts[i], fp);
+    }
+    int numTravels;
+    fread(&numTravels, sizeof(int), 1, fp);
+    company->travels = ALLOCATE(InterstellarTravel**, numTravels);
+    for (int j = 0; j < numTravels; j++) {
+        company->travels[j] = ALLOCATE(InterstellarTravel*,1);
+        readInterstellarTravelFromBinaryFile(company->travels[j], fp, company);
+    }
+    fread(&company->permissionsZone, sizeof(int), 1, fp);
+
+    return 1;
+}
+
+
 
 void get_company_name(char* name) {
     printf("Enter Company Name: ");

@@ -16,6 +16,11 @@ typedef struct UniversalManager {
     int numCompanies;
 } UniversalManager;
 
+void writeUniversalManagerToText(FILE* fp, const UniversalManager* manager);
+int readUniversalManagerFromText(FILE* fp, UniversalManager* manager);
+int writeUniversalManagerToBinaryFile(const UniversalManager* manager, FILE* fp);
+int readUniversalManagerFromBinaryFile(UniversalManager* manager, FILE* fp);
+
 
 void initUniversalManager(UniversalManager* manager);
 void addGalaxy(UniversalManager* manager, Galaxy* galaxy);

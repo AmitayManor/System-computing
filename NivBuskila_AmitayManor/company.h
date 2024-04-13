@@ -21,6 +21,11 @@ typedef struct Company {
 } Company;
 
 
+void writeCompanyToText(FILE* fp, const Company* company);
+int readCompanyFromText(FILE* fp, Company* company);
+int writeCompanyToBinaryFile(const Company* company, FILE* fp);
+int readCompanyFromBinaryFile(Company* company, FILE* fp);
+
 SpaceCraft* searchSpaceCraft(Company* company);
 SpaceCraft* searchSpaceCraftFromFile(Company* company, const id);
 

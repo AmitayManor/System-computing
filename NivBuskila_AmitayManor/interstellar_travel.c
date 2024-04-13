@@ -7,6 +7,29 @@
 
 void testInterstellarTravelIO() {
     // Setup
+    Planet planet1 = { "Bijo", {4,1,2},1,2,15 };
+    Planet planet2 = { "Eden", {5,1,2},2,2,15 };
+    Planet planet3 = { "Omri", {4,1,7},3,2,15 };
+    Planet planet11 = { "avi", {43,1,77},1,2,10 };
+
+    PlanetNode pNode3 = { &planet3,NULL };
+    PlanetNode pNode2 = { &planet2,&pNode3 };
+    PlanetNode pNode1 = { &planet1,&pNode2 };
+    PlanetNode pNode11 = { &planet11,NULL };
+
+    SolarSystem system = { "Niv",{2, 2, 2},5, &pNode1,3, 1000, 32 };
+    SolarSystem system2 = { "Milky",{1, 2, 43},6, &pNode11,1, 1000, 32 };
+
+    SolarSystem** star_system = ALLOCATE(SolarSystem**, 2);
+    star_system[0] = &system;
+    star_system[1] = &system2;
+
+    Galaxy galaxy = { "Amitay",{1,1,1}, star_system, 2,10,100,1 };
+
+    Galaxy** galaxies = ALLOCATE(Galaxy**, 1);
+    galaxies[0] = &galaxy;
+
+
     SpaceCraft sp1 = { "f1","t",1500,1 };
     SpaceCraft sp2 = { "f2","q",1500,2 };
     SpaceCraft sp3 = { "f3","a",1500,3 };
@@ -19,10 +42,23 @@ void testInterstellarTravelIO() {
     sCrafts[3] = &sp4;
 
 
+    Company cm1 = { "SpaceX", 1997, 4, sCrafts, NULL, 0,eGALAXY };
+    Company cm2 = { "China", 2000, 4, sCrafts, NULL, 0,eSOLARSYSTEM };
+    Company cm3 = { "USA", 1968, 4, sCrafts, NULL, 0,ePLANET };
+
+    Company** companies = ALLOCATE(Company**, 3);
+
+    companies[0] = &cm1;
+    companies[1] = &cm2;
+    companies[2] = &cm3;
+
+    UniversalManager manager = { galaxies,1, companies,3 };
+
+
     Company company = { "SpaceX", 1997, 4, sCrafts, NULL, 0,eGALAXY };
     InterstellarTravel travel = {
         "CodeSRC123", "CodeDST456",
-        searchSpaceCraftFromFile(&company, 101),  // Assuming a SpaceCraft with ID 101 exists
+        searchSpaceCraftFromFile(&company, 1),  // Assuming a SpaceCraft with ID 101 exists
         {1, 12, 2022}, {5, 1, 2023},  // Departure and arrival dates
         1000000.0, 5, 1, 999  // Distance, risk level, completion status, travel ID
     };

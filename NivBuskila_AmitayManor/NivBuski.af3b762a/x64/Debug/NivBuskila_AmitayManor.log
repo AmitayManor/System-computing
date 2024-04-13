@@ -1,23 +1,31 @@
 ﻿  company.c
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(73,30): warning C4047: '=': 'SpaceCraft **' differs in levels of indirection from 'SpaceCraft ***'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(80,37): warning C4047: '=': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(82,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(92,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(90,25): warning C4047: 'initializing': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(132,26): warning C4047: '=': 'InterstellarTravel **' differs in levels of indirection from 'InterstellarTravel ***'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(139,33): warning C4047: '=': 'InterstellarTravel *' differs in levels of indirection from 'SpaceCraft **'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(141,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(152,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(149,33): warning C4047: 'initializing': 'InterstellarTravel *' differs in levels of indirection from 'InterstellarTravel **'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(208,21): warning C4047: 'initializing': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(261,50): warning C4047: 'function': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(261,50): warning C4024: 'free_spacecraft': different types for formal and actual parameter 1
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(336,9): warning C4033: 'searchSpaceCraft' must return a value
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(308,11): warning C4047: 'initializing': 'char *' differs in levels of indirection from 'char **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(42,26): warning C4047: '=': 'SpaceCraft **' differs in levels of indirection from 'SpaceCraft ***'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(44,33): warning C4047: '=': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(51,22): warning C4047: '=': 'InterstellarTravel **' differs in levels of indirection from 'InterstellarTravel ***'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(53,29): warning C4047: '=': 'InterstellarTravel *' differs in levels of indirection from 'InterstellarTravel **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(64,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(137,30): warning C4047: '=': 'SpaceCraft **' differs in levels of indirection from 'SpaceCraft ***'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(144,37): warning C4047: '=': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(146,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(156,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(154,25): warning C4047: 'initializing': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(196,26): warning C4047: '=': 'InterstellarTravel **' differs in levels of indirection from 'InterstellarTravel ***'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(203,33): warning C4047: '=': 'InterstellarTravel *' differs in levels of indirection from 'SpaceCraft **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(205,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(216,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(213,33): warning C4047: 'initializing': 'InterstellarTravel *' differs in levels of indirection from 'InterstellarTravel **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(272,21): warning C4047: 'initializing': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(325,50): warning C4047: 'function': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(325,50): warning C4024: 'free_spacecraft': different types for formal and actual parameter 1
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(400,9): warning C4033: 'searchSpaceCraft' must return a value
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(372,11): warning C4047: 'initializing': 'char *' differs in levels of indirection from 'char **'
   interstellar_travel.c
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\interstellar_travel.c(33,5): warning C4133: 'function': incompatible types - from 'InterstellarTravel *' to 'FILE *'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\interstellar_travel.c(33,5): warning C4133: 'function': incompatible types - from 'FILE *' to 'const InterstellarTravel *'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\interstellar_travel.c(15,18): warning C4047: 'initializing': 'SpaceCraft **' differs in levels of indirection from 'SpaceCraft ***'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\interstellar_travel.c(69,5): warning C4133: 'function': incompatible types - from 'InterstellarTravel *' to 'FILE *'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\interstellar_travel.c(69,5): warning C4133: 'function': incompatible types - from 'FILE *' to 'const InterstellarTravel *'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\interstellar_travel.c(23,19): warning C4047: 'initializing': 'SolarSystem **' differs in levels of indirection from 'SolarSystem ***'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\interstellar_travel.c(29,14): warning C4047: 'initializing': 'Galaxy **' differs in levels of indirection from 'Galaxy ***'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\interstellar_travel.c(38,18): warning C4047: 'initializing': 'SpaceCraft **' differs in levels of indirection from 'SpaceCraft ***'
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\interstellar_travel.c(49,15): warning C4047: 'initializing': 'Company **' differs in levels of indirection from 'Company ***'
   main.c
 C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\main.c(58,19): warning C4047: 'initializing': 'SolarSystem **' differs in levels of indirection from 'SolarSystem ***'
 C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\main.c(64,14): warning C4047: 'initializing': 'Galaxy **' differs in levels of indirection from 'Galaxy ***'
@@ -42,6 +50,6 @@ C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\Ni
 C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\universal_manager.c(674,25): warning C4047: 'initializing': 'SpaceCraft *' differs in levels of indirection from 'SpaceCraft **'
 C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\universal_manager.c(742,29): warning C4047: 'initializing': 'InterstellarTravel *' differs in levels of indirection from 'InterstellarTravel **'
   Generating Code...
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(304,1): warning C4715: 'searchSpaceCraftFromFile': not all control paths return a value
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(350,1): warning C4715: 'searchSpaceCraft': not all control paths return a value
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(414,1): warning C4715: 'searchSpaceCraft': not all control paths return a value
+C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(368,1): warning C4715: 'searchSpaceCraftFromFile': not all control paths return a value
   NivBuskila_AmitayManor.vcxproj -> C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\x64\Debug\NivBuskila_AmitayManor.exe

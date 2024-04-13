@@ -15,13 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="universal_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="galaxy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="location.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="solar_system.h">
@@ -36,9 +30,6 @@
     <ClInclude Include="permission.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="interstellar_travel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="spacecraft.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -46,6 +37,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interstellar_travel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="location.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="universal_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="macros.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

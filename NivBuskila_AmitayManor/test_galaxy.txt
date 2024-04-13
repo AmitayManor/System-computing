@@ -1,3 +1,9 @@
+Galaxy Name: Amitay
+Portal Location: 1 1 1
+Risk Level: 10
+Galaxy Size: 100
+Galaxy ID: 1
+Number of Solar Systems: 2
 SolarSystem Name: Niv
 Portal Location: 2 2 2
 Risk Level: 5
@@ -19,3 +25,14 @@ Portal Location: 4 1 7
 Planet ID: 3
 Risk Level: 2
 Size: 15
+SolarSystem Name: Milky
+Portal Location: 1 2 43
+Risk Level: 6
+Number of Planets: 1
+System Size: 1000
+System ID: 32
+Planet Name: avi
+Portal Location: 43 1 77
+Planet ID: 1
+Risk Level: 2
+Size: 10

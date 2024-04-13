@@ -1,0 +1,5 @@
+Planet Name: Earth
+Portal Location: 0 100 200
+Planet ID: 1
+Risk Level: 5
+Size: 1000

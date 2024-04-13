@@ -1,0 +1,4 @@
+Name: Enterprise
+Model: NX-01
+Max Speed: 250000.00
+Craft ID: 1701

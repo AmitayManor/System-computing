@@ -1,6 +1,8 @@
 #ifndef PERMISSION_H
 #define PERMISSION_H
 
+#include "macros.h"
+
 typedef enum {
     eNOPERMISSION,
     ePLANET,

@@ -1,0 +1,157 @@
+Number of Galaxies: 1
+Galaxy Name: Amitay
+Portal Location: 1 1 1
+Risk Level: 10
+Galaxy Size: 100
+Galaxy ID: 1
+Number of Solar Systems: 2
+SolarSystem Name: Niv
+Portal Location: 2 2 2
+Risk Level: 5
+Number of Planets: 3
+System Size: 1000
+System ID: 32
+Planet Name: Bijo
+Portal Location: 4 1 2
+Planet ID: 1
+Risk Level: 2
+Size: 15
+Planet Name: Eden
+Portal Location: 5 1 2
+Planet ID: 2
+Risk Level: 2
+Size: 15
+Planet Name: Omri
+Portal Location: 4 1 7
+Planet ID: 3
+Risk Level: 2
+Size: 15
+SolarSystem Name: Milky
+Portal Location: 1 2 43
+Risk Level: 6
+Number of Planets: 1
+System Size: 1000
+System ID: 32
+Planet Name: avi
+Portal Location: 43 1 77
+Planet ID: 1
+Risk Level: 2
+Size: 10
+Number of Companies: 3
+Company Name: SpaceX
+Established Year: 1997
+Number of SpaceCrafts: 4
+Name: f1
+Model: t
+Max Speed: 1500.00
+Craft ID: 1
+Name: f2
+Model: q
+Max Speed: 1500.00
+Craft ID: 2
+Name: f3
+Model: a
+Max Speed: 1500.00
+Craft ID: 3
+Name: f4
+Model: z
+Max Speed: 1500.00
+Craft ID: 4
+Number of Travels: 2
+Travel Code Src: G0001S0032P0001
+Travel Code Dst: G0001S0032P0003
+SpaceCraft ID: 1
+Departure Date: 12-12-2024
+Arrival Date: 12-12-2024
+Distance: 5.000000
+Risk Level: 2
+Is Completed: 1
+Travel ID: 1
+Travel Code Src: G0001S0032P0001
+Travel Code Dst: G0001S0032P0002
+SpaceCraft ID: 1
+Departure Date: 13-12-2024
+Arrival Date: 13-12-2024
+Distance: 1.000000
+Risk Level: 2
+Is Completed: 1
+Travel ID: 2
+Permissions Zone: 3
+Company Name: China
+Established Year: 2000
+Number of SpaceCrafts: 4
+Name: f1
+Model: t
+Max Speed: 1500.00
+Craft ID: 1
+Name: f2
+Model: q
+Max Speed: 1500.00
+Craft ID: 2
+Name: f3
+Model: a
+Max Speed: 1500.00
+Craft ID: 3
+Name: f4
+Model: z
+Max Speed: 1500.00
+Craft ID: 4
+Number of Travels: 2
+Travel Code Src: G0001S0032P0001
+Travel Code Dst: G0001S0032P0003
+SpaceCraft ID: 1
+Departure Date: 12-12-2024
+Arrival Date: 12-12-2024
+Distance: 5.000000
+Risk Level: 2
+Is Completed: 1
+Travel ID: 1
+Travel Code Src: G0001S0032P0001
+Travel Code Dst: G0001S0032P0002
+SpaceCraft ID: 1
+Departure Date: 13-12-2024
+Arrival Date: 13-12-2024
+Distance: 1.000000
+Risk Level: 2
+Is Completed: 1
+Travel ID: 2
+Permissions Zone: 2
+Company Name: USA
+Established Year: 1968
+Number of SpaceCrafts: 4
+Name: f1
+Model: t
+Max Speed: 1500.00
+Craft ID: 1
+Name: f2
+Model: q
+Max Speed: 1500.00
+Craft ID: 2
+Name: f3
+Model: a
+Max Speed: 1500.00
+Craft ID: 3
+Name: f4
+Model: z
+Max Speed: 1500.00
+Craft ID: 4
+Number of Travels: 2
+Travel Code Src: G0001S0032P0001
+Travel Code Dst: G0001S0032P0003
+SpaceCraft ID: 1
+Departure Date: 12-12-2024
+Arrival Date: 12-12-2024
+Distance: 5.000000
+Risk Level: 2
+Is Completed: 1
+Travel ID: 1
+Travel Code Src: G0001S0032P0001
+Travel Code Dst: G0001S0032P0002
+SpaceCraft ID: 1
+Departure Date: 13-12-2024
+Arrival Date: 13-12-2024
+Distance: 1.000000
+Risk Level: 2
+Is Completed: 1
+Travel ID: 2
+Permissions Zone: 1

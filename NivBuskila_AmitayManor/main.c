@@ -1,90 +1,77 @@
 #include <stdio.h>
+
 #include "universal_manager.h"
 #include "galaxy.h"
 #include "company.h"
 
-int main() {
-    UniversalManager manager;
-    initUniversalManager(&manager);
+
+int main() {  
 
     int choice;
+    
+    UniversalManager manager;
+    initUniversalManager(&manager);
+      
 
     do {
+       
         printf("\nMain Menu:\n");
         printf("1. Add cosmic element\n");
-        printf("2. Display Systems\n");
-        printf("3. Display Subcomponents\n");
-        printf("4. Add Galaxy\n");
-        printf("5. Add Company\n");
-        printf("6. display Solar System\n");
-        printf("7. Rename Planet\n");
-        printf("8. Display All Cosmic Elements\n");
-        printf("9. Exit\n");
-        printf("10. Test - Companies interface\n");
+        printf("2. Companies interface\n");
+        printf("3. Display The Universe\n");
+        printf("4. Display All Companies\n");
+        printf("5. Rename cosmic element\n");
+        printf("6. Export all data to file\n");
+        printf("7. Import all data to file\n");
+        printf("8. Exit\n");
         printf("Enter your choice: ");
         scanf("%d", &choice);
 
         switch (choice) {
         case 1: {
-            
             addCosmicElement(&manager);
-            
             break;
         }
         case 2: {
-            // Display Systems managed by UniversalManager
-            printGalaxies(&manager);
+            manage_company_operations(&manager);
             break;
         }
         case 3: {
-            // Display Subcomponents within the Systems managed by UniversalManager
-            printCompanies(&manager);
-            break;
-        }
-        case 4: {
-            // Add Galaxy to UniversalManager
-            addGalaxyToManager(&manager);
-            break;
-        }
-        case 5: {
-            // Add Company to UniversalManager
-            addCompanyToManager(&manager);
-            break;
-        }
-        case 6: {
-            // Increase Risk Levels across Systems managed by UniversalManager
-            displaySolarSystem(&manager);
-            break;
-        }
-        case 7: {
-            // Rename a Planet within a System managed by UniversalManager
-            renameCosmicElement(&manager);
-            break;
-        }
-        case 8: {
-            // Display All Cosmic elements managed by UniversalManager
             displayCosmicElements(&manager);
             break;
         }
-
-        case 9: {
+        case 4: {
+            printCompanies(&manager);
+            break;
+        }
+        
+        case 5: {
+            renameCosmicElement(&manager);
+            break;
+        }
+        case 6: {
+            
+            exportData(&manager);
+            break;
+        }
+        
+        case 7: {
+            importData(&manager);
+            break;
+        }
+        case 8: {
             printf("Exiting...\n");
             break;
         }
 
-        case 10: {
-            manage_company_operations(&manager);
-
-            break;
-        }
         default: {
             printf("Invalid choice. Please try again.\n");
         }
         }
-    } while (choice != 9);
+    } while (choice != 8);
 
-    // Free resources
     freeUniversalManager(&manager);
 
     return 0;
+    
 }

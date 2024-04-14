@@ -1,12 +1,17 @@
 #ifndef PLANET_H
 #define PLANET_H
 
+#include "macros.h"
 #include "location.h"
 #include "utility.h"
 
+#define MAX_PLANET_NAME 50
+#define MAX_RISK_LVL 10
+#define MIN_RISK_LVL 0
+
 typedef struct SolarSystem SolarSystem;
 
-#define MAX_PLANET_NAME 50
+typedef unsigned char BYTE;
 
 typedef struct Planet {
     char name[MAX_PLANET_NAME];
@@ -21,8 +26,17 @@ typedef struct PlanetNode {
     struct PlanetNode* next;
 } PlanetNode;
 
-Planet* create_planet(SolarSystem* solarSystem);
+
+int readPlanetFromText(FILE* fp, Planet* planet);
+void writePlanetToText(FILE* fp, const Planet* planet);
+
+int readPlanetFromBinaryFileCompressed(Planet* pPl, FILE* fp);
+int savePlanetToBinaryFileCompressed(const Planet* pPl, FILE* fp);
+
+void print_planet(void* p);
+Planet* create_planet(SolarSystem* system);
 void free_planet(Planet* planet);
 void rename_planet(Planet* planet);
+void freePlanetNode(PlanetNode* node);
 
 #endif // PLANET_H

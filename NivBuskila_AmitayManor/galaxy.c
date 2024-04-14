@@ -2,26 +2,93 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-void load_galaxy_from_binary(FILE* file, Galaxy* galaxy) {
-    // Binary file reading logic
+
+int readGalaxyFromBinaryFile(Galaxy* galaxy, FILE* fp) {
+    
+    fread(galaxy->name, sizeof(char), MAX_GALAXY_NAME, fp);
+    fread(&galaxy->portal_location, sizeof(Location), 1, fp);
+    fread(&galaxy->riskLevel, sizeof(int), 1, fp);
+    fread(&galaxy->size, sizeof(int), 1, fp);
+    fread(&galaxy->id, sizeof(int), 1, fp);
+    fread(&galaxy->num_solar_systems, sizeof(int), 1, fp);
+
+    galaxy->star_systems = ALLOCATE(SolarSystem*, galaxy->num_solar_systems);
+    if (!galaxy->star_systems) {
+        return 0;  
+    }
+
+    for (int i = 0; i < galaxy->num_solar_systems; i++) {
+        galaxy->star_systems[i] = ALLOCATE(SolarSystem,1);
+        if (!galaxy->star_systems[i]) {
+            return 0;
+        }
+        if (!readSolarSystemFromBinaryFile(galaxy->star_systems[i], fp)) {
+            return 0;
+        }
+    }
+
+    return 1;
 }
 
-void save_galaxy_to_binary(FILE* file, Galaxy* galaxy) {
-    // Binary file writing logic
+int writeGalaxyToBinaryFile(const Galaxy* galaxy, FILE* fp) {
+   
+    fwrite(galaxy->name, sizeof(char), MAX_GALAXY_NAME, fp);
+    fwrite(&galaxy->portal_location, sizeof(Location), 1, fp);
+    fwrite(&galaxy->riskLevel, sizeof(int), 1, fp);
+    fwrite(&galaxy->size, sizeof(int), 1, fp);
+    fwrite(&galaxy->id, sizeof(int), 1, fp);
+    fwrite(&galaxy->num_solar_systems, sizeof(int), 1, fp);
+
+
+    for (int i = 0; i < galaxy->num_solar_systems; i++) {
+        if (!writeSolarSystemToBinaryFile(galaxy->star_systems[i], fp)) {
+            return 0;  
+        }
+    }
+
+    return 1;
 }
 
-void save_galaxy_to_text(FILE* file, Galaxy* galaxy) {
-    // Text file writing logic
+void writeGalaxyToText(FILE* fp, const Galaxy* galaxy) {
+    fprintf(fp, "Galaxy Name: %s\n", galaxy->name);
+    fprintf(fp, "Portal Location: %d %d %d\n", galaxy->portal_location.x, galaxy->portal_location.y, galaxy->portal_location.z);
+    fprintf(fp, "Risk Level: %d\n", galaxy->riskLevel);
+    fprintf(fp, "Galaxy Size: %d\n", galaxy->size);
+    fprintf(fp, "Galaxy ID: %d\n", galaxy->id);
+    fprintf(fp, "Number of Solar Systems: %d\n", galaxy->num_solar_systems);
+
+    for (int i = 0; i < galaxy->num_solar_systems; i++) {
+        writeSolarSystemToText(fp, galaxy->star_systems[i]);
+    }
 }
 
-void load_galaxy_from_text(FILE* file, Galaxy* galaxy) {
-    // Text file reading logic
-}
+int readGalaxyFromText(FILE* fp, Galaxy* galaxy) {
+    char buffer[MAX_GALAXY_NAME + 1];
+    if (fscanf(fp, "Galaxy Name: %[^\n]\n", buffer) != 1) return 0;
+    strncpy(galaxy->name, buffer, MAX_GALAXY_NAME);
+    
 
-void sort_solar_systems(Galaxy* galaxy, int sort_choice) {
-    // Sorting logic based on sort_choice
-}
+    if (fscanf(fp, "Portal Location: %d %d %d\n", &galaxy->portal_location.x,
+        &galaxy->portal_location.y, &galaxy->portal_location.z) != 3) return 0;
 
+    if (fscanf(fp, "Risk Level: %d\n", &galaxy->riskLevel) != 1) return 0;
+    if (fscanf(fp, "Galaxy Size: %d\n", &galaxy->size) != 1) return 0;
+    if (fscanf(fp, "Galaxy ID: %d\n", &galaxy->id) != 1) return 0;
+
+    int numSystems;
+    if (fscanf(fp, "Number of Solar Systems: %d\n", &numSystems) != 1) return 0;
+    galaxy->star_systems = ALLOCATE(SolarSystem*,numSystems);
+    if (!galaxy->star_systems) return 0;
+    galaxy->num_solar_systems = numSystems;
+
+    for (int i = 0; i < numSystems; i++) {
+        galaxy->star_systems[i] = ALLOCATE(SolarSystem,1);
+        if (!galaxy->star_systems[i]) return 0;
+        if (!readSolarSystemFromText(fp, galaxy->star_systems[i])) return 0; 
+    }
+
+    return 1;
+}
 
 void display_solar_systems(Galaxy* galaxy) {
     printf("Galaxy Name: %s\n", galaxy->name);
@@ -31,7 +98,6 @@ void display_solar_systems(Galaxy* galaxy) {
     }
 }
 
-
 void add_solar_system(Galaxy* galaxy) {
     if (!galaxy) {
         printf("Error: No galaxy provided.\n");
@@ -40,17 +106,18 @@ void add_solar_system(Galaxy* galaxy) {
 
     SolarSystem* newSystem = create_solar_system(galaxy);
     if (newSystem) {
-        
+
         SolarSystem** temp = realloc(galaxy->star_systems, (galaxy->num_solar_systems + 1) * sizeof(SolarSystem*));
         if (temp == NULL) {
             printf("Failed to allocate memory for new solar system.\n");
-            free_solar_system(newSystem);  
+            free_solar_system(newSystem);
             return;
         }
 
         galaxy->star_systems = temp;
-        galaxy->star_systems[galaxy->num_solar_systems] = newSystem;  
-        galaxy->num_solar_systems++; 
+        galaxy->star_systems[galaxy->num_solar_systems] = newSystem;
+        galaxy->num_solar_systems++;
+        updateGalaxyRiskLevel(galaxy);
         printf("Solar System '%s' added successfully to Galaxy '%s'.\n", newSystem->name, galaxy->name);
 
     }
@@ -59,11 +126,9 @@ void add_solar_system(Galaxy* galaxy) {
     }
 }
 
-
-
 void free_galaxy(Galaxy* galaxy) {
     if (galaxy) {
-        free(galaxy->name);
+        
         for (int i = 0; i < galaxy->num_solar_systems; i++) {
             free_solar_system(galaxy->star_systems[i]);
         }
@@ -73,9 +138,10 @@ void free_galaxy(Galaxy* galaxy) {
 }
 
 Galaxy* create_galaxy(UniversalManager* manager) {
-    Galaxy* galaxy = (Galaxy*)malloc(sizeof(Galaxy));
+
+    Galaxy* galaxy = ALLOCATE(Galaxy, 1);
     if (!galaxy) {
-        fprintf(stderr, "Failed to allocate memory for Galaxy.\n");
+        LOG_DEBUG ("Failed to allocate memory for Galaxy.\n");
         return NULL;
     }
     galaxy->num_solar_systems = 0;
@@ -84,15 +150,15 @@ Galaxy* create_galaxy(UniversalManager* manager) {
 
     printf("Enter the name for the galaxy (up to %d characters): ", MAX_GALAXY_NAME - 1);
     if (!myGets(galaxy->name, MAX_GALAXY_NAME)) {
-        fprintf(stderr, "Failed to read Galaxy name.\n");
+        LOG_DEBUG("Failed to read Galaxy name.\n");
         free(galaxy);
         return NULL;
     }
     int id;
+    flush_stdin();
     do {
         printf("Enter Galaxy ID (1-9999): ");
         scanf("%d", &id);
-        flush_stdin();
         if (!isGalaxyIDUnique(manager, id)) {
             printf("This ID is already in use. Please enter a unique ID.\n");
         }
@@ -101,20 +167,23 @@ Galaxy* create_galaxy(UniversalManager* manager) {
             break;
         }
     } while (1);
+    
     Location loc;
+    do {
     printf("Enter location coordinates (x y z): ");
     scanf("%d %d %d", &loc.x, &loc.y, &loc.z);
-    while (getchar() != '\n'); 
-
-    if (!isGalaxyLocationUnique(manager, loc)) {
-        printf("This location is already occupied. Please enter a unique location.\n");
-        free(galaxy);
-        return;
+        
+    if (isGalaxyLocationUnique(manager, loc)) {
+        galaxy->portal_location = loc;
+        break;
     }
+    else printf("This location is already occupied. Please enter a unique location.\n");
+        
+    } while (1);
 
-    galaxy->portal_location = loc;
+    
     printf("Enter the Galaxy radius: ");
-    scanf("%d", &galaxy->radius);
+    scanf("%d", &galaxy->size);
     flush_stdin();
 
     printf("Galaxy '%s' has been created.\n", galaxy->name);
@@ -141,34 +210,36 @@ void rename_galaxy(Galaxy* galaxy)
     }
 }
 
-
-int isSolarSystemIDUnique(const Galaxy* galaxy, int id) {
+int isSolarSystemIDUnique(const Galaxy* galaxy, const int id) {
     for (int i = 0; i < galaxy->num_solar_systems; i++) {
         if (galaxy->star_systems[i]->id == id) {
-            return 0;  // ID is not unique
+            return 0; 
         }
     }
-    return 1;  // ID is unique
+    return 1;
 }
-int isSolarSystemLocationUnique(const Galaxy* galaxy, Location loc) {
+
+int isSolarSystemLocationUnique(const Galaxy* galaxy,const Location loc) {
     for (int i = 0; i < galaxy->num_solar_systems; i++) {
         if (isSameLocation(galaxy->star_systems[i]->portal_location, loc)) {
-            return 0;  // Location is not unique
+            return 0;  
         }
     }
-    return 1;  // Location is unique
+    return 1;  
 }
-int isSolarSystemWithinGalaxy(Galaxy* galaxy, Location newSystemLoc) {
+
+int isSolarSystemWithinGalaxy(const Galaxy* galaxy,const Location newSystemLoc) {
     double distance = calculateDistance(galaxy->portal_location, newSystemLoc);
-    if (distance <= galaxy->radius) {
-        return 1;  // Solar System is within the galaxy's reach
+    if (distance <= galaxy->size) {
+        return 1;  
     }
-    return 0;  // Solar System is not within the galaxy's reach
+    return 0;  
 }
+
 void updateGalaxyRiskLevel(Galaxy* galaxy) {
     if (galaxy == NULL || galaxy->num_solar_systems == 0) {
         printf("Error: No galaxy provided or no solar systems exist within the galaxy.\n");
-        galaxy->riskLevel = 0;  // Default to 0 if no solar systems exist
+        galaxy->riskLevel = 0;  
         return;
     }
 
@@ -177,6 +248,23 @@ void updateGalaxyRiskLevel(Galaxy* galaxy) {
         totalRisk += galaxy->star_systems[i]->risk_level;
     }
 
-    galaxy->riskLevel = totalRisk / galaxy->num_solar_systems;  // Calculate average risk level
+    galaxy->riskLevel = totalRisk / galaxy->num_solar_systems;  
     printf("Updated Galaxy '%s' risk level to %d based on its solar systems.\n", galaxy->name, galaxy->riskLevel);
+}
+
+void print_galaxy(void* g) {
+    Galaxy* galaxy = (Galaxy*)g;
+    printf("\nGalaxy: %s\n", galaxy->name);
+    printf("ID: %d\n", galaxy->id);
+    printf("Location: (%d,%d,%d)\n", galaxy->portal_location.x, galaxy->portal_location.y, galaxy->portal_location.z);
+    printf("Size (Radius): %d\n", galaxy->size);
+    printf("Risk Level: %d\n", galaxy->riskLevel);
+
+    if (galaxy->num_solar_systems == 0) {
+        printf("  - No solar systems in this galaxy.\n");
+    }
+    else {
+        for (int i = 0; i < galaxy->num_solar_systems;i++)
+            generic_print(galaxy->star_systems[i], print_solar_system);
+    }
 }

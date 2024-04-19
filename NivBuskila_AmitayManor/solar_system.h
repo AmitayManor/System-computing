@@ -47,4 +47,8 @@ int isPlanetWithinSolarSystem(SolarSystem* system, const Location newPlanetLoc);
 int check_unique_planet_id(SolarSystem* sSystem, const int id);
 int check_unique_planet_location(SolarSystem* sSystem, const Location planetLoc);
 
+void get_solar_name(SolarSystem* system);
+void get_solar_id(Galaxy* galaxy, SolarSystem* system);
+void get_solar_location(Galaxy* galaxy, SolarSystem* system);
+void get_solar_radius(SolarSystem* system);
 #endif // SOLAR_SYSTEM_H

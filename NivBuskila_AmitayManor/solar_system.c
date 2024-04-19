@@ -120,8 +120,67 @@ void writeSolarSystemToText(FILE* fp, const SolarSystem* system) {
     }
 }
 
+
+void get_solar_name(SolarSystem* system){
+
+    printf("Enter Solar System Name: ");
+    if (!myGets(system->name, MAX_SOLAR_SYSTEM_NAME)) {
+        LOG_DEBUG("Failed to read Solar System name.\n");
+        free(system);
+        return NULL;
+    }
+}
+void get_solar_id(Galaxy* galaxy, SolarSystem* system) {
+    int idFlag = 0;
+    int id;
+    do {
+        printf("Enter the Solar System ID (1-9999): ");
+        scanf("%d", &id);
+        if (isSolarSystemIDUnique(galaxy, id) && id > 0 && id < 10000) {
+            idFlag = 1;
+            system->id = id;
+        }
+        else
+            printf("\nError! ID is not valid. Try again.\n");
+
+    } while (!idFlag);
+}
+void get_solar_location(Galaxy* galaxy, SolarSystem* system){
+
+    Location loc;
+    int locFlag = 0;
+    do {
+        printf("Enter the Solar System location coordinates (x y z): ");
+        scanf("%d %d %d", &loc.x, &loc.y, &loc.z);
+
+        if (!isSolarSystemLocationUnique(galaxy, loc) || !isSolarSystemWithinGalaxy(galaxy, loc))
+            printf("This location is either occupied or out of the reach of the galaxy. Please enter a different location.\n");
+
+        else {
+            locFlag = 1;
+            system->portal_location = loc;
+        }
+
+    } while (!locFlag);
+}
+void get_solar_radius(SolarSystem* system){
+    int radiusFlag = 0;
+    int size;
+    do {
+        printf("Enter the Solar System radius: ");
+        scanf("%d", &size);
+        if (size > 0) {
+            radiusFlag = 1;
+            system->size = size;
+        }
+        else
+            printf("\nError! Radius is not valid. Try again.\n");
+    } while (!radiusFlag);
+}
+
 SolarSystem* create_solar_system(Galaxy* galaxy) {
 
+    flush_stdin();
     if (!galaxy) {
         LOG_DEBUG("Error: No galaxy provided.\n");
         return NULL;
@@ -130,66 +189,26 @@ SolarSystem* create_solar_system(Galaxy* galaxy) {
     SolarSystem* system = ALLOCATE(SolarSystem, 1);
     if (system) {
 
-        printf("Enter Solar System Name: ");
-        if (!myGets(system->name, MAX_SOLAR_SYSTEM_NAME)) {
-            LOG_DEBUG("Failed to read Solar System name.\n");
-            free(system);
-            return NULL;
-        }
+        get_solar_name(system);
 
         system->risk_level = 0;
         system->num_planets = 0;
         system->planetsHead = NULL;
         system->num_planets = 0;
 
-        int idFlag = 0;
-        int id;
-        do {
-            printf("Enter the Solar System ID (1-9999): ");
-            scanf("%d", &id);
-            if (isSolarSystemIDUnique(galaxy, id) && id > 0 && id < 10000) {
-                idFlag = 1;
-                system->id = id;
-            }
-            else
-                printf("\nError! ID is not valid. Try again.\n");
+        get_solar_id(galaxy, system);
 
-        } while (!idFlag);
+        get_solar_location(galaxy, system);
 
-        Location loc;
-        int locFlag = 0;
-        do {
-            printf("Enter the Solar System location coordinates (x y z): ");
-            scanf("%d %d %d", &loc.x, &loc.y, &loc.z);
+        get_solar_radius(system);
 
-            if (!isSolarSystemLocationUnique(galaxy, loc) || !isSolarSystemWithinGalaxy(galaxy, loc))
-                printf("This location is either occupied or out of the reach of the galaxy. Please enter a different location.\n");
-               
-            else{
-                locFlag = 1;
-                system->portal_location = loc;
-            }
-                
-        } while (!locFlag);
-
-        int radiusFalg = 0;
-        int size;
-        do {
-            printf("Enter the Solar System radius: ");
-            scanf("%d", &size);
-            if (size > 0) {
-                radiusFalg = 1;
-                system->size = size;
-            }
-            else
-                printf("\nError! Radius is not valid. Try again.\n");
-        } while (!radiusFalg);
 
     }
     else {
         LOG_DEBUG("Memory allocation failed for SolarSystem.\n");
         return NULL;
     }
+    flush_stdin();
     return system;
 }
 

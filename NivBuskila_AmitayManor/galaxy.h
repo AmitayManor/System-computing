@@ -41,4 +41,10 @@ void free_galaxy(Galaxy* galaxy);
 Galaxy* create_galaxy(UniversalManager* mg);
 void rename_galaxy(Galaxy* galaxy);
 
+void get_galaxy_name(Galaxy* galaxy);
+void get_galaxy_id(UniversalManager* manager, Galaxy* galaxy);
+void get_galaxy_location(UniversalManager* manager, Galaxy* galaxy);
+void get_galaxy_radius(Galaxy* galaxy);
+
+
 #endif // GALAXY_H

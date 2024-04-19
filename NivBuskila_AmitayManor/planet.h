@@ -38,5 +38,10 @@ Planet* create_planet(SolarSystem* system);
 void free_planet(Planet* planet);
 void rename_planet(Planet* planet);
 void freePlanetNode(PlanetNode* node);
+void get_planet_name(Planet* planet);
+void get_planet_id(SolarSystem* system, Planet* planet);
+void get_planet_location(SolarSystem* system, Planet* planet);
+void get_planet_radius(Planet* planet);
+void get_planet_risk(Planet* planet);
 
 #endif // PLANET_H

@@ -1,157 +1,391 @@
-Number of Galaxies: 1
-Galaxy Name: Amitay
-Portal Location: 1 1 1
-Risk Level: 10
-Galaxy Size: 100
+Number of Galaxies: 3
+Galaxy Name: Milky Way
+Portal Location: 0 0 0
+Risk Level: 6
+Galaxy Size: 220000
 Galaxy ID: 1
-Number of Solar Systems: 2
-SolarSystem Name: Niv
-Portal Location: 2 2 2
+Number of Solar Systems: 3
+SolarSystem Name: Solar 1
+Portal Location: 541 213 214
+Risk Level: 6
+Number of Planets: 4
+System Size: 35000
+System ID: 1
+Planet Name: Earth
+Portal Location: 1 2 3
+Planet ID: 1
+Risk Level: 0
+Size: 3654
+Planet Name: Neptune
+Portal Location: 5 3 22
+Planet ID: 2
+Risk Level: 7
+Size: 16548
+Planet Name: Mars
+Portal Location: 4547 21 31
+Planet ID: 3
+Risk Level: 8
+Size: 9999
+Planet Name: Mercury
+Portal Location: 3 15 46
+Planet ID: 4
+Risk Level: 9
+Size: 5400
+SolarSystem Name: Solar 2
+Portal Location: 321 21 21
+Risk Level: 6
+Number of Planets: 3
+System Size: 40000
+System ID: 2
+Planet Name: Kepler A
+Portal Location: 4848 545 655
+Planet ID: 1
+Risk Level: 10
+Size: 15487
+Planet Name: Kepler B
+Portal Location: 14 14 14875
+Planet ID: 2
+Risk Level: 6
+Size: 7145
+Planet Name: Kepler C
+Portal Location: 41 5157 74
+Planet ID: 3
+Risk Level: 3
+Size: 9454
+SolarSystem Name: Solar 3
+Portal Location: 66 66 66
+Risk Level: 6
+Number of Planets: 2
+System Size: 34211
+System ID: 3
+Planet Name: Nora A
+Portal Location: 848 545 66
+Planet ID: 1
+Risk Level: 4
+Size: 8540
+Planet Name: Nora B
+Portal Location: 666 666 666
+Planet ID: 2
+Risk Level: 9
+Size: 77777
+Galaxy Name: Andromeda
+Portal Location: 9541 1235 4512
+Risk Level: 4
+Galaxy Size: 300000
+Galaxy ID: 2
+Number of Solar Systems: 4
+SolarSystem Name: Alpha 1
+Portal Location: 35 212 141
 Risk Level: 5
 Number of Planets: 3
-System Size: 1000
-System ID: 32
-Planet Name: Bijo
-Portal Location: 4 1 2
+System Size: 36000
+System ID: 1
+Planet Name: GlieseX
+Portal Location: 645 121 1548
 Planet ID: 1
-Risk Level: 2
-Size: 15
-Planet Name: Eden
-Portal Location: 5 1 2
+Risk Level: 4
+Size: 4745
+Planet Name: GlieseY
+Portal Location: 7 454 412
+Planet ID: 2
+Risk Level: 7
+Size: 9442
+Planet Name: GlieseZ
+Portal Location: 645 1215 120
+Planet ID: 3
+Risk Level: 6
+Size: 7474
+SolarSystem Name: Alpha 2
+Portal Location: 1818 1515 13131
+Risk Level: 4
+Number of Planets: 4
+System Size: 34541
+System ID: 2
+Planet Name: HIP1
+Portal Location: 87 45 74
+Planet ID: 1
+Risk Level: 3
+Size: 7145
+Planet Name: HIP2
+Portal Location: 101 241 1
+Planet ID: 2
+Risk Level: 8
+Size: 5041
+Planet Name: HIP3
+Portal Location: 5120 0 41
+Planet ID: 3
+Risk Level: 1
+Size: 2014
+Planet Name: HIP4
+Portal Location: 9 63 20014
+Planet ID: 4
+Risk Level: 5
+Size: 5410
+SolarSystem Name: Alpha 3
+Portal Location: 321 514 2135
+Risk Level: 3
+Number of Planets: 2
+System Size: 98434
+System ID: 3
+Planet Name: Turk 1
+Portal Location: 84 541 4744
+Planet ID: 1
+Risk Level: 4
+Size: 8145
+Planet Name: Turk 2
+Portal Location: 745 124 44
 Planet ID: 2
 Risk Level: 2
-Size: 15
-Planet Name: Omri
-Portal Location: 4 1 7
-Planet ID: 3
-Risk Level: 2
-Size: 15
-SolarSystem Name: Milky
-Portal Location: 1 2 43
-Risk Level: 6
-Number of Planets: 1
-System Size: 1000
-System ID: 32
-Planet Name: avi
-Portal Location: 43 1 77
+Size: 1414
+SolarSystem Name: Alpha 4
+Portal Location: 312 5 321
+Risk Level: 7
+Number of Planets: 3
+System Size: 32154
+System ID: 4
+Planet Name: TX 1
+Portal Location: 74 5154 775
 Planet ID: 1
+Risk Level: 10
+Size: 21541
+Planet Name: TX 2
+Portal Location: 3 666 254
+Planet ID: 2
+Risk Level: 7
+Size: 6415
+Planet Name: TX 3
+Portal Location: 71 411 0
+Planet ID: 3
+Risk Level: 4
+Size: 845
+Galaxy Name: Triangulum
+Portal Location: 777 777 777
+Risk Level: 4
+Galaxy Size: 500000
+Galaxy ID: 3
+Number of Solar Systems: 3
+SolarSystem Name: Gamma 1
+Portal Location: 212 14324 124
+Risk Level: 7
+Number of Planets: 3
+System Size: 21402
+System ID: 1
+Planet Name: GM 1
+Portal Location: 1011 124 547
+Planet ID: 1
+Risk Level: 10
+Size: 15432
+Planet Name: GM 2
+Portal Location: 84 5471 1032
+Planet ID: 2
+Risk Level: 7
+Size: 4021
+Planet Name: GM 3
+Portal Location: 333 333 3
+Planet ID: 3
+Risk Level: 4
+Size: 3154
+SolarSystem Name: Gamma 2
+Portal Location: 11 0 324312
 Risk Level: 2
-Size: 10
+Number of Planets: 2
+System Size: 23132
+System ID: 2
+Planet Name: KP 1
+Portal Location: 11 0 320000
+Planet ID: 1
+Risk Level: 1
+Size: 1245
+Planet Name: KP 2
+Portal Location: 15 10 310000
+Planet ID: 2
+Risk Level: 3
+Size: 7465
+SolarSystem Name: Gamma 3
+Portal Location: 212 43 462344
+Risk Level: 4
+Number of Planets: 3
+System Size: 36422
+System ID: 3
+Planet Name: Yod 1
+Portal Location: 2451 21 450123
+Planet ID: 1
+Risk Level: 6
+Size: 846
+Planet Name: Yod 2
+Portal Location: 34 46 480012
+Planet ID: 2
+Risk Level: 4
+Size: 732
+Planet Name: Yod 3
+Portal Location: 84 654 458376
+Planet ID: 3
+Risk Level: 3
+Size: 9454
 Number of Companies: 3
 Company Name: SpaceX
 Established Year: 1997
 Number of SpaceCrafts: 4
-Name: f1
-Model: t
-Max Speed: 1500.00
+Name: Voyager 1
+Model: Super Craft
+Max Speed: 250000.00
 Craft ID: 1
-Name: f2
-Model: q
-Max Speed: 1500.00
+Name: Voyager 2
+Model: Super Craft
+Max Speed: 145000.00
 Craft ID: 2
-Name: f3
-Model: a
-Max Speed: 1500.00
+Name: Juno 1
+Model: Intersteller Probe
+Max Speed: 280000.00
 Craft ID: 3
-Name: f4
-Model: z
-Max Speed: 1500.00
+Name: Juno 2
+Model: Super Craft
+Max Speed: 300000.00
 Craft ID: 4
-Number of Travels: 2
-Travel Code Src: G0001S0032P0001
-Travel Code Dst: G0001S0032P0003
-SpaceCraft ID: 1
-Departure Date: 12-12-2024
-Arrival Date: 12-12-2024
-Distance: 5.000000
+Number of Travels: 3
+Travel Code Src: G0001S0001P0001
+Travel Code Dst: G0002S0001P0001
+SpaceCraft ID: 3
+Departure Date: 10-12-2024
+Arrival Date: 10-12-2024
+Distance: 1678.070916
 Risk Level: 2
 Is Completed: 1
 Travel ID: 1
-Travel Code Src: G0001S0032P0001
-Travel Code Dst: G0001S0032P0002
+Travel Code Src: G0003S0003P0002
+Travel Code Dst: G0002S0002P0001
+SpaceCraft ID: 2
+Departure Date: 5-5-2025
+Arrival Date: 8-5-2025
+Distance: 479938.002927
+Risk Level: 3
+Is Completed: 1
+Travel ID: 2
+Travel Code Src: G0002S0004P0002
+Travel Code Dst: G0001S0003P0002
 SpaceCraft ID: 1
-Departure Date: 13-12-2024
-Arrival Date: 13-12-2024
-Distance: 1.000000
+Departure Date: 19-2-2025
+Arrival Date: 19-2-2025
+Distance: 780.585037
+Risk Level: 8
+Is Completed: 0
+Travel ID: 3
+Permissions Zone: 3
+Company Name: NASA
+Established Year: 1928
+Number of SpaceCrafts: 4
+Name: Apollo 11X
+Model: Shuttle
+Max Speed: 260000.00
+Craft ID: 1
+Name: Apollo 13X
+Model: Long Distance Shuttle
+Max Speed: 235125.00
+Craft ID: 2
+Name: Falcon 135B
+Model: Long Range Voyager
+Max Speed: 210500.00
+Craft ID: 3
+Name: Falcon 140B
+Model: Defender
+Max Speed: 300000.00
+Craft ID: 4
+Number of Travels: 6
+Travel Code Src: G0001S0003P0002
+Travel Code Dst: G0001S0001P0002
+SpaceCraft ID: 2
+Departure Date: 10-10-2026
+Arrival Date: 10-10-2026
+Distance: 1136.321257
+Risk Level: 8
+Is Completed: 0
+Travel ID: 1
+Travel Code Src: G0003S0003P0003
+Travel Code Dst: G0001S0001P0001
+SpaceCraft ID: 3
+Departure Date: 15-12-2024
+Arrival Date: 17-12-2024
+Distance: 458373.471224
+Risk Level: 1
+Is Completed: 1
+Travel ID: 2
+Travel Code Src: G0002S0002P0002
+Travel Code Dst: G0001S0002P0001
+SpaceCraft ID: 3
+Departure Date: 18-4-2025
+Arrival Date: 18-4-2025
+Distance: 4801.472795
+Risk Level: 9
+Is Completed: 0
+Travel ID: 3
+Travel Code Src: G0003S0002P0001
+Travel Code Dst: G0001S0002P0003
+SpaceCraft ID: 1
+Departure Date: 28-5-2025
+Arrival Date: 29-5-2025
+Distance: 319967.562458
 Risk Level: 2
+Is Completed: 0
+Travel ID: 4
+Travel Code Src: G0002S0004P0002
+Travel Code Dst: G0003S0002P0002
+SpaceCraft ID: 1
+Departure Date: 24-12-2026
+Arrival Date: 25-12-2026
+Distance: 309746.694891
+Risk Level: 5
+Is Completed: 1
+Travel ID: 5
+Travel Code Src: G0001S0001P0001
+Travel Code Dst: G0002S0002P0002
+SpaceCraft ID: 4
+Departure Date: 6-9-2026
+Arrival Date: 6-9-2026
+Distance: 259.084928
+Risk Level: 4
+Is Completed: -842150451
+Travel ID: 6
+Permissions Zone: 3
+Company Name: IAI
+Established Year: 1948
+Number of SpaceCrafts: 5
+Name: Lavi
+Model: Long Distance Voyager
+Max Speed: 300000.00
+Craft ID: 1
+Name: Beresheat
+Model: Explorer
+Max Speed: 150000.00
+Craft ID: 2
+Name: Beresheat X
+Model: Long Distance Explorer
+Max Speed: 200000.00
+Craft ID: 3
+Name: Jacob X1
+Model: Long Distance Voyager
+Max Speed: 250000.00
+Craft ID: 4
+Name: Jacob X2
+Model: Long Distance Defender
+Max Speed: 185000.00
+Craft ID: 5
+Number of Travels: 2
+Travel Code Src: G0001S0001P0001
+Travel Code Dst: G0002S0004P0001
+SpaceCraft ID: 5
+Departure Date: 25-8-2026
+Arrival Date: 25-8-2026
+Distance: 5210.030422
+Risk Level: 5
+Is Completed: 0
+Travel ID: 1
+Travel Code Src: G0003S0003P0003
+Travel Code Dst: G0002S0003P0001
+SpaceCraft ID: 4
+Departure Date: 7-7-2025
+Arrival Date: 8-7-2025
+Distance: 453632.014074
+Risk Level: 3
 Is Completed: 1
 Travel ID: 2
 Permissions Zone: 3
-Company Name: China
-Established Year: 2000
-Number of SpaceCrafts: 4
-Name: f1
-Model: t
-Max Speed: 1500.00
-Craft ID: 1
-Name: f2
-Model: q
-Max Speed: 1500.00
-Craft ID: 2
-Name: f3
-Model: a
-Max Speed: 1500.00
-Craft ID: 3
-Name: f4
-Model: z
-Max Speed: 1500.00
-Craft ID: 4
-Number of Travels: 2
-Travel Code Src: G0001S0032P0001
-Travel Code Dst: G0001S0032P0003
-SpaceCraft ID: 1
-Departure Date: 12-12-2024
-Arrival Date: 12-12-2024
-Distance: 5.000000
-Risk Level: 2
-Is Completed: 1
-Travel ID: 1
-Travel Code Src: G0001S0032P0001
-Travel Code Dst: G0001S0032P0002
-SpaceCraft ID: 1
-Departure Date: 13-12-2024
-Arrival Date: 13-12-2024
-Distance: 1.000000
-Risk Level: 2
-Is Completed: 1
-Travel ID: 2
-Permissions Zone: 2
-Company Name: USA
-Established Year: 1968
-Number of SpaceCrafts: 4
-Name: f1
-Model: t
-Max Speed: 1500.00
-Craft ID: 1
-Name: f2
-Model: q
-Max Speed: 1500.00
-Craft ID: 2
-Name: f3
-Model: a
-Max Speed: 1500.00
-Craft ID: 3
-Name: f4
-Model: z
-Max Speed: 1500.00
-Craft ID: 4
-Number of Travels: 2
-Travel Code Src: G0001S0032P0001
-Travel Code Dst: G0001S0032P0003
-SpaceCraft ID: 1
-Departure Date: 12-12-2024
-Arrival Date: 12-12-2024
-Distance: 5.000000
-Risk Level: 2
-Is Completed: 1
-Travel ID: 1
-Travel Code Src: G0001S0032P0001
-Travel Code Dst: G0001S0032P0002
-SpaceCraft ID: 1
-Departure Date: 13-12-2024
-Arrival Date: 13-12-2024
-Distance: 1.000000
-Risk Level: 2
-Is Completed: 1
-Travel ID: 2
-Permissions Zone: 1

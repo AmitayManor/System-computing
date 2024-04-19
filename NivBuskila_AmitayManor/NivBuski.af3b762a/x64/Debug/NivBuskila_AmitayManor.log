@@ -1,10 +1,8 @@
-﻿  company.c
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(62,41): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(172,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(182,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(229,33): warning C4133: '=': incompatible types - from 'SpaceCraft *' to 'InterstellarTravel *'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(231,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(242,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(430,9): warning C4033: 'searchSpaceCraft' must return a value
-C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\company.c(444,1): warning C4715: 'searchSpaceCraft': not all control paths return a value
-  NivBuskila_AmitayManor.vcxproj -> C:\Users\lior\Desktop\Git Clones\System Computing\MainVer1.3\System-computing\NivBuskila_AmitayManor\x64\Debug\NivBuskila_AmitayManor.exe
+﻿  universal_manager.c
+C:\Users\lior\Desktop\Git Clones\System Computing\LastVer1.5\NivBuskila_AmitayManor\universal_manager.c(525,23): warning C4133: 'function': incompatible types - from 'const int *' to 'const char *'
+C:\Users\lior\Desktop\Git Clones\System Computing\LastVer1.5\NivBuskila_AmitayManor\universal_manager.c(554,39): warning C4101: 'newName': unreferenced local variable
+C:\Users\lior\Desktop\Git Clones\System Computing\LastVer1.5\NivBuskila_AmitayManor\universal_manager.c(685,37): warning C4133: 'function': incompatible types - from 'char [50]' to 'const int *'
+C:\Users\lior\Desktop\Git Clones\System Computing\LastVer1.5\NivBuskila_AmitayManor\universal_manager.c(933,17): warning C4002: too many arguments for function-like macro invocation 'LOG_DEBUG'
+C:\Users\lior\Desktop\Git Clones\System Computing\LastVer1.5\NivBuskila_AmitayManor\universal_manager.c(1271,20): warning C4098: 'special_longestTravel': 'void' function returning a value
+C:\Users\lior\Desktop\Git Clones\System Computing\LastVer1.5\NivBuskila_AmitayManor\universal_manager.c(1295,20): warning C4098: 'special_dangerousCosmicElement': 'void' function returning a value
+  NivBuskila_AmitayManor.vcxproj -> C:\Users\lior\Desktop\Git Clones\System Computing\LastVer1.5\NivBuskila_AmitayManor\x64\Debug\NivBuskila_AmitayManor.exe

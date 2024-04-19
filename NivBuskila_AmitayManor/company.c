@@ -103,8 +103,6 @@ int readCompanyFromBinaryFile(Company* company, FILE* fp) {
     return 1;
 }
 
-
-
 void get_company_name(char* name) {
     printf("Enter Company Name: ");
     
@@ -160,6 +158,7 @@ int isCraftIdUnique(const Company* company, int craftId) {
 void initialize_company_spacecrafts(Company* company, int numOfSpaceCrafts) {
     
     if (numOfSpaceCrafts > 0) {
+        printf("\n--- Create Space Crafts ---\n");
         company->spaceCrafts = ALLOCATE(SpaceCraft*, numOfSpaceCrafts);
         if (company->spaceCrafts == NULL) {
             LOG_DEBUG("Error: Failed to allocate memory for spacecrafts.\n");
@@ -219,6 +218,7 @@ void initialize_company_spacecrafts(Company* company, int numOfSpaceCrafts) {
 void initialize_company_travels(UniversalManager* mg, Company* company, int numOfTravels) {
 
     if (numOfTravels > 0) {
+        printf("\n--- Create Intersteller Travels ---\n");
         company->travels = ALLOCATE(InterstellarTravel*, numOfTravels);
         if (company->travels == NULL) {
             LOG_DEBUG("Error: Failed to allocate memory for travels.\n");
@@ -270,7 +270,8 @@ void initialize_company_travels(UniversalManager* mg, Company* company, int numO
             get_spaceCraft(company, newTravel);
             get_departureDate(newTravel);
             get_arrival_date(mg, newTravel);
-
+            int succ = is_travel_successful(newTravel);
+            newTravel->isCompleted = succ;
             company->travels[i] = newTravel;
         }
     }
@@ -331,11 +332,9 @@ Permission get_permission_zone() {
     return permission;
 }
 
-
-
 void free_company(Company* company) {
     if (company) {
-        //free(company->name);
+        free(company->name);
         
         for (int i = 0; i < company->numSpacecrafts; i++) {
             free_spacecraft(company->spaceCrafts[i]);
@@ -360,7 +359,7 @@ int compareCompanyByNumTravels(const void* a, const void* b) {
 int compareCompanyByName(const void* a, const void* b) {
     const Company* cA = *(const Company**)a;
     const Company* cB = *(const Company**)b;
-    return STR_EQUAL(cA->name, cB->name);
+    return strcmp(cA->name, cB->name);
 }
 
 int compareCompanyByNumSpaceCrafts(const void* a, const void* b) {
@@ -381,27 +380,16 @@ SpaceCraft* searchSpaceCraftFromFile(Company* company, const id) {
         return *found;
     }
     else {
-        return NULL; // This ensures that a value is returned in all cases.
+        return NULL; 
     }
-    /*
-    SpaceCraft searchKey;
-    SpaceCraft* searchKeyPtr = &searchKey;
-    searchKey.craftId = id;
-    qsort(company->spaceCrafts, company->numSpacecrafts, sizeof(SpaceCraft*), compareSpaceCraftByID);
-    SpaceCraft** found = (SpaceCraft**)bsearch(&searchKeyPtr, company->spaceCrafts, company->numSpacecrafts, sizeof(SpaceCraft*), compareSpaceCraftFunctions[0]);
-
-    if (found) {
-        SpaceCraft* foundSpaceCraft = *found;
-        return foundSpaceCraft;
-    }
-    */
+    
 }
 
 SpaceCraft* searchSpaceCraft(Company* company) {
     int attribute, searchID;
     char* searchString = ALLOCATE(char, MAX_LEN_SPACE_CRAFT);
 
-    printf("Search SpaceCraft by: 1. ID\n2. Name\n3. Model\nEnter choice: ");
+    printf("Search SpaceCraft by:\n1. ID\n2. Name\n3. Model\nEnter choice: ");
     scanf("%d", &attribute);
     SpaceCraft searchKey;
     SpaceCraft* searchKeyPtr = &searchKey;
@@ -440,6 +428,66 @@ SpaceCraft* searchSpaceCraft(Company* company) {
     else {
         printf("SpaceCraft not found.\n");
         return NULL;
+    }
+}
+
+SpaceCraft* searchSpaceCraftAcrossCompanies(const Company* company, char* searchString, const int type) {
+
+    
+
+    if (!company) {
+        LOG_DEBUG("Error! Company is NULL");
+        return NULL;
+
+    }
+
+    switch (type) {
+
+    case 1: {
+        
+
+        qsort(company->spaceCrafts, company->numSpacecrafts, sizeof(SpaceCraft*), compareSpaceCraftByName);
+
+        SpaceCraft searchKey = { .name = searchString };
+        SpaceCraft* searchKeyPtr = &searchKey;
+        SpaceCraft** found = (SpaceCraft**)bsearch(&searchKeyPtr, company->spaceCrafts, company->numSpacecrafts, sizeof(SpaceCraft*), compareSpaceCraftByName);
+
+        if (found) {
+            return *found;
+            break;
+        }
+
+       
+        return NULL;
+        break;
+    }
+
+    case 2: {
+        fgets(searchString, MAX_LEN_SPACE_CRAFT, stdin);
+        searchString[strcspn(searchString, "\n")] = 0;
+
+        qsort(company->spaceCrafts, company->numSpacecrafts, sizeof(SpaceCraft*), compareSpaceCraftByModel);
+
+        SpaceCraft searchKey = { .name = searchString };
+        SpaceCraft* searchKeyPtr = &searchKey;
+        SpaceCraft** found = (SpaceCraft**)bsearch(&searchKeyPtr, company->spaceCrafts, company->numSpacecrafts, sizeof(SpaceCraft*), compareSpaceCraftByModel);
+
+        if (found) {
+            return *found;
+            break;
+        }
+
+        return NULL;
+        break;
+    }
+
+    default: {
+
+        printf("\nWrong input.\n");
+        return NULL;
+        break;
+    }
+
     }
 }
 

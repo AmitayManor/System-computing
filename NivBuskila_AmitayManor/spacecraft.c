@@ -80,14 +80,14 @@ SpaceCraft* create_spacecraft(const char* name, const char* model, double maxSpe
 
 void print_spacecraft(void* sc) {
     SpaceCraft* spacecraft = (SpaceCraft*)sc;
-    printf("SpaceCraft ID: %d, Model: %s, Max Speed: %.2f\n", spacecraft->craftId, spacecraft->model, spacecraft->maxSpeed);
+    printf("SpaceCraft ID: %d, Name: %s , Model: %s, Max Speed: %.2f\n", spacecraft->craftId,spacecraft->name, spacecraft->model, spacecraft->maxSpeed);
 }
 
 void get_SpaceCraft_id(SpaceCraft* sp) {
     if (sp) {
         int id;
         do {
-            printf("Enter wanted id (1-9999): ");
+            printf("Enter wanted id for Space Craft (1-9999): ");
             scanf("%d", &id);
             if (id < MIN_ID || id > MAX_ID) {
                 printf("Invalid id. Please enter a value between 1 and 9999.\n");
@@ -165,13 +165,13 @@ int compareSpaceCraftByName(const void* a, const void* b) {
     const SpaceCraft* scA = *(const SpaceCraft**)a;
     const SpaceCraft* scB = *(const SpaceCraft**)b;
 
-    return STR_EQUAL(scA->name, scB->name);
+    return strcmp(scA->name, scB->name);
 }
 
 int compareSpaceCraftByModel(const void* a, const void* b) {
     const SpaceCraft* scA = *(const SpaceCraft**)a;
     const SpaceCraft* scB = *(const SpaceCraft**)b;
-    return STR_EQUAL(scA->model, scB->model);
+    return strcmp(scA->model, scB->model);
 }
 
 void free_spacecraft(SpaceCraft* craft) {

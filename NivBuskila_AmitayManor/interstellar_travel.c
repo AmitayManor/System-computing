@@ -280,6 +280,11 @@ void get_arrival_date(UniversalManager* mg, InterstellarTravel* tr) {
         double travelDuration = (tr->distance) / (tr->spaceCraft->maxSpeed);
         int daysToAdd = (int)travelDuration;
         tr->arrivalDate = advance_date(tr->departureDate, daysToAdd);
+
+        int avgRisk;
+        avgRisk = (pS->riskLevel + pD->riskLevel) / 2;
+        tr->riskLevel = avgRisk;
+
     }
 
 }
@@ -356,7 +361,7 @@ int compareTravelByDistance(const void* a, const void* b) {
 
 void print_travel(void* tr) {
     InterstellarTravel* travel = (InterstellarTravel*)tr;
-    printf("Travel ID: %d, SRC: %s, DST: %s, Departure Date: %d/%d/%d\n",travel->travelID ,travel->travelCodeSrc, travel->travelCodeDst, travel->departureDate.day, travel->departureDate.month, travel->departureDate.year);
+    printf("Travel ID: %d, Departure Date: %d/%d/%d Distance: %fl\n",travel->travelID , travel->departureDate.day, travel->departureDate.month, travel->departureDate.year, travel->distance);
 }
 
 void get_travelID(Company* company, InterstellarTravel* tr) {
@@ -390,33 +395,42 @@ void free_interstellar_travel(InterstellarTravel* travel) {
     }
 }
 
-int calculate_risk_level(InterstellarTravel* travel) {
-    if (travel) {
-        
-        if (travel->distance < 1000000.0) {
-            return 1; 
-        }
-        else if (travel->distance < 5000000.0) {
-            return 2; 
-        }
-        else {
-            return 3; 
-        }
-    }
-    return 0;
-}
-
 int is_travel_successful(InterstellarTravel* travel) {
+   
     if (travel) {
         
         int randomValue = rand() % 100;
         switch (travel->riskLevel) {
         case 1: 
-            return randomValue < 90;
+            if (randomValue > 5) return 1;
+            else return 0;
         case 2: 
-            return randomValue < 70; 
+            if (randomValue > 10) return 1;
+            else return 0;
         case 3: 
-            return randomValue < 50; 
+            if (randomValue > 20) return 1;
+            else return 0;
+        case 4:
+            if (randomValue > 30) return 1;
+            else return 0;
+        case 5:
+            if (randomValue > 40) return 1;
+            else return 0;
+        case 6:
+            if (randomValue > 50) return 1;
+            else return 0;
+        case 7:
+            if (randomValue > 60) return 1;
+            else return 0;
+        case 8:
+            if (randomValue > 70) return 1;
+            else return 0;
+        case 9:
+            if (randomValue > 80) return 1;
+            else return 0;
+        case 10:
+            if (randomValue > 90) return 1;
+            else return 0;
         default:
             return 0; 
         }

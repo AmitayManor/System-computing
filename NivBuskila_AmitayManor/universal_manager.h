@@ -34,6 +34,7 @@ SolarSystem* findSolarSystem_byID(Galaxy* galaxy, const int id);
 Planet* findPlanet_byID(SolarSystem* system, const int id);
 void searchCompany(UniversalManager* manager);
 void displayCosmicElements(const UniversalManager* manager);
+void display_all_spaceCrafts(const UniversalManager* manager);
 void renamePlanet(UniversalManager* manager);
 void renameSolarSystem(UniversalManager* manager);
 void renameGalaxy(UniversalManager* manager);
@@ -54,5 +55,8 @@ void add_travel_to_company(Company* company, UniversalManager* manager);
 void addCosmicElement(UniversalManager* manager);
 int isGalaxyIDUnique(const UniversalManager* manager, const int id);
 int isGalaxyLocationUnique(const UniversalManager* manager, const Location loc);
-
+void sortElements(const UniversalManager* manager);
+void searchElements(const UniversalManager* manager);
+void special_longestTravel(const UniversalManager* mg);
+void special_dangerousCosmicElement(const UniversalManager* mg);
 #endif // UNIVERSAL_MANAGER_H

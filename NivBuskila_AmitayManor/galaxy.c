@@ -137,25 +137,19 @@ void free_galaxy(Galaxy* galaxy) {
     }
 }
 
-Galaxy* create_galaxy(UniversalManager* manager) {
 
-    Galaxy* galaxy = ALLOCATE(Galaxy, 1);
-    if (!galaxy) {
-        LOG_DEBUG ("Failed to allocate memory for Galaxy.\n");
-        return NULL;
-    }
-    galaxy->num_solar_systems = 0;
-    galaxy->riskLevel = 0;
-    galaxy->star_systems = NULL;
-
+void get_galaxy_name(Galaxy* galaxy){
     printf("Enter the name for the galaxy (up to %d characters): ", MAX_GALAXY_NAME - 1);
+
     if (!myGets(galaxy->name, MAX_GALAXY_NAME)) {
         LOG_DEBUG("Failed to read Galaxy name.\n");
         free(galaxy);
         return NULL;
     }
+}
+void get_galaxy_id(UniversalManager* manager, Galaxy* galaxy){
     int id;
-    flush_stdin();
+
     do {
         printf("Enter Galaxy ID (1-9999): ");
         scanf("%d", &id);
@@ -167,23 +161,46 @@ Galaxy* create_galaxy(UniversalManager* manager) {
             break;
         }
     } while (1);
-    
+}
+void get_galaxy_location(UniversalManager* manager, Galaxy* galaxy){
     Location loc;
     do {
-    printf("Enter location coordinates (x y z): ");
-    scanf("%d %d %d", &loc.x, &loc.y, &loc.z);
-        
-    if (isGalaxyLocationUnique(manager, loc)) {
-        galaxy->portal_location = loc;
-        break;
-    }
-    else printf("This location is already occupied. Please enter a unique location.\n");
-        
-    } while (1);
+        printf("Enter location coordinates (x y z): ");
+        scanf("%d %d %d", &loc.x, &loc.y, &loc.z);
 
-    
+        if (isGalaxyLocationUnique(manager, loc)) {
+            galaxy->portal_location = loc;
+            break;
+        }
+        else printf("This location is already occupied. Please enter a unique location.\n");
+
+    } while (1);
+}
+void get_galaxy_radius(Galaxy* galaxy){
     printf("Enter the Galaxy radius: ");
     scanf("%d", &galaxy->size);
+}
+
+
+Galaxy* create_galaxy(UniversalManager* manager) {
+    flush_stdin();
+    Galaxy* galaxy = ALLOCATE(Galaxy, 1);
+    if (!galaxy) {
+        LOG_DEBUG ("Failed to allocate memory for Galaxy.\n");
+        return NULL;
+    }
+    galaxy->num_solar_systems = 0;
+    galaxy->riskLevel = 0;
+    galaxy->star_systems = NULL;
+
+    get_galaxy_name(galaxy);
+    
+    get_galaxy_id(manager, galaxy);
+    
+    get_galaxy_location(manager, galaxy);
+   
+    get_galaxy_radius(galaxy);
+
     flush_stdin();
 
     printf("Galaxy '%s' has been created.\n", galaxy->name);

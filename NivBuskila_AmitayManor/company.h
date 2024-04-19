@@ -10,6 +10,7 @@
 #define MAX_AMOUNT_OF_CRAFTS 50
 #define MAX_COMPANY_NAME 256
 
+
 typedef struct Company {
     char* name;
     int establishedYear;
@@ -42,7 +43,7 @@ void initialize_company_travels(UniversalManager* mg, Company* company, int numO
 Permission get_permission_zone();
 int isCraftIdUnique(const Company* company, int craftId);
 void free_company(Company* company);
-
-
+SpaceCraft* searchSpaceCraftAcrossCompanies(const Company* company, char* searchString, const int type);
+void searchTravel(Company* company);
 
 #endif // COMPANY_H

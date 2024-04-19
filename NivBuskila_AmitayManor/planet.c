@@ -77,8 +77,91 @@ void print_planet(void* p) {
     printf("\t\tRisk Level: %d\n", planet->riskLevel);
 }
 
+
+void get_planet_name(Planet* planet) {
+    if (!planet) {
+        LOG_DEBUG("Error! Planet not initiated")
+            return NULL;
+    }
+    else {
+        printf("Enter the name for the Planet (up to %d characters): ", MAX_PLANET_NAME - 1);
+
+        if (!myGets(planet->name, MAX_PLANET_NAME)) {
+            LOG_DEBUG("Failed to read Planet name or input was empty.\n");
+
+            free(planet);
+            return NULL;
+        }
+    }
+}
+
+void get_planet_id(SolarSystem* system, Planet* planet){
+
+    int idFlag = 0;
+    int id;
+    do {
+        printf("Enter the Planet ID (1-9999): ");
+        scanf("%d", &id);
+        if (check_unique_planet_id(system, id) && id > 0 && id < 10000) {
+            idFlag = 1;
+            planet->id = id;
+        }
+        else
+            printf("\nError! ID is not valid. Try again.\n");
+
+    } while (!idFlag);
+}
+
+void get_planet_location(SolarSystem* system, Planet* planet){
+
+    int locFlag = 0;
+    Location loc;
+    do {
+        printf("Enter the Planet location coordinates (x y z): ");
+        scanf("%d %d %d", &loc.x, &loc.y, &loc.z);
+        if (check_unique_planet_location(system, loc) && isPlanetWithinSolarSystem(system, loc)) {
+            locFlag = 1;
+            planet->portal_location = loc;
+        }
+        else
+            printf("\nError! Location is not valid. Try again.\n");
+    } while (!locFlag);
+}
+
+void get_planet_radius(Planet* planet){
+    int radiusFlag = 0;
+    int size;
+    do {
+        printf("Enter the Planet radius: ");
+        scanf("%d", &size);
+        if (size > 0) {
+            radiusFlag = 1;
+            planet->size = size;
+        }
+    } while (!radiusFlag);
+}
+
+void get_planet_risk(Planet* planet){
+    int risk;
+    int riskFlag = 0;
+    do {
+        printf("Enter the risk level of this planet:(0-10)\n\t%d - Most Dangerous.\n\t%d - Most Safe ", MAX_RISK_LVL, MIN_RISK_LVL);
+        scanf("%d", &risk);
+
+        if (risk >= MIN_RISK_LVL && risk <= MAX_RISK_LVL) {
+            planet->riskLevel = risk;
+            riskFlag = 1;
+        }
+        else
+            printf("\nError! Not a valid input. Try again\n");
+
+
+    } while (!riskFlag);
+}
+
 Planet* create_planet(SolarSystem* system) {
 
+    flush_stdin();
     if (!system) {
         LOG_DEBUG("Error: No solar system provided.\n");
         return NULL;
@@ -90,69 +173,13 @@ Planet* create_planet(SolarSystem* system) {
         return NULL;
     }
 
-    printf("Enter the name for the Planet (up to %d characters): ", MAX_PLANET_NAME - 1);
+    get_planet_name(newPlanet);
+    get_planet_id(system, newPlanet);
+    get_planet_location(system, newPlanet);
+    get_planet_radius(newPlanet);
+    get_planet_risk(newPlanet);
 
-    if (!myGets(newPlanet->name, MAX_PLANET_NAME)) {
-        LOG_DEBUG("Failed to read Planet name or input was empty.\n");
-
-        free(newPlanet);  
-        return NULL;
-    }
-    
-    int idFlag = 0;
-    int id;
-    do {
-        printf("Enter the Planet ID (1-9999): ");
-        scanf("%d", &id);
-        if (check_unique_planet_id(system, id) && id > 0 && id < 10000) {
-            idFlag = 1;
-            newPlanet->id = id;
-        }
-        else
-            printf("\nError! ID is not valid. Try again.\n");
-
-    } while (!idFlag);
-
-    int locFlag = 0;
-    Location loc;
-    do {
-        printf("Enter the Planet location coordinates (x y z): ");
-        scanf("%d %d %d", &loc.x, &loc.y, &loc.z);
-        if (check_unique_planet_location(system, loc) && isPlanetWithinSolarSystem(system, loc)) {
-            locFlag = 1;
-            newPlanet->portal_location = loc;
-        }
-        else
-            printf("\nError! Location is not valid. Try again.\n");
-    } while (!locFlag);
-
-    int radiusFalg = 0;
-    int size;
-    do {
-        printf("Enter the Galaxy radius: ");
-        scanf("%d", &size);
-        if (size > 0) {
-            radiusFalg = 1;
-            newPlanet->size = size;
-        }
-    } while (!radiusFalg);
-
-    int risk;
-    int riskFlag = 0;
-    do {
-        printf("Enter the risk level of this planet:\n\t%d - Most Dangerous.\n\t%d - Most Safe ", MAX_RISK_LVL, MIN_RISK_LVL);
-        scanf("%d", &risk);
-
-        if (risk >= MIN_RISK_LVL && risk <= MAX_RISK_LVL) {
-            newPlanet->riskLevel = risk;
-            riskFlag = 1;
-        }
-        else
-            printf("\nErorr! Not a valid input. Try again\n");
-
-
-    } while (!riskFlag);
-
+    flush_stdin();
     return newPlanet;
 }
 
